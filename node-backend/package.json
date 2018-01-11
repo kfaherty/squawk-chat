@@ -19,7 +19,6 @@
     "cookie-parser": "^1.4.0",
     "crypto-js":"latest",
     "node-sha1": "^1.0.1",
-    "twitter": "latest",
     "uuid": "latest",
     "promise": "^7.0.4",
     "request": "^2.65.0",
