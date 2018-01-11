@@ -2,8 +2,7 @@ var request = require('request');
 var express = require('express');
 var Promise  = require('promise');
 var bodyParser = require('body-parser');
-var cacheMaker = require("./cacheMaker");
-var uuid=require('uuid');
+var uuid = require('uuid');
 var CryptoJS = require('crypto-js');
 var cookie = require('cookie');
 
@@ -29,11 +28,11 @@ function start( port ){
     /    ==================================================
     */
 
-    var createToken = function(){
-        //create a unique token
-        var uniqueToken=uuid.v1();
-        return uniqueToken;
-    }
+    // var createToken = function(){ // moved to pg
+    //     //create a unique token
+    //     var uniqueToken=uuid.v1();
+    //     return uniqueToken;
+    // }
 
     var serveFile = function(filename,contentType){
         return function(req,res){
