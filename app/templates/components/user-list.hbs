@@ -1,13 +1,12 @@
-<div class="user-list-contain">
-    <div class="search">
-        search
-    </div>
-    <div class="sort">
-        sort
-    </div>
-    <div class="user-list">
-        {{#each model as |user|}}
-            {{user-object user=user}}
-        {{/each}}
-    </div>
+<div class="search">
+    <label>Search</label>
+    <input type="text" name="search">
+</div>
+<div class="sort">
+    sort
+</div>
+<div class="user-list">
+    {{#each model as |user|}}
+        {{user-object user=user}}
+    {{/each}}
 </div>

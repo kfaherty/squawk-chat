@@ -1,0 +1,21 @@
+.user-list-contain {
+	width: 40%;
+	// border: 1px solid;
+	border-right: 1px solid;
+	.search {
+		margin: 10px;
+		padding: 10px;
+		position: relative;
+		border-bottom: 1px solid;
+		label {
+			position: absolute;
+			top: 3px;
+			box-sizing: border-box;
+		}
+		input {
+			box-sizing: border-box;
+			width: 100%;
+			border: none;
+		}
+	}	
+}
