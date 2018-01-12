@@ -50,6 +50,9 @@
 		text-align: center;
 		width: 100%;
 		color: #1cd67c;
+	    white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
 	}
 	.chat-subtitle {
 		// font-size: 11px;
@@ -58,6 +61,9 @@
 		text-align: center;
 		width: 100%;
 		color: #6A6F6C;
+	    white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
 	}
 }
 .chat-contain {
@@ -124,7 +130,12 @@
 	width: 100%;
 	position: absolute;
 	top: 45px;
-    height: calc( 100% - 185px );
+    height: calc( 100% - 45px );
+    overflow-y: scroll;
+
+    .input-padding {
+    	height: 120px;
+    }
 }
 .chat-user-list-contain,.chat-user-profile-contain {
 	position: absolute;

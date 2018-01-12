@@ -25,6 +25,33 @@
     src: local('Verlag XLight'), local('Verlag-XLight'), url(verlagxlight.woff) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000; 
 }
 
+::-webkit-scrollbar {
+    width:6px;
+    position: absolute;
+}
+::-webkit-scrollbar:horizontal {
+    height:6px;
+}
+::-webkit-scrollbar-track {
+    background:transparent;
+    border-left: none;// 1px solid #ccc;
+    // border-right: 2px transparent solid;
+}
+::-webkit-scrollbar-track:horizontal {
+    border-top: none;//1px solid #ccc;
+}
+::-webkit-scrollbar-thumb {
+    // margin: 2px;
+    background-color: #99A09C;
+    border-radius:5px;
+    // transition:background 0.3s ease;
+}
+::-webkit-scrollbar-thumb:hover {
+    background-color: #616965;
+}
+::-webkit-scrollbar-corner{
+    background:transparent; //#eaeaea;
+}
 
 @import 'foundation-icons.css';
 

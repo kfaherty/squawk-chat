@@ -21,7 +21,18 @@ export default Ember.Component.extend({
 				from: 'Cool Coolname',
 				timestamp: '11:45 pm',
 				message: 'Cool'
-			}
+			},
+			{
+				from: 'I sent this one',
+				timestamp: '11:45 pm',
+				mine: true,
+				message: 'Hello'
+			},
+			{
+				from: 'Cool Coolname',
+				timestamp: '11:45 pm',
+				message: 'Yep'
+			},
 		]
     },
   	
