@@ -60,23 +60,18 @@ html{
   left: 160px;
   span {
     padding-right: 39px;
+    color: #99A09C;
+    line-height: 74px;
+    text-decoration: none;
+    // font-weight: 600;
+    font-size: 17px;
 
-    a {
-      color: #99A09C;
-      line-height: 74px;
-      text-decoration: none;
-      // font-weight: 600;
-      font-size: 17px;
-
-      &:hover {
-        color: #a4b1ad;
-      }
+    &:hover {
+      color: #a4b1ad;
     }
 
     &.active {
-      a,a:hover {
-        color: #1CDC7F;
-      }
+      color: #1CDC7F;
     }     
   }
 }

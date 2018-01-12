@@ -7,9 +7,10 @@ const Router = Ember.Router.extend({
 });
 
 Router.map(function() {
-  this.route('messages');
-  this.route('channels');
-  this.route('search');
+  // this.route('messages');
+  // this.route('channels');
+  // this.route('credit-card');
+  // this.route('search');
 });
 
 export default Router;
