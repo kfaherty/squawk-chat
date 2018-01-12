@@ -48,30 +48,6 @@
 			padding-right: 10px;
 			font-weight: 600;
 			font-size: 12px;
-		}
-		.arrow {
-			cursor: pointer;
-			position: relative;
-			top: 3px;
-			display: inline-block;
-			text-align: right;
-			width: 8px;
-			height: 8px;
-			background: transparent;
-			border-top: 2px solid #89908C;
-			border-right: 2px solid #89908C;
-			transform: translate3d(0,-50%,0) rotate(135deg);
-					
-			&:before { // for better hit area
-				content: '';
-				position: absolute;
-				top: 50%;
-				left: 50%;
-				transform: translate(-40%,-60%) rotate(45deg);
-				width: 200%;
-				height: 200%;
-			}
-		}
-		
+		}	
 	}
 }
