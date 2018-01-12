@@ -1,0 +1,136 @@
+.chat-window {
+	position: absolute;
+	top: 75px;
+	left: 340px;
+	height: calc( 100vh - 75px );
+	width: calc( 100% - 340px );
+}
+.no-chat {
+	width: 200px;
+	height: 50px;
+	border-radius: 4px;
+	background: white;
+	position: absolute;
+	top: calc( 50% - 50px );
+	left: calc( 50% - 100px );;
+	text-align: center;
+	color: #6A6F6C;
+	z-index: 99;
+	display: flex;
+	vertical-align: center;
+	align-items: center;
+	justify-content: center;
+	opacity: 1;
+	transition: opacity 0.3s ease;
+	pointer-events: initial;
+
+	&.hidden {
+		opacity: 0;
+		pointer-events: none;
+	}
+}
+.chat-header {
+	height: 45px;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	background: white;
+	border-bottom: 1px solid #E5EBE9;
+	display: flex;
+	vertical-align: center;
+	align-items: center;
+	justify-content: center;
+	font-size: 13px;
+	.chat-header-wrap {
+		width: calc( 100% - 50px );
+	}
+	.chat-title{
+		font-weight: 600;
+		text-align: center;
+		width: 100%;
+		color: #1cd67c;
+	}
+	.chat-subtitle {
+		// font-size: 11px;
+		padding-top: 4px;
+		// font-weight: 600;
+		text-align: center;
+		width: 100%;
+		color: #6A6F6C;
+	}
+}
+.chat-contain {
+	background: #EDF0EF;
+	position: relative;
+	top: 0px;
+	left: 0px;
+	height: 100%;
+	width: calc( 100% - 140px );
+	transition: width 0.3s ease;
+
+	// TODO: gradient on top of scroll-previous-messages
+
+	&.full {
+		width: 100%;
+	}
+
+	.input-contain {
+		position: absolute;
+		bottom: 0px;
+		left: 0px;
+		// border-top: 1px solid black;
+		margin: 20px;
+		height: 100px;
+		background: white;
+		border-radius: 4px;
+		width: calc( 100% - 40px );
+    	box-shadow: 0px 0px 30px rgba(0, 0, 0, .1);
+
+		.label {
+			position: absolute;
+			top: 10px;
+    		left: 15px;
+			box-sizing: border-box;
+			pointer-events: none;
+			div,span {
+				display: inline-block;
+			}
+			.fi-magnifying-glass {
+				color: #9EA6A2;
+				font-size: 14px;
+			}
+			span {
+				color: #D6DBD9;
+				font-size: 12px;
+				padding-left: 5px;
+			}
+		}
+		textarea {
+		    resize: none;
+			box-sizing: border-box;
+			width: 100%;
+		    height: 100%;
+			border: none;
+			background: transparent;
+			outline: none;
+			padding: 10px 20px;
+   			font-family: 'Verlag', sans-serif;
+		}
+	}
+}
+.messages-contain {
+	width: 100%;
+	position: relative;
+	top: 45px;
+    height: calc( 100% - 185px );
+}
+.chat-user-list-contain {
+	position: absolute;
+	right: 0px;
+	width: 140px;
+	height: 100%;
+	border-left: 1px solid #E5EBE9;
+	top: 0px;
+	background: white;
+}

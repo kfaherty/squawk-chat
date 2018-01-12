@@ -6,7 +6,7 @@
 </div>
 <div class="details-contain">
 	<div class="user-name">{{user.name}}</div>
-	<div class="message-type">{{user.type}}</div>
+	<div class="message-type">{{user.userStatus}}{{#if user.statusMessage}}: {{user.statusMessage}}{{/if}}</div>
 	<div class="snippet">{{user.snippet}}</div>
 </div>
 <div class="timestamp">{{user.relativeTime}}</div>

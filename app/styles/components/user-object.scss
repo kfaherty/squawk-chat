@@ -80,6 +80,9 @@
 			padding-top: 9px;
 			font-weight: 600;
 			color: #6A6F6C;
+		    white-space: nowrap;
+			overflow: hidden;
+    		text-overflow: ellipsis; // we need to do this with js i think
 		}
 		.snippet {
 			padding-top: 4px;
