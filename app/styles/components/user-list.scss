@@ -5,14 +5,28 @@
 	background: #f7faf9;
 	border-right: 1px solid #E5EBE9;
 	.search {
+		padding-top: 10px;
 		margin: 0px 10px 10px 10px;
-		padding: 10px;
 		position: relative;
 		border-bottom: 1px solid #DFE4E2;
-		label {
+		.label {
 			position: absolute;
-			top: 3px;
+			top: 18px;
+			left: 20px;
 			box-sizing: border-box;
+			pointer-events: none;
+			div,span {
+				display: inline-block;
+			}
+			.fi-magnifying-glass {
+				color: #9EA6A2;
+				font-size: 14px;
+			}
+			span {
+				color: #D6DBD9;
+				font-size: 12px;
+				padding-left: 5px;
+			}
 		}
 		input {
 			box-sizing: border-box;
@@ -20,6 +34,44 @@
 			border: none;
 			background: transparent;
 			outline: none;
+			padding: 10px 20px;
 		}
 	}	
+	.sort {
+		text-align: right;
+		padding: 0px 20px;
+		.label {
+			cursor: pointer;
+			display: inline-block;
+			text-align: right;
+			color: #89908C;
+			padding-right: 10px;
+			font-weight: 600;
+			font-size: 12px;
+		}
+		.arrow {
+			cursor: pointer;
+			position: relative;
+			top: 3px;
+			display: inline-block;
+			text-align: right;
+			width: 8px;
+			height: 8px;
+			background: transparent;
+			border-top: 2px solid #89908C;
+			border-right: 2px solid #89908C;
+			transform: translate3d(0,-50%,0) rotate(135deg);
+					
+			&:before { // for better hit area
+				content: '';
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				transform: translate(-40%,-60%) rotate(45deg);
+				width: 200%;
+				height: 200%;
+			}
+		}
+		
+	}
 }
