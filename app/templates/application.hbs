@@ -1,0 +1,24 @@
+<div class="app-contain">
+    <div class="top-bar">
+        <div class="logo-contain">
+            Squawk Chat
+        </div>
+        <nav>
+            <ul class="text-buttons-contain">
+                <li>
+                    {{#link-to 'messages' class="text-button"}}Messages{{/link-to}}
+                </li>
+                <li>
+                    {{#link-to 'channels' class="text-button"}}Channels{{/link-to}}
+                </li>
+                <li>
+                    {{#link-to 'search' class="text-button"}}Search{{/link-to}}
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    {{user-list}}
+
+    {{outlet}}
+</div>

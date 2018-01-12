@@ -1,0 +1,22 @@
+$shrinking-box-border-color: #483d8b;
+$shrinking-box-background-color: rgb(200, 200, 200);
+$shrinking-box-background-color-small: rgb(12, 89, 100);
+
+.shrinking-box {
+	display: flex;
+	justify-content: space-around;
+	border: 1px solid $shrinking-box-border-color;
+	padding:1em;
+	width: 360px;
+	height: 360px;
+	background-color: $shrinking-box-background-color;
+	transition: width 0.5s ease 0s, height 0.5s ease 0s, background-color 0.5s ease 0s, color 0.5s ease 0s;
+	align-items:center;
+
+	&.is-small {
+		width: 200px;
+		height: 200px;
+		background-color: $shrinking-box-background-color-small;
+		color: $white;
+	}
+}
