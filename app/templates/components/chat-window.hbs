@@ -1,8 +1,8 @@
-<div class="no-chat hidden">
+
+<div class="no-chat {{if chat 'hidden'}}">
 	<span>No chat selected</span>
 </div>
-
-<div class="chat-contain">
+<div class="chat-contain {{unless chat 'hidden'}}">
 	<div class="chat-header">
 		<div class="chat-header-wrap">
 			<div class="chat-title">{{chat.title}}</div>
@@ -14,12 +14,12 @@
 	</div>
 
 	<div class="widgetMenu">
-		<div class="list-item"><div class="list-icon fi-x"></div>Close Chat</div>
-		<div class="list-item"><div class="list-icon fi-star"></div>Favorite</div>
-		<div class="list-item"><div class="list-icon fi-star"></div>Unfavorite</div>
-		<div class="list-item"><div class="list-icon fi-plus"></div>Ignore</div>
-		<div class="list-item"><div class="list-icon fi-minus"></div>Unignore</div>
-		<div class="list-item"><div class="list-icon fi-flag"></div>Report</div>
+		<div class="list-item" {{action 'closeChatClicked'}}><div class="list-icon fi-x"></div>Close Chat</div>
+		<div class="list-item" {{action 'widgetClicked'}}><div class="list-icon fi-star"></div>Favorite</div>
+		<div class="list-item" {{action 'widgetClicked'}}><div class="list-icon fi-star"></div>Unfavorite</div>
+		<div class="list-item" {{action 'widgetClicked'}}><div class="list-icon fi-plus"></div>Ignore</div>
+		<div class="list-item" {{action 'widgetClicked'}}><div class="list-icon fi-minus"></div>Unignore</div>
+		<div class="list-item" {{action 'widgetClicked'}}><div class="list-icon fi-flag"></div>Report</div>
 	</div>
 
 	<div class="messages-contain">
@@ -45,11 +45,11 @@
 </div>
 
 {{#if chat.private}}
-	<div class="chat-user-profile-contain">
+	<div class="chat-user-profile-contain {{unless chat 'hidden'}}">
 		{{user-profile}}
 	</div>
 {{else}}
-	<div class="chat-user-list-contain">
+	<div class="chat-user-list-contain {{unless chat 'hidden'}}">
 		list
 		<!-- user list -->
 		{{#each chat.user as |user|}}

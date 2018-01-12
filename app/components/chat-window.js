@@ -44,6 +44,11 @@ export default Ember.Component.extend({
   	actions: {
 		widgetClicked: function(){
 			this.set('showWidgetMenu',!this.get('showWidgetMenu'));
+		},
+		closeChatClicked: function() {
+			this.set('chat',null);
+
+			this.set('showWidgetMenu',!this.get('showWidgetMenu'));	
 		}
 	}
 });

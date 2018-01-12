@@ -42,6 +42,8 @@
 }
 
 .chat-window {
+	background: #EDF0EF;
+
 	position: absolute;
     top: 75px;
     left: 341px;
@@ -145,15 +147,21 @@
 	}
 }
 .chat-contain {
-	background: #EDF0EF;
 	position: relative;
 	top: 0px;
 	left: 0px;
 	height: 100%;
 	width: calc( 100% - 140px );
-	transition: width 0.3s ease;
+	transition: width 0.3s ease,opacity 0.3s ease;
+	opacity: 1;
+	pointer-events: initial;
 
 	// TODO: gradient on top of scroll-previous-messages
+
+	&.hidden {
+		opacity: 0;
+		pointer-events: none;
+	}
 
 	&.full {
 		width: 100%;
@@ -223,11 +231,19 @@
 	border-left: 1px solid #E5EBE9;
 	top: 0px;
 	background: white;
+	opacity: 1;
+	transition: opacity 0.3s ease;
+	pointer-events: initial;
+
+	&.hidden {
+		opacity: 0;
+		pointer-events: none;
+	}
 }
 .widgetMenu {
     position: absolute;
-    top: 32px;
-    right: 10px;
+    top: 22px;
+    right: 22px;
     background: #FFF;
     border: 1px solid #E5EBE9;
     border-bottom: none;
