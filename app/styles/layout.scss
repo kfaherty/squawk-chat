@@ -1,26 +1,31 @@
-nav{
-  & ul{
-    max-width:$portrait-tablet;
-    margin: 2em auto;
-    display:flex;
-    justify-content: space-around;
-    & a.btn{
-      width: 200px;
-    }
-  }
-    @media (max-width: $portrait-tablet) {
-      ul {
-        width:100%;
-        flex-direction: column;
-        a.btn {
-          margin-top: 1em;
-        }
+.top-bar {
+  height: 74px;
+  border-bottom: 1px solid #E5EBE9;
+  background: #f7faf9;
+  position: relative;
+}
+.logo-contain {
+  color: #616965;
+  line-height: 74px;
+  margin-left: 24px;
+}
+.text-buttons-contain {
+  // list-style: none;
+  position: absolute;
+  top: 0px;
+  left: 200px;
+  span {
+    padding: 20px;
+
+    a {
+      color: #99A09C;
+      line-height: 74px;
+      &:hover {
+        text-decoration: none;
       }
     }
-}
-
-.panel{
-  max-width:$portrait-tablet;
-  margin: 0 auto;
-  margin-bottom: 300px;
+    &.active {
+      color: #1CDC7F;
+    }     
+  }
 }
