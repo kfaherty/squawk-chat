@@ -9,7 +9,9 @@
 		</div>
 	</div>
 	<div class="messages-contain">
-		<!-- messages  -->
+	    {{#each chat.messages as |message|}}
+        	{{chat-message message=message}}
+    	{{/each}}	
 	</div>
 	<div class="input-contain">
 		<div class="label">
@@ -21,9 +23,18 @@
 	    </div>
 	</div>
 </div>
-<div class="chat-user-list-contain">
-	<!-- user list -->
-</div>
-<div class="chat-user-profile-contain hidden">
-	<!-- profile -->
-</div>
+
+{{#if chat.private}}
+	<div class="chat-user-profile-contain">
+		profile
+		<!-- profile -->
+	</div>
+{{else}}
+	<div class="chat-user-list-contain">
+		list
+		<!-- user list -->
+		{{#each chat.user as |user|}}
+	        {{user-object user=user}}
+	    {{/each}}
+	</div>
+{{/if}}

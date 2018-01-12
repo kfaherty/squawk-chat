@@ -6,9 +6,12 @@
 	margin: 20px;
 	background: white;
 	position: relative;
+	border: 1px solid #E5EBE9;
 
 	&.selected {
 		background: #1cd67c;
+		border: 1px solid #1cd67c;
+
 		box-shadow: 0px 0px 14px #ccc;
 		.user-icon-contain {
 			.user-icon {

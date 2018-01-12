@@ -22,6 +22,7 @@ export default Ember.Component.extend({
       statusMessage: 'Yo, just got home wow this is a long status',
       friend: false,
       bookmark: true,
+      selected: true,
       snippet: 'Hey dude Hope you are fine lorem ipsum Dolor sit amet, consectetur adipiscing elit, sed do magnaet ifsa nidsian kgskhg idshgi ingskngls klngds'
     },
     {
@@ -30,7 +31,6 @@ export default Ember.Component.extend({
       status: 2,
       userStatus: "Busy",
       statusMessage: null,
-      selected: true,
       friend: false,
       snippet: 'Hey dude Hope you are fine lorem ipsum Dolor sit amet, consectetur adipiscing elit, sed do magnaet ifsa nidsian kgskhg idshgi ingskngls klngds'
     }

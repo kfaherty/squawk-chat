@@ -86,6 +86,7 @@
 		border-radius: 4px;
 		width: calc( 100% - 40px );
     	box-shadow: 0px 0px 30px rgba(0, 0, 0, .1);
+		border: 1px solid #E5EBE9;
 
 		.label {
 			position: absolute;
@@ -121,11 +122,11 @@
 }
 .messages-contain {
 	width: 100%;
-	position: relative;
+	position: absolute;
 	top: 45px;
     height: calc( 100% - 185px );
 }
-.chat-user-list-contain {
+.chat-user-list-contain,.chat-user-profile-contain {
 	position: absolute;
 	right: 0px;
 	width: 140px;
