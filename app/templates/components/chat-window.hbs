@@ -1,13 +1,27 @@
 <div class="no-chat hidden">
 	<span>No chat selected</span>
 </div>
+
 <div class="chat-contain">
 	<div class="chat-header">
 		<div class="chat-header-wrap">
 			<div class="chat-title">{{chat.title}}</div>
 			<div class="chat-subtitle">{{chat.subtitle}}</div>
 		</div>
+		<div class="settings-button" {{action 'widgetClicked'}}>
+			<div class="fi-widget"></div>
+		</div>
 	</div>
+
+	<div class="widgetMenu">
+		<div class="list-item"><div class="list-icon fi-x"></div>Close Chat</div>
+		<div class="list-item"><div class="list-icon fi-star"></div>Favorite</div>
+		<div class="list-item"><div class="list-icon fi-star"></div>Unfavorite</div>
+		<div class="list-item"><div class="list-icon fi-plus"></div>Ignore</div>
+		<div class="list-item"><div class="list-icon fi-minus"></div>Unignore</div>
+		<div class="list-item"><div class="list-icon fi-flag"></div>Report</div>
+	</div>
+
 	<div class="messages-contain">
 	    {{#each chat.messages as |message|}}
         	{{chat-message message=message}}
@@ -27,8 +41,7 @@
 
 {{#if chat.private}}
 	<div class="chat-user-profile-contain">
-		profile
-		<!-- profile -->
+		{{user-profile}}
 	</div>
 {{else}}
 	<div class="chat-user-list-contain">

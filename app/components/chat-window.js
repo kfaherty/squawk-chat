@@ -35,5 +35,15 @@ export default Ember.Component.extend({
 			},
 		]
     },
-  	
+  	classNameBindings: ['showWidgetMenu:showWidgetMenu'],
+  	showWidgetMenu: false,
+	defaultWidgetClosed: Ember.on('init', function(){
+	    //http://emberjs.com/api/classes/Ember.Object.html#method_set
+    	this.set("showWidgetMenu", false);
+  	}),
+  	actions: {
+		widgetClicked: function(){
+			this.set('showWidgetMenu',!this.get('showWidgetMenu'));
+		}
+	}
 });
