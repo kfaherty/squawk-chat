@@ -1,9 +1,52 @@
+
+@mixin keyframes($animationName) {
+    @-webkit-keyframes #{$animationName} {
+        @content;
+    }
+    @-moz-keyframes #{$animationName} {
+        @content;
+    }
+    @-o-keyframes #{$animationName} {
+        @content;
+    }
+    @keyframes #{$animationName} {
+        @content;
+    } 
+}
+@include keyframes(animateMenu) {  // this doesn't adjust the height.
+    0% { 
+        opacity: 0; 
+        -webkit-transform: scaleY(0);
+        -o-transform: scaleY(0);
+        -ms-transform: scaleY(0);
+        transform: scaleY(0);
+    }
+    100% { 
+        opacity: 1; 
+        -webkit-transform: scaleY(1);
+        -o-transform: scaleY(1);
+        -ms-transform: scaleY(1);
+        transform: scaleY(1);
+    }
+}
+@include keyframes(animateTyping) {  // this doesn't adjust the height.
+    0% { 
+        transform: translatey(-3px); 
+    }
+    50% {
+    	transform: translatey(5px);
+    }
+    100% { 
+        transform: translatey(-3px);
+    }
+}
+
 .chat-window {
 	position: absolute;
-	top: 75px;
-	left: 340px;
-	height: calc( 100vh - 75px );
-	width: calc( 100% - 340px );
+    top: 75px;
+    left: 341px;
+    height: calc( 100vh - 75px);
+    width: calc( 100% - 341px);
 
 	 &.showWidgetMenu {
         .widgetMenu {
@@ -197,6 +240,7 @@
     -o-transform-origin : 50% 0%;
     -ms-transform-origin : 50% 0%;
     transform-origin : 50% 0%;
+	box-shadow: 0px 0px 30px rgba(0, 0, 0, .1);
 
     .list-icon  {
         display: inline-block;
@@ -213,4 +257,48 @@
             background: #F1F3F2;
         }
     }
+}
+.typing-indicator {
+	background: #FFF;
+	border: 0px solid transparent;
+	width: 50px;
+	border-radius: 4px;
+	padding: 0px;
+	margin: 0px 20px;
+	text-align: center;
+	box-shadow: 0px 0px 30px rgba(0, 0, 0, .1);
+	transform: scale(0);
+	height: 0px;
+	opacity: 0px;
+	overflow: hidden;
+	transition: transform 0.3s ease, height 0.3s ease, opacity 0.3s ease, border 0.3s ease, padding 0.3s ease, margin 0.3s ease;
+	&.visible {
+		padding: 5px;
+		border: 1px solid #DFE4E2;
+		margin: 20px;
+		opacity: 1;
+		height: 25px;
+		transform: scale(1);
+		div {
+			animation: animateTyping 1.3s infinite cubic-bezier(0.45, 0.05, 0.55, 0.95);
+		}
+		.dot-one{
+		    animation-delay: 0s;
+		}
+		.dot-two {
+		    animation-delay: 0.15s;
+		}
+		.dot-three {
+		    animation-delay: 0.3s;
+		}
+	}
+
+	div {
+		margin-right: 2px;
+		width: 4px;
+		height: 4px;
+		background: #A6B2AD;
+		border-radius: 10px;
+		display: inline-block;
+	}
 }
