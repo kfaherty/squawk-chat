@@ -35,4 +35,31 @@ export default Ember.Component.extend({
       snippet: 'Hey dude Hope you are fine lorem ipsum Dolor sit amet, consectetur adipiscing elit, sed do magnaet ifsa nidsian kgskhg idshgi ingskngls klngds'
     }
   ],
+  classNameBindings: ['showSortMenu:showSortMenu'],
+  showSortMenu: false,
+  defaultSortClosed: Ember.on('init', function(){
+    //http://emberjs.com/api/classes/Ember.Object.html#method_set
+    this.set("showSortMenu", false);
+  }),
+  actions: {
+    sortClicked: function(){
+      this.set('showSortMenu',!this.get('showSortMenu'));
+    },
+    setNewestSort: function() {
+      this.set('sortType','Newest First');
+      this.set('showSortMenu',!this.get('showSortMenu')); 
+    },
+    setOldestSort: function() {
+      this.set('sortType','Oldest First');
+      this.set('showSortMenu',!this.get('showSortMenu')); 
+    },
+    setAlphaSort: function() {
+      this.set('sortType','Alphabetical');
+      this.set('showSortMenu',!this.get('showSortMenu')); 
+    },
+    setTypeSort: function() {
+      this.set('sortType','Type');
+      this.set('showSortMenu',!this.get('showSortMenu')); 
+    }
+  }
 });

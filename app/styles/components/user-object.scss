@@ -7,7 +7,8 @@
 	background: white;
 	position: relative;
 	border: 1px solid #E5EBE9;
-
+	cursor: pointer;
+	
 	&.selected {
 		background: #1cd67c;
 		border: 1px solid #1cd67c;

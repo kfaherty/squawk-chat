@@ -5,9 +5,15 @@
     </div>
     <input type="text" name="search">
 </div>
-<div class="sort">
+<div class="sort" {{action 'sortClicked'}}>
     <div class="label">Sort: {{sortType}} </div>
 	<div class="arrow"></div>
+</div>
+<div class="sortMenu">
+    <div class="list-item" {{action 'setNewestSort'}}><div class="list-icon fi-arrow-up"></div>Newest First</div>
+    <div class="list-item" {{action 'setOldestSort'}}><div class="list-icon fi-arrow-down"></div>Oldest First</div>
+    <div class="list-item" {{action 'setAlphaSort'}}><div class="list-icon fi-text-color"></div>Alphabetical</div>
+    <div class="list-item" {{action 'setTypeSort'}}><div class="list-icon fi-filter"></div>Type</div>
 </div>
 <div class="user-list">
     {{#each model as |user|}}
