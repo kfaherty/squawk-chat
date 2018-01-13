@@ -35,11 +35,16 @@ export default Ember.Component.extend({
 			},
 		]
     },
-  	classNameBindings: ['showWidgetMenu:showWidgetMenu'],
+  	classNameBindings: [
+  		'showWidgetMenu:showWidgetMenu',
+  		'hideTextLabel:hideTextLabel'
+  	],
   	showWidgetMenu: false,
+	hideTextLabel: false,
 	defaultWidgetClosed: Ember.on('init', function(){
 	    //http://emberjs.com/api/classes/Ember.Object.html#method_set
     	this.set("showWidgetMenu", false);
+	    this.set('hideTextLabel',false);
   	}),
   	actions: {
 		widgetClicked: function(){
@@ -49,6 +54,14 @@ export default Ember.Component.extend({
 			this.set('chat',null);
 
 			this.set('showWidgetMenu',!this.get('showWidgetMenu'));	
-		}
+		},
+	    updateTextarea: function(value) {
+	      // console.log(value);
+	      if (value && value.length) {
+	        this.set('hideTextLabel',true); 
+	      } else {
+	        this.set('hideTextLabel',false); 
+	      }
+	    }
 	}
 });

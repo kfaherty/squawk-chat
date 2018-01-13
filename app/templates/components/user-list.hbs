@@ -3,7 +3,7 @@
 		<div class="fi-magnifying-glass"></div>
     	<span>Search</span>
     </div>
-    <input type="text" name="search">
+    <input type="text" name="search" oninput={{action 'updateSearch' value='target.value'}} >
 </div>
 <div class="sort" {{action 'sortClicked'}}>
     <div class="label">Sort: {{sortType}} </div>

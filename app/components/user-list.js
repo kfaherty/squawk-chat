@@ -35,12 +35,19 @@ export default Ember.Component.extend({
       snippet: 'Hey dude Hope you are fine lorem ipsum Dolor sit amet, consectetur adipiscing elit, sed do magnaet ifsa nidsian kgskhg idshgi ingskngls klngds'
     }
   ],
-  classNameBindings: ['showSortMenu:showSortMenu'],
+  classNameBindings: [
+    'showSortMenu:showSortMenu',
+    'hideSearchLabel:hideSearchLabel'
+  ],
+  
   showSortMenu: false,
-  defaultSortClosed: Ember.on('init', function(){
+  hideSearchLabel: false,
+  defaultValues: Ember.on('init', function(){
     //http://emberjs.com/api/classes/Ember.Object.html#method_set
     this.set("showSortMenu", false);
+    this.set('hideSearchLabel',false);
   }),
+  
   actions: {
     sortClicked: function(){
       this.set('showSortMenu',!this.get('showSortMenu'));
@@ -60,6 +67,14 @@ export default Ember.Component.extend({
     setTypeSort: function() {
       this.set('sortType','Type');
       this.set('showSortMenu',!this.get('showSortMenu')); 
+    },
+    updateSearch: function(value) {
+      // console.log(value);
+      if (value && value.length) {
+        this.set('hideSearchLabel',true); 
+      } else {
+        this.set('hideSearchLabel',false); 
+      }
     }
   }
 });

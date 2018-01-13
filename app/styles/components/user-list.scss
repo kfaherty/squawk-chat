@@ -17,6 +17,14 @@
 	    }
     }
 
+	&.hideSearchLabel{
+		.search .label {
+			span {
+				opacity: 0;
+			}
+		}
+	}
+
 	.search {
 		padding-top: 10px;
 		margin: 0px 10px 10px 10px;
@@ -24,8 +32,8 @@
 		border-bottom: 1px solid #DFE4E2;
 		.label {
 			position: absolute;
-			top: 18px;
-			left: 20px;
+			top: 19px;
+			left: 21px;
 			box-sizing: border-box;
 			pointer-events: none;
 			div,span {
@@ -42,9 +50,12 @@
 			}
 		}
 		input {
+			z-index: 3;	
 			box-sizing: border-box;
 			width: 100%;
 			border: none;
+		    font-family: 'Verlag', sans-serif;
+			font-size: 12px;
 			background: transparent;
 			outline: none;
 			padding: 10px 20px 10px 40px;

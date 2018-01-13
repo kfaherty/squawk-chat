@@ -60,6 +60,11 @@
 	        pointer-events: initial;
 	    }
     }
+    &.hideTextLabel {
+    	.input-contain .label {
+    		opacity: 0;
+    	}
+    }
 }
 .no-chat {
 	width: 200px;
@@ -210,6 +215,7 @@
 			outline: none;
 			padding: 10px 20px;
    			font-family: 'Verlag', sans-serif;
+   			font-size: 12px;
 		}
 	}
 }

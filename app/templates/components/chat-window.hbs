@@ -37,7 +37,7 @@
 		<div class="label">
     		<span>Type a message</span>
 	    </div>
-	    <textarea type="text" name="message" resizable="false" />
+	    <textarea type="text" name="message" resizable="false" oninput={{action 'updateTextarea' value='target.value'}} />
 	    <div class="send">
 	    	<div class="fi-send"></div>
 	    </div>
