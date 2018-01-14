@@ -5,7 +5,38 @@ export default Ember.Component.extend({
   sortType: 'Newest First',
   selectedChat: '242174728147218941',
 
-  model: null,
+  // model: null,
+  model: [
+    {
+      name: 'Cool Coolname',
+      relativeTime: '11:45 pm',
+      status: 0,
+      userStatus: "Offline",
+      statusMessage: null,
+      friend: true,
+      snippet: 'Hey dude Hope you are fine lorem ipsum Dolor sit amet, consectetur adipiscing elit, sed do magnaet ifsa nidsian kgskhg idshgi ingskngls klngds'
+    },
+    {
+      name: 'Cool Coolname',
+      relativeTime: '11:45 pm',
+      status: 1,
+      userStatus: "Online",
+      statusMessage: 'Yo, just got home wow this is a long status',
+      friend: false,
+      bookmark: true,
+      selected: true,
+      snippet: 'Hey dude Hope you are fine lorem ipsum Dolor sit amet, consectetur adipiscing elit, sed do magnaet ifsa nidsian kgskhg idshgi ingskngls klngds'
+    },
+    {
+      name: 'Cool Coolname',
+      relativeTime: '11:45 pm',
+      status: 2,
+      userStatus: "Busy",
+      statusMessage: null,
+      friend: false,
+      snippet: 'Hey dude Hope you are fine lorem ipsum Dolor sit amet, consectetur adipiscing elit, sed do magnaet ifsa nidsian kgskhg idshgi ingskngls klngds'
+    }
+  ],
 
   classNameBindings: [
     'showSortMenu:showSortMenu',
