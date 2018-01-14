@@ -33,6 +33,64 @@ export default Ember.Component.extend({
 				timestamp: '11:45 pm',
 				message: 'Yep'
 			},
+			{
+				from: 'Cool Coolname',
+				timestamp: '11:45 pm',
+				message: 'This doesnt seem to work..'
+			},
+			{
+				from: 'Cool Coolname',
+				timestamp: '11:45 pm',
+				message: 'Oh. Weird. Nevermind.'
+			},
+			{
+				from: 'Cool Coolname',
+				timestamp: '11:45 pm',
+				message: 'Cool'
+			},
+			{
+				from: 'I sent this one',
+				timestamp: '11:45 pm',
+				mine: true,
+				message: 'Hello'
+			},
+			{
+				from: 'Cool Coolname',
+				timestamp: '11:45 pm',
+				message: 'Yep'
+			},
+			{
+				from: 'Cool Coolname',
+				timestamp: '11:45 pm',
+				message: 'This doesnt seem to work..'
+			},
+			{
+				from: 'Cool Coolname',
+				timestamp: '11:45 pm',
+				message: 'Oh. Weird. Nevermind.'
+			},
+			{
+				from: 'Cool Coolname',
+				timestamp: '11:45 pm',
+				message: 'There should be like.. timestamps between messages if the date changes.'
+			},
+			{
+				from: 'I sent this one',
+				timestamp: '11:45 pm',
+				mine: true,
+				message: 'Yeah I coded that on the last one. Probably can just use whatever I did there.'
+			},
+			{
+				from: 'I sent this one',
+				timestamp: '11:45 pm',
+				mine: true,
+				message: 'lol the database is refusing connections now. Use pg pools I guess..'
+			},
+			{
+				from: 'Cool Coolname',
+				timestamp: '11:45 pm',
+				message: 'Are you going to fix the usernames?'
+			},
 		]
     },
   	classNameBindings: [

@@ -16,6 +16,7 @@
     <div class="list-item" {{action 'setTypeSort'}}><div class="list-icon fi-filter"></div>Type</div>
 </div>
 <div class="user-list">
+    {{log model}}
     {{#each model as |user|}}
         {{user-object user=user}}
     {{/each}}

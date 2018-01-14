@@ -3,38 +3,10 @@ import Ember from 'ember';
 export default Ember.Component.extend({
   classNames: ['user-list-contain'],
   sortType: 'Newest First',
-  //  go to api
-  model: [
-    {
-      name: 'Cool Coolname',
-      relativeTime: '11:45 pm',
-      status: 0,
-      userStatus: "Offline",
-      statusMessage: null,
-      friend: true,
-      snippet: 'Hey dude Hope you are fine lorem ipsum Dolor sit amet, consectetur adipiscing elit, sed do magnaet ifsa nidsian kgskhg idshgi ingskngls klngds'
-    },
-    {
-      name: 'Cool Coolname',
-      relativeTime: '11:45 pm',
-      status: 1,
-      userStatus: "Online",
-      statusMessage: 'Yo, just got home wow this is a long status',
-      friend: false,
-      bookmark: true,
-      selected: true,
-      snippet: 'Hey dude Hope you are fine lorem ipsum Dolor sit amet, consectetur adipiscing elit, sed do magnaet ifsa nidsian kgskhg idshgi ingskngls klngds'
-    },
-    {
-      name: 'Cool Coolname',
-      relativeTime: '11:45 pm',
-      status: 2,
-      userStatus: "Busy",
-      statusMessage: null,
-      friend: false,
-      snippet: 'Hey dude Hope you are fine lorem ipsum Dolor sit amet, consectetur adipiscing elit, sed do magnaet ifsa nidsian kgskhg idshgi ingskngls klngds'
-    }
-  ],
+  selectedChat: '242174728147218941',
+
+  model: null,
+
   classNameBindings: [
     'showSortMenu:showSortMenu',
     'hideSearchLabel:hideSearchLabel'
@@ -76,5 +48,65 @@ export default Ember.Component.extend({
         this.set('hideSearchLabel',false); 
       }
     }
-  }
+  },
+
+  // socket
+  websockets: Ember.inject.service(),
+  socketRef: null,
+
+  didInsertElement() {
+    this._super(...arguments);
+
+    /*
+      2. The next step you need to do is to create your actual websocket. Calling socketFor
+      will retrieve a cached websocket if one exists or in this case it
+      will create a new one for us.
+    */
+    const socket = this.get('websockets').socketFor('wss://localhost:8799/');
+
+    /*
+      3. The next step is to define your event handlers. All event handlers
+      are added via the `on` method and take 3 arguments: event name, callback
+      function, and the context in which to invoke the callback. All 3 arguments
+      are required.
+    */
+    socket.on('open', this.myOpenHandler, this);
+    socket.on('message', this.myMessageHandler, this);
+    socket.on('close', this.myCloseHandler, this);
+
+    this.set('socketRef', socket);
+  },
+
+  willDestroyElement() {
+    this._super(...arguments);
+
+    const socket = this.get('socketRef');
+
+    /*
+      4. The final step is to remove all of the listeners you have setup.
+    */
+    socket.off('open', this.myOpenHandler);
+    socket.off('message', this.myMessageHandler);
+    socket.off('close', this.myCloseHandler);
+  },
+
+  myOpenHandler(event) {
+    console.log(`On open event has been called: ${event}`);
+  },
+
+  myMessageHandler(event) {
+    console.log(`Message: ${event.data}`);
+  },
+
+  myCloseHandler(event) {
+    console.log(`On close event has been called: ${event}`);
+  },
+
+  // actions: {
+  //   sendButtonPressed() {
+  //     const socket = this.get('socketRef');
+  //     socket.send('Hello Websocket World');
+  //   }
+  // }
+
 });
