@@ -16,3 +16,4 @@
 npm-debug.log*
 testem.log
 node-backend/node_modules/
+node-backend/pg_creds.json

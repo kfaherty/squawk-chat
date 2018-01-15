@@ -50,11 +50,15 @@ export default Ember.Component.extend({
     this.set("showSortMenu", false);
     this.set('hideSearchLabel',false);
   }),
-  
+
   actions: {
     sortClicked: function(){
       this.set('showSortMenu',!this.get('showSortMenu'));
     },
+    // TODO: refactor this to be a single function with a switch.
+    // TODO: do sorting
+    // TODO: render sorted list
+
     setNewestSort: function() {
       this.set('sortType','Newest First');
       this.set('showSortMenu',!this.get('showSortMenu')); 
@@ -78,66 +82,72 @@ export default Ember.Component.extend({
       } else {
         this.set('hideSearchLabel',false); 
       }
+
+      // TODO do search in here.
+      // TODO render only search results
+      // TODO move this to its own component and use yield results
+      // https://guides.emberjs.com/v2.18.0/tutorial/autocomplete-component/
     }
   },
 
   // socket
-  websockets: Ember.inject.service(),
-  socketRef: null,
+
+  /*
+    1. First step you need to do is inject the socketio service into your object.
+  */
+  socketIOService: Ember.inject.service('socket-io'),
+
+  /*
+    Important note: The namespace is an implementation detail of the Socket.IO protocol...
+    http://socket.io/docs/rooms-and-namespaces/#custom-namespaces
+  */
+  namespace: 'chat',
 
   didInsertElement() {
     this._super(...arguments);
 
     /*
-      2. The next step you need to do is to create your actual websocket. Calling socketFor
-      will retrieve a cached websocket if one exists or in this case it
-      will create a new one for us.
+      2. The next step you need to do is to create your actual socketIO.
     */
-    const socket = this.get('websockets').socketFor('wss://localhost:8799/');
+    const socket = this.get('socketIOService').socketFor('http://localhost:7000/' + this.get('namespace'));
 
     /*
-      3. The next step is to define your event handlers. All event handlers
-      are added via the `on` method and take 3 arguments: event name, callback
-      function, and the context in which to invoke the callback. All 3 arguments
-      are required.
+    * 3. Define any event handlers
     */
-    socket.on('open', this.myOpenHandler, this);
-    socket.on('message', this.myMessageHandler, this);
-    socket.on('close', this.myCloseHandler, this);
+    socket.on('connect', this.onConnect, this);
+    socket.on('message', this.onMessage, this);
 
-    this.set('socketRef', socket);
+    /*
+      4. It is also possible to set event handlers on specific events
+    */
+    socket.on('myCustomEvent', () => { socket.emit('anotherCustomEvent', 'some data'); });
+  },
+
+  onConnect() {
+    const socket = this.get('socketIOService').socketFor('http://localhost:7000/' + this.get('namespace'));
+
+    /*
+      There are 2 ways to send messages to the server: send and emit
+    */
+    socket.send('Hello World');
+    socket.emit('Hello server');
+  },
+
+  onMessage(data) {
+    // This is executed within the ember run loop
+  },
+
+  myCustomEvent(data) {
+    const socket = this.get('socketIOService').socketFor('http://localhost:7000/' + this.get('namespace'));
+    socket.emit('anotherCustomEvent', 'some data');
   },
 
   willDestroyElement() {
     this._super(...arguments);
 
-    const socket = this.get('socketRef');
-
-    /*
-      4. The final step is to remove all of the listeners you have setup.
-    */
-    socket.off('open', this.myOpenHandler);
-    socket.off('message', this.myMessageHandler);
-    socket.off('close', this.myCloseHandler);
-  },
-
-  myOpenHandler(event) {
-    console.log(`On open event has been called: ${event}`);
-  },
-
-  myMessageHandler(event) {
-    console.log(`Message: ${event.data}`);
-  },
-
-  myCloseHandler(event) {
-    console.log(`On close event has been called: ${event}`);
-  },
-
-  // actions: {
-  //   sendButtonPressed() {
-  //     const socket = this.get('socketRef');
-  //     socket.send('Hello Websocket World');
-  //   }
-  // }
-
+    const socket = this.get('socketService').socketFor('http://localhost:7000/' + this.get('namespace'));
+    socket.off('connect', this.onConnect);
+    socket.off('message', this.onMessage);
+    socket.off('myCustomEvent', this.myCustomEvent);
+  }
 });

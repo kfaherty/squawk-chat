@@ -1,21 +1,26 @@
 var request = require('request');
 var express = require('express');
 var Promise  = require('promise');
+var PG = require('./pg.js');
 var bodyParser = require('body-parser');
 var uuid = require('uuid');
 var CryptoJS = require('crypto-js');
 var cookie = require('cookie');
+var chatModule=require("./chat");
 
-var port = 5000;
+var postgres = new PG();
+var port = 7000;
 
 start( port );
 
 function start( port ){
     var app = express();
     var http = require('http').Server(app);
-    var io = require('socket.io')(http);
+    var socketio = require('socket.io')(http);
     var ss = require('socket.io-stream');
-    io.set('transports', ['websocket', 'polling']);
+    socketio.set('transports', ['websocket', 'polling']);
+    var io = socketio.of('/chat');
+
 
     console.log('This process is pid', process.pid );
 
@@ -24,15 +29,23 @@ function start( port ){
     app.enable('trust proxy');
 
     /*   ==================================================
+    /    ================== Init Modules ==================
+    /    ==================================================
+    */
+
+    var useRealChatModule=true;
+    var chatIsReady = chatModule.init(io,postgres,useRealChatModule);
+
+    /*   ==================================================
     /    ============== webhooks & callbacks ==============
     /    ==================================================
     */
 
-    // var createToken = function(){ // moved to pg
-    //     //create a unique token
-    //     var uniqueToken=uuid.v1();
-    //     return uniqueToken;
-    // }
+    var createToken = function(){ // moved to pg
+        //create a unique token
+        var uniqueToken=uuid.v1();
+        return uniqueToken;
+    }
 
     var serveFile = function(filename,contentType){
         return function(req,res){
@@ -98,6 +111,14 @@ function start( port ){
             } else {
                 createSessionToken();
             }
+
+
+
+            // FIXME: move this auth stuff to authority service.
+            chatIsReady.then(function(chat){
+                console.log("registering with chatModule");
+                chat.socketConnected(userData,socket);
+            }).catch(console.log.bind(console,"chatIsReady fail"));
         }
         
         checkToken();
