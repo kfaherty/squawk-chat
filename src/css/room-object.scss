@@ -1,0 +1,108 @@
+.room-object {
+	width: 300px;
+	height: 136px;
+	// border: 1px solid;
+	border-radius: 5px;
+	margin: 20px;
+	background: white;
+	position: relative;
+	border: 1px solid #E5EBE9;
+	cursor: pointer;
+	
+	&.selected {
+		background: #1cd67c;
+		border: 1px solid #1cd67c;
+
+		box-shadow: 0px 0px 14px #ccc;
+		.user-icon-contain {
+			.user-icon {
+				color: #53E09C;
+		    	-webkit-text-stroke: 1px #D2f7e5;
+			}
+		}
+		.details-contain {
+			.user-name,.snippet,.message-type {
+				color: #f0fbf3;
+			}
+		}
+		.timestamp {
+			color: #f0fbf3;
+		}
+	}
+	.avatar-contain {
+		position: absolute;
+		left: 18px;
+		top: 18px;
+		width: 30px;
+		height: 30px;
+		border-radius: 30px;
+		background: black;
+    	box-shadow: 0px 0px 14px rgba(0, 0, 0, .3);
+	}
+	.user-icon-contain {
+		position: absolute;
+		left: 18px;
+	    top: 63px;
+	    text-align: center;
+		width: 30px;
+		height: 30px;
+		.user-icon {
+		    padding-bottom: 12px;
+			color: #FAFBFB;
+		    -webkit-text-stroke: 1px #e9edeb;
+			// text-shadow:
+			//    -1px -1px 0 #e9edeb,  
+			//     1px -1px 0 #e9edeb,
+			//     -1px 1px 0 #e9edeb,
+			//      1px 1px 0 #e9edeb;
+			&.active {
+				color: #FFC655;
+			    -webkit-text-stroke: 1px #edba54;
+
+				// text-shadow:
+				//    -1px -1px 0 #edba54,  
+				//     1px -1px 0 #edba54,
+				//     -1px 1px 0 #edba54,
+				//      1px 1px 0 #edba54;
+			}
+		}
+		// border-radius: 30px;
+		// background: black;
+	}
+	.details-contain {
+		position: relative;
+		left: 60px;
+		top: 20px;
+		font-size: 13px;
+	    width: calc( 100% - 80px );
+
+		.user-name{
+			color: #1cd67c;
+			font-weight: 600;
+		}
+		.message-type{
+			padding-top: 9px;
+			font-weight: 600;
+			color: #6A6F6C;
+		    white-space: nowrap;
+			overflow: hidden;
+    		text-overflow: ellipsis; // we need to do this with js i think
+		}
+		.snippet {
+			padding-top: 4px;
+		    color: #A6B2AD;
+		    line-height: 22px;
+		    height: 65px;
+    		overflow: hidden;
+    		text-overflow: ellipsis; // we need to do this with js i think
+		}
+	}	
+	.timestamp {
+		position: absolute;
+		top: 20px;
+		right: 20px;
+		text-align: right;
+		font-size: 13px;
+	    color: #A6B2AD;
+	}
+}
