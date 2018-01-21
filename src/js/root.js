@@ -34,28 +34,28 @@ class Root extends Component {
 						<p>Disconnected from data</p>
 					</div>
 
-			        <div class="logo-contain">
+			        <div className="logo-contain">
 			            SquawkChat
 			        </div>
-			        <nav class="text-buttons-contain">
-			            <span class="text-button active">Messages</span>
-			            <span class="text-button">Channels</span>
-			            <span class="text-button">Friends</span>
-			            <span class="text-button">Find User</span>
+			        <nav className="text-buttons-contain">
+			            <span className="text-button active">Messages</span>
+			            <span className="text-button">Channels</span>
+			            <span className="text-button">Friends</span>
+			            <span className="text-button">Find User</span>
 			        </nav>
-			        <div class="logged-in-user-contain">
-			            <div class="user-name">User Name</div>
-			            <div class="arrow"></div>
-			            <div class="avatar"></div>
+			        <div className="logged-in-user-contain">
+			            <div className="user-name">User Name</div>
+			            <div className="arrow"></div>
+			            <div className="avatar"></div>
 			        </div>
-			        <div class="controls-contain">
-			            <div class="arrow right"></div>
+			        <div className="controls-contain">
+			            <div className="arrow right"></div>
 			        </div>
 			    </div>
 
 				<div className="app-contain">
 					<RoomList />
-					<Chat />
+					<Chat selectedChat="true" />
 				</div>
 			</div>
         );
