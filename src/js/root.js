@@ -11,6 +11,7 @@ class Root extends Component {
     	super(props);
     	this.state = {
 	    	selectedTab: 'timeline',
+	    	selectedChat: null,
 	    	userData: null,
 	    	connected: true,
 	    };
@@ -19,7 +20,7 @@ class Root extends Component {
     componentWillMount() {
 	  //   gotTwitterLoginPromise().then((data) => {
 			this.setState({
-				userData: true
+				userData: false
 			});
 	  //   });
     }
@@ -29,7 +30,7 @@ class Root extends Component {
 			<div className="app-wrapper">
 				<Authorize visible={this.state.userData} />
 
-			    <div class="top-bar">
+			    <div className="top-bar">
 			    	<div className={"potential-problem " + (this.state.connected ? "" : "visible")}>
 						<p>Disconnected from data</p>
 					</div>
@@ -54,8 +55,12 @@ class Root extends Component {
 			    </div>
 
 				<div className="app-contain">
-					<RoomList />
-					<Chat selectedChat="true" />
+					<RoomList
+						// ok
+					/>
+					<Chat 
+						selectedChat={this.state.selectedChat} 
+					/>
 				</div>
 			</div>
         );

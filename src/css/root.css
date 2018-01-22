@@ -753,14 +753,14 @@ button {
   color: #b1b1b1;
   transform: scale(1, 1); }
   button:hover, button:active {
-    border: 1px solid #F44336;
+    border: 1px solid #1CDC7F;
     color: #fff; }
     button:hover::before, button:active::before {
       transform: scale(1, 1);
-      background: #F44336; }
+      background: #1CDC7F; }
   button.selected::before {
     transform: scale(1, 1);
-    background: #F44336; }
+    background: #1CDC7F; }
   button::before {
     position: absolute;
     content: '';
@@ -780,16 +780,15 @@ button {
   position: absolute;
   color: #b1b1b1;
   font-size: 10px;
-  text-transform: uppercase;
   padding: 4px 10px;
   top: 0px;
-  transform: translate(0px, 0px);
+  transform: translate(0px, -11px);
   transition: all 0.3s ease;
   pointer-events: none;
   opacity: 50%; }
   .input-label.full {
     font-size: 14px;
-    transform: translate(0px, 11px); }
+    transform: translate(0px, 3px); }
 
 input, textarea {
   -moz-appearance: textfield !important;
@@ -812,14 +811,9 @@ input, textarea {
     outline-color: transparent;
     outline-style: none; }
   input.error, textarea.error {
-    background: #F44336; }
+    border: 1px solid #F44336; }
   input::-webkit-inner-spin-button, input::-webkit-outer-spin-button, textarea::-webkit-inner-spin-button, textarea::-webkit-outer-spin-button {
     -webkit-appearance: none !important; }
-
-.input-form-contain {
-  position: relative;
-  border-bottom: 1px solid #b1b1b1;
-  margin: 10px 0px; }
 
 .app-views-contain {
   position: absolute;
@@ -882,13 +876,14 @@ input, textarea {
   transition: opacity 0.3s ease; }
   .authorize-contain.visible {
     pointer-events: initial;
-    opacity: 1; }
+    opacity: 1;
+    z-index: 99; }
 
 .authorize-background {
   position: absolute;
   width: 100vw;
   height: 100vh;
-  background: #464646;
+  background: #EDF0EF;
   z-index: 98; }
 
 .authorize-modal {
@@ -901,15 +896,39 @@ input, textarea {
   max-width: 420px;
   min-height: 250px;
   height: auto;
-  background: #464646;
+  background: white;
   border-radius: 5px;
-  color: #b1b1b1; }
+  color: #6A6F6C;
+  box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.1); }
   .authorize-modal button {
     margin-bottom: 30px; }
-  .authorize-modal p {
-    padding: 20px;
-    line-height: 20px;
-    text-align: center; }
+  .authorize-modal .input-label {
+    position: absolute;
+    top: 19px;
+    left: 21px;
+    box-sizing: border-box;
+    pointer-events: none; }
+    .authorize-modal .input-label div, .authorize-modal .input-label span {
+      display: inline-block; }
+    .authorize-modal .input-label .icon {
+      color: #9EA6A2;
+      font-size: 14px;
+      padding-top: 4px; }
+    .authorize-modal .input-label span {
+      color: #D6DBD9;
+      font-size: 12px;
+      padding-left: 5px; }
+  .authorize-modal input {
+    color: #6A6F6C;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 100%;
+    border: none;
+    font-family: 'Verlag', sans-serif;
+    font-size: 12px;
+    background: transparent;
+    outline: none;
+    padding: 10px 20px 10px 40px; }
 
 .logo-row {
   color: #1CDC7F;
@@ -954,14 +973,16 @@ input, textarea {
       pointer-events: none; }
       .room-list-contain .search .label div, .room-list-contain .search .label span {
         display: inline-block; }
-      .room-list-contain .search .label .fi-magnifying-glass {
+      .room-list-contain .search .label .icon {
         color: #9EA6A2;
-        font-size: 14px; }
+        font-size: 14px;
+        padding-top: 4px; }
       .room-list-contain .search .label span {
         color: #D6DBD9;
         font-size: 12px;
         padding-left: 5px; }
     .room-list-contain .search input {
+      color: #89908C;
       z-index: 3;
       box-sizing: border-box;
       width: 100%;
@@ -970,7 +991,7 @@ input, textarea {
       font-size: 12px;
       background: transparent;
       outline: none;
-      padding: 10px 20px 10px 40px; }
+      padding: 10px 20px 10px 37px; }
   .room-list-contain .sort {
     text-align: right;
     padding: 0px 20px; }
@@ -1211,7 +1232,7 @@ input, textarea {
   left: calc( 50% - 100px);
   text-align: center;
   color: #6A6F6C;
-  z-index: 99;
+  z-index: 97;
   display: flex;
   vertical-align: center;
   align-items: center;

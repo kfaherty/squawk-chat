@@ -1,33 +1,55 @@
 
 import React, { Component } from 'react';
-import { RelativeTime } from './common';
+import { StandardInput,RelativeTime } from './common';
 import { RoomObject } from './roomobject';
 
 class RoomList extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            sortType: 'Newest First'
+            sortType: 'Newest First',
+            selectedChat: null
         };
     }
     render() {
-        const testuser = {
-            name: 'cool coolname',
-            bookmark: false,
-            friend:true,
-            userStatus: "busy",
-            statusMessage: 'okokokok',
-            snippet: 'alright, thats cool',
-            relativeTime: '11:45'
-        }
+        const testuser = [
+            {
+              name: 'Cool Coolname',
+              relativeTime: '11:45 pm',
+              status: 0,
+              userStatus: "Offline",
+              statusMessage: null,
+              friend: true,
+              snippet: 'Hey dude Hope you are fine lorem ipsum Dolor sit amet, consectetur adipiscing elit, sed do magnaet ifsa nidsian kgskhg idshgi ingskngls klngds'
+            },
+            {
+              name: 'Cool Coolname',
+              relativeTime: '11:45 pm',
+              status: 1,
+              userStatus: "Online",
+              statusMessage: 'Yo, just got home wow this is a long status',
+              friend: false,
+              bookmark: true,
+              selected: true,
+              snippet: 'Hey dude Hope you are fine lorem ipsum Dolor sit amet, consectetur adipiscing elit, sed do magnaet ifsa nidsian kgskhg idshgi ingskngls klngds'
+            },
+            {
+              name: 'Cool Coolname',
+              relativeTime: '11:45 pm',
+              status: 2,
+              userStatus: "Busy",
+              statusMessage: null,
+              friend: false,
+              snippet: 'Hey dude Hope you are fine lorem ipsum Dolor sit amet, consectetur adipiscing elit, sed do magnaet ifsa nidsian kgskhg idshgi ingskngls klngds'
+            }
+        ];
         return (
             <div className="room-list-contain">
                 <div className="search">
-                	<div className="label">
-                		<div className="fi-magnifying-glass"></div>
-                    	<span>Search</span>
-                    </div>
-                    <input type="text" name="search" />
+                    <StandardInput 
+                        iconClass="fi-magnifying-glass"
+                        inputName='Search' 
+                    />
                 </div>
                 <div className="sort" >
                     <div className="label">Sort: {this.state.sortType}</div>
@@ -40,9 +62,12 @@ class RoomList extends Component {
                     <div className="list-item"><div className="list-icon fi-filter"></div>Type</div>
                 </div>
                 <div className="room-list">
-                        { // TODO: this needs data & map
-                        }
-                    <RoomObject user={testuser}/>
+                    {testuser.map((obj) => {
+                        obj.selected = ( obj.id === this.state.selectedChat ? 'selected' : '' );
+                        return (
+                            <RoomObject user={obj}/>
+                        )
+                    })}   
                 </div>
             </div>
         );

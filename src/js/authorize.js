@@ -4,25 +4,12 @@ import {StandardInput} from './common';
 
 
 class Authorize extends Component {
-	constructor(props) {
-		super(props)
-		this.state = {
-			modalVisible: true,
-		}
-	}
-    componentWillMount() {
-	  //   gotTwitterLoginPromise().then((data) => {
-			this.setState({
-				modalVisible: false
-			});
-	  //   });
-    }
 	handleClick() {
 
 	}
 	render() {
 		return (
-			<div className={"authorize-contain " + (this.state.modalVisible ? "visible" : "" )}>
+			<div className={"authorize-contain " + (this.props.visible ? "visible" : "" )}>
 				<div className="authorize-background"></div>
 				<div className="authorize-modal">
 					<div className="logo-row">

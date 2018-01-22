@@ -127,7 +127,10 @@ class StandardInput extends Component {
 	render() {
 		return (
 			<div className="input-form-contain">
-				<span className={"input-label " + (this.state.searchTerm ? "" : "full" )}>{this.props.inputName}</span>
+				<div className="label">
+					{this.props.iconClass && (<div className={"icon "+this.props.iconClass}></div>)}
+					<span className={"input-label " + (this.state.searchTerm ? "" : "full" )}>{this.props.inputName}</span>
+				</div>
 				<input type={this.props.type || "text"} value={this.state.searchTerm} onChange={(event) => this.handleChange(event)} />
 			</div>
 		);

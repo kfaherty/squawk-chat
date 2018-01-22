@@ -14,12 +14,9 @@ function ChatMessage(props){
 }
 
 class Chat extends Component {
-	constructor(props) {
-    	super(props);
-    	this.state = {
-	    	selectedChat: true
-	    };
-	}
+	// constructor(props) {
+ //    	super(props);
+	// }
    	render() {
    		const chat = {title: 'Cool Coolname',
 		subtitle: 'Online: Yo, just got home wow this is a long status',
@@ -139,7 +136,7 @@ class Chat extends Component {
 
 							<div className="messages-contain">
 								{chat.messages.map((obj) => {
-									obj.selected = ( obj.id_str === this.state.selectedTweet ? 'selected' : '' );
+									obj.selected = ( obj.id_str === this.props.selectedChat ? 'selected' : '' );
 									return (
 									  <ChatMessage 
 									    key={obj.id_str}

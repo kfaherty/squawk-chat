@@ -753,14 +753,14 @@ button {
   color: #b1b1b1;
   transform: scale(1, 1); }
   button:hover, button:active {
-    border: 1px solid #F44336;
+    border: 1px solid #1CDC7F;
     color: #fff; }
     button:hover::before, button:active::before {
       transform: scale(1, 1);
-      background: #F44336; }
+      background: #1CDC7F; }
   button.selected::before {
     transform: scale(1, 1);
-    background: #F44336; }
+    background: #1CDC7F; }
   button::before {
     position: absolute;
     content: '';
@@ -780,16 +780,15 @@ button {
   position: absolute;
   color: #b1b1b1;
   font-size: 10px;
-  text-transform: uppercase;
   padding: 4px 10px;
   top: 0px;
-  transform: translate(0px, 0px);
+  transform: translate(0px, -11px);
   transition: all 0.3s ease;
   pointer-events: none;
   opacity: 50%; }
   .input-label.full {
     font-size: 14px;
-    transform: translate(0px, 11px); }
+    transform: translate(0px, 3px); }
 
 input, textarea {
   -moz-appearance: textfield !important;
@@ -812,14 +811,9 @@ input, textarea {
     outline-color: transparent;
     outline-style: none; }
   input.error, textarea.error {
-    background: #F44336; }
+    border: 1px solid #F44336; }
   input::-webkit-inner-spin-button, input::-webkit-outer-spin-button, textarea::-webkit-inner-spin-button, textarea::-webkit-outer-spin-button {
     -webkit-appearance: none !important; }
-
-.input-form-contain {
-  position: relative;
-  border-bottom: 1px solid #b1b1b1;
-  margin: 10px 0px; }
 
 .app-views-contain {
   position: absolute;

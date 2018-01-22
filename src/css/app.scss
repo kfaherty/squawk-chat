@@ -316,19 +316,19 @@ button {
     transform: scale(1, 1);
     
     &:hover, &:active {
-        border: 1px solid $red;
+        border: 1px solid #1CDC7F;
         // background: $red;
         color: $white;
 
         &::before{
             transform:scale(1,1);
-            background:$red;
+            background:#1CDC7F;
         }
     }
     &.selected {
         &::before{
             transform:scale(1,1);
-            background:$red;
+            background:#1CDC7F;
         }   
     }
     &::before{
@@ -356,16 +356,16 @@ button {
     position: absolute;
     color: $darkestwhite;
     font-size: 10px;
-    text-transform: uppercase;
+    // text-transform: uppercase;
     padding: 4px 10px;
     top: 0px;
-    transform: translate(0px,0px);
+    transform: translate(0px,-11px);
     transition: all 0.3s ease;
     pointer-events: none;
     opacity: 50%;
     &.full {
         font-size: 14px;
-        transform: translate(0px, 11px);
+        transform: translate(0px, 3px);
     }
 }
 
@@ -396,21 +396,13 @@ input,textarea {
         outline-style: none;
     }
     &.error {
-        background: $red;
-        // border: 1px solid $red;
+        // background: $red;
+        border: 1px solid $red;
     }
     &::-webkit-inner-spin-button, &::-webkit-outer-spin-button {
         -webkit-appearance: none !important;
     }
 }
-.input-form-contain {
-    position: relative;
-    // background: $white;
-    // border-radius: 5px;
-    border-bottom: 1px solid $darkestwhite;
-    margin: 10px 0px;
-}
-
 
 .app-views-contain {
     position: absolute;

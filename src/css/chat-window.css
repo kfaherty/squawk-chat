@@ -118,7 +118,7 @@
   left: calc( 50% - 100px);
   text-align: center;
   color: #6A6F6C;
-  z-index: 99;
+  z-index: 97;
   display: flex;
   vertical-align: center;
   align-items: center;
