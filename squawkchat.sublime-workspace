@@ -4,6 +4,98 @@
 		"selected_items":
 		[
 			[
+				"log",
+				"loginPromiseResolve"
+			],
+			[
+				"re",
+				"return"
+			],
+			[
+				"ret",
+				"return"
+			],
+			[
+				"res",
+				"resolve"
+			],
+			[
+				"padd",
+				"padding-top"
+			],
+			[
+				"logg",
+				"logged_in"
+			],
+			[
+				"charac",
+				"characterlist"
+			],
+			[
+				"strin",
+				"stringify"
+			],
+			[
+				"user",
+				"userData"
+			],
+			[
+				"va",
+				"value"
+			],
+			[
+				"handl",
+				"handleFieldChange"
+			],
+			[
+				"pa",
+				"passwordhaserror"
+			],
+			[
+				"usern",
+				"usernamehaserror"
+			],
+			[
+				"val",
+				"validated"
+			],
+			[
+				"on",
+				"onChange"
+			],
+			[
+				"hand",
+				"handleFieldChange"
+			],
+			[
+				"sock",
+				"socket"
+			],
+			[
+				"socket",
+				"socketurl"
+			],
+			[
+				"select",
+				"selectedChat"
+			],
+			[
+				"sel",
+				"selectedChat"
+			],
+			[
+				"C",
+				"ChatMessage"
+			],
+			[
+				"messag",
+				"messages"
+			],
+			[
+				"sor",
+				"sortType"
+			],
+			[
 				"font",
 				"font"
 			],
@@ -14,10 +106,6 @@
 			[
 				"t",
 				"top"
-			],
-			[
-				"pa",
-				"padding-top"
 			],
 			[
 				"pad",
@@ -46,10 +134,6 @@
 			[
 				"tex",
 				"text-align"
-			],
-			[
-				"padd",
-				"padding-right"
 			],
 			[
 				"te",
@@ -100,14 +184,6 @@
 				"_blank"
 			],
 			[
-				"on",
-				"onClick"
-			],
-			[
-				"hand",
-				"handleMenuToggle"
-			],
-			[
 				"inlin",
 				"inline-block"
 			],
@@ -142,10 +218,6 @@
 			[
 				"Us",
 				"UserInfo"
-			],
-			[
-				"sel",
-				"selectedUser"
 			],
 			[
 				"margin",
@@ -216,16 +288,8 @@
 				"id_str"
 			],
 			[
-				"user",
-				"userMap"
-			],
-			[
 				"err",
 				"error"
-			],
-			[
-				"res",
-				"response"
 			],
 			[
 				"r",
@@ -284,10 +348,6 @@
 				"checkToken"
 			],
 			[
-				"re",
-				"reject"
-			],
-			[
 				"autho",
 				"authorize-modal"
 			],
@@ -318,10 +378,6 @@
 			[
 				"vid",
 				"video_info"
-			],
-			[
-				"ret",
-				"return"
 			],
 			[
 				"li",
@@ -458,35 +514,43 @@
 			[
 				"imag",
 				"imageTemplate"
-			],
-			[
-				"ch",
-				"check"
-			],
-			[
-				"fun",
-				"function"
-			],
-			[
-				"product",
-				"product-selector"
 			]
 		]
 	},
 	"buffers":
 	[
 		{
+			"file": "src/js/authorize.js",
 			"settings":
 			{
-				"buffer_size": 0,
+				"buffer_size": 2689,
+				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "src/js/authorize.js",
+			"file": "src/js/root.js",
 			"settings":
 			{
-				"buffer_size": 937,
+				"buffer_size": 1802,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/css/auth.scss",
+			"settings":
+			{
+				"buffer_size": 3177,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/js/api2.js",
+			"settings":
+			{
+				"buffer_size": 2875,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -558,11 +622,41 @@
 	"expanded_folders":
 	[
 		"/C/Users/user/Documents/squawk-chat/src/js",
-		"/C/Users/user/Documents/squawk-chat/old/app",
-		"/C/Users/user/Documents/squawk-chat/old/app/components"
+		"/C/Users/user/Documents/squawk-chat/src/css"
 	],
 	"file_history":
 	[
+		"/C/Users/user/Documents/squawk-chat/src/css/root.css",
+		"/C/Users/user/Documents/squawk-chat/src/js/common.js",
+		"/C/Users/user/Documents/squawk-chat/src/css/auth.scss",
+		"/C/Users/user/Documents/squawk-chat/src/js/root.js",
+		"/C/Users/user/Documents/squawk-chat/src/js/roomlist.js",
+		"/C/Users/user/Documents/squawk-chat/src/js/roomobject.js",
+		"/C/Users/user/Documents/squawk-chat/src/js/api2.js",
+		"/C/Users/user/Documents/squawk-chat/src/css/chat-window.scss",
+		"/C/Users/user/Documents/squawk-chat/src/js/chat.js",
+		"/C/Users/user/Documents/squawk-chat/src/css/room-list.scss",
+		"/C/Users/user/Documents/squawk-chat/src/css/app.scss",
+		"/C/Users/user/Documents/squawk-chat/src/js/socketconfig.js",
+		"/C/Users/user/Documents/squawk-chat/src/js/api.js",
+		"/C/Users/user/Documents/squawk-chat/src/js/authorize.js",
+		"/C/Users/user/Documents/squawk-chat/src/js/root.test.js",
+		"/C/Users/user/Documents/riskbone/ogogoro/front-end/public/js/app/ogogoro.js",
+		"/C/Users/user/Documents/squawk-chat/src/js/fapi.js",
+		"/C/Users/user/Documents/tweets-react/src/js/api.js",
+		"/C/Users/user/Documents/squawk-chat/old/app/components/user-list.js",
+		"/C/Users/user/Documents/tweets-react/src/js/timeline.js",
+		"/C/Users/user/Documents/squawk-chat/src/css/root.scss",
+		"/C/Users/user/Documents/squawk-chat/old/app/components/chat-window.js",
+		"/C/Users/user/Documents/squawk-chat/old/app/templates/components/chat-window.hbs",
+		"/C/Users/user/Documents/tweets-react/src/js/common.js",
+		"/C/Users/user/Documents/squawk-chat/old/app/templates/components/chat-message.hbs",
+		"/C/Users/user/Documents/squawk-chat/src/css/room-object.scss",
+		"/C/Users/user/Documents/react-doctor-patient/src/css/auth.scss",
+		"/C/Users/user/Documents/react-doctor-patient/src/css/auth.css",
+		"/C/Users/user/Documents/squawk-chat/src/css/layout.scss",
+		"/C/Users/user/Documents/squawk-chat/old/app/styles/variables.scss",
+		"/C/Users/user/Documents/squawk-chat/old/app/styles/app.scss",
 		"/C/Users/user/Documents/squawk-chat/public/index.html",
 		"/C/Users/user/Documents/riskbone/front-end/public/css/commonstyles.css",
 		"/C/Users/user/Documents/react-doctor-patient/src/index.js",
@@ -600,7 +694,6 @@
 		"/C/Users/user/Documents/tweets-react/src/css/app.scss",
 		"/C/Users/user/Documents/tweets-react/src/js/tweet.js",
 		"/C/Users/user/Documents/tweets-react/src/js/root.js",
-		"/C/Users/user/Documents/tweets-react/src/js/common.js",
 		"/C/Users/user/Downloads/frontend_redshelf_challenge/frontend_platform_interview-master/app/templates/components/shrinking-box.hbs",
 		"/C/Users/user/Downloads/frontend_redshelf_challenge/frontend_platform_interview-master/app/templates/html-css-exercise.hbs",
 		"/C/Users/user/Downloads/frontend_redshelf_challenge/frontend_platform_interview-master/app/routes/html-css-exercise.js",
@@ -660,37 +753,7 @@
 		"/C/Users/user/Documents/squawk-chat/tmp/funnel-input_base_path-C8Xzj2ZA.tmp/index.html",
 		"/C/Users/user/Documents/squawk-chat/tmp/funnel-input_base_path-H6k6EUeP.tmp/index.html",
 		"/C/Users/user/Documents/squawk-chat/tmp/funnel-input_base_path-UkH79O6c.tmp/index.html",
-		"/C/Users/user/Documents/squawk-chat/tmp/funnel-input_base_path-ul7MtAcg.tmp/index.html",
-		"/C/Users/user/Documents/squawk-chat/tmp/funnel-input_base_path-zOE6ioXr.tmp/index.html",
-		"/C/Users/user/Documents/squawk-chat/tmp/funnel-output_path-6QO5txnR.tmp/squawk-chat/index.html",
-		"/C/Users/user/Documents/squawk-chat/tmp/funnel-output_path-AdlzWfsp.tmp/squawk-chat/tests/index.html",
-		"/C/Users/user/Documents/squawk-chat/tmp/funnel-output_path-inZITclc.tmp/index.html",
-		"/C/Users/user/Documents/squawk-chat/tmp/funnel-output_path-OlDw12rk.tmp/tests/index.html",
-		"/C/Users/user/Documents/squawk-chat/tmp/funnel-output_path-yRq1uaxB.tmp/index.html",
-		"/C/Users/user/Documents/squawk-chat/tmp/simple_concat_concat-input_base_path-F6Jj9OQS.tmp/index.html",
-		"/C/Users/user/Documents/squawk-chat/tmp/simple_concat_concat-input_base_path-Yhlw5tfB.tmp/index.html",
-		"/C/Users/user/Documents/squawk-chat/tmp/source_map_concat-input_base_path-ieKpRcGj.tmp/squawk-chat/index.html",
-		"/C/Users/user/Documents/squawk-chat/tmp/source_map_concat-input_base_path-YVRLiE6c.tmp/squawk-chat/index.html",
-		"/C/Users/user/Documents/squawk-chat/app/routes/coding-exercise.js",
-		"/C/Users/user/Documents/squawk-chat/dist/assets/rs-fed-interview.css",
-		"/C/Users/user/Documents/squawk-chat/dist/assets/rs-fed-interview.css.map",
-		"/C/Users/user/Documents/squawk-chat/dist/assets/rs-fed-interview.js",
-		"/C/Users/user/Documents/squawk-chat/dist/assets/rs-fed-interview.map",
-		"/C/Users/user/Documents/squawk-chat/dist/assets/tests.js",
-		"/C/Users/user/Documents/squawk-chat/dist/assets/tests.map",
-		"/C/Users/user/Documents/squawk-chat/dist/assets/vendor.js",
-		"/C/Users/user/Documents/squawk-chat/dist/assets/vendor.map",
-		"/C/Users/user/Documents/squawk-chat/testem.js",
-		"/C/Users/user/Documents/squawk-chat/public/crossdomain.xml",
-		"/C/Users/user/Documents/squawk-chat/node-backend/pg.js",
-		"/C/Users/user/Documents/squawk-chat/node-backend/index.js",
-		"/C/Users/user/Documents/squawk-chat/app/resolver.js",
-		"/C/Users/user/Documents/squawk-chat/.eslintrc.js",
-		"/C/Users/user/Documents/squawk-chat/bower.json",
-		"/C/Users/user/Documents/squawk-chat/ember-cli-build.js",
-		"/C/Users/user/Documents/riskbone/back-end/devpg.json",
-		"/C/Users/user/Documents/squawk-chat/node-backend/auth.js",
-		"/C/Users/user/Documents/squawk-chat/node-backend/package.json"
+		"/C/Users/user/Documents/squawk-chat/tmp/funnel-input_base_path-ul7MtAcg.tmp/index.html"
 	],
 	"find":
 	{
@@ -709,6 +772,12 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"translateX",
+			".bind(this)",
+			"./api",
+			"red",
+			".input-form-contain",
+			"class",
 			"button-scale",
 			"updatesearh",
 			"widget",
@@ -808,6 +877,7 @@
 		"regex": false,
 		"replace_history":
 		[
+			"className",
 			"Squawk Chat",
 			"squawk-chat",
 			"900ms",
@@ -834,46 +904,48 @@
 			[
 				{
 					"buffer": 0,
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 0,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
 					"file": "src/js/authorize.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 937,
+						"buffer_size": 2689,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								619,
-								619
+								1333,
+								1333
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Babel/JavaScript (Babel).sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 42.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "src/js/root.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1802,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								536,
+								536
 							]
 						],
 						"settings":
@@ -886,6 +958,65 @@
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "src/css/auth.scss",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3177,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2161,
+								2161
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/SCSS/SCSS.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 882.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "src/js/api2.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2875,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								356,
+								356
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Babel/JavaScript (Babel).sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
 					"type": "text"
 				}
 			]

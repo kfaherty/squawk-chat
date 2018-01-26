@@ -116,22 +116,25 @@ class StandardInput extends Component {
 	constructor(props) {
     	super(props);
     	this.state = {
-    		searchTerm: '',
+    		inputValue: '',
     	};
     }
 	handleChange(event) {
 		this.setState({
-			searchTerm: event.target.value,
+			inputValue: event.target.value,
 		});
+		if (this.props.onChange) {
+			this.props.onChange(this.props.inputName,event.target.value);
+		}
   	}
 	render() {
 		return (
 			<div className="input-form-contain">
 				<div className="label">
 					{this.props.iconClass && (<div className={"icon "+this.props.iconClass}></div>)}
-					<span className={"input-label " + (this.state.searchTerm ? "" : "full" )}>{this.props.inputName}</span>
+					<span className={"input-label " + (this.state.inputValue ? "" : "full" )}>{this.props.inputName}</span>
 				</div>
-				<input type={this.props.type || "text"} value={this.state.searchTerm} onChange={(event) => this.handleChange(event)} />
+				<input type={this.props.type || "text"} value={this.state.inputValue} onChange={(event) => this.handleChange(event)} />
 			</div>
 		);
 	}

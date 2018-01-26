@@ -4,25 +4,14 @@
 	// border: 1px solid;
 	background: #F7FAF9;
 	border-right: 1px solid #E5EBE9;
-	position: relative;
+    position: absolute;
+    top: 75px;
+    left: 0px;
+    display: none;
+    overflow: hidden;
 
- 	&.showSortMenu {
-        .sortMenu {
-	        -webkit-animation: animateMenu ease;
-	        animation: animateMenu ease;
-	        -webkit-animation-duration: 300ms;
-	        animation-duration: 300ms;
-	        opacity: 1;
-	        pointer-events: initial;
-	    }
-    }
-
-	&.hideSearchLabel{
-		.search .label {
-			span {
-				opacity: 0;
-			}
-		}
+	&.visible {
+		display: block;
 	}
 
 	.search {
@@ -115,4 +104,51 @@
             background: #F1F3F2;
         }
     }
+
+    &.visible{
+        -webkit-animation: animateMenu ease;
+        animation: animateMenu ease;
+        -webkit-animation-duration: 300ms;
+        animation-duration: 300ms;
+        opacity: 1;
+        pointer-events: initial;
+    }
+}
+.room-list {
+    overflow-y: scroll;
+    top: 20px;
+    position: relative;
+    height: calc( 100% - 99px);
+}
+.no-rooms {
+	// width: 200px;
+ //    height: 50px;
+ //    border-radius: 4px;
+    // background: white;
+    // position: absolute;
+    // top: calc( 50% - 50px);
+    // left: calc( 50% - 100px);
+    padding-top: 20px;
+    text-align: center;
+    color: #6A6F6C;
+    // z-index: 97;
+    display: -ms-flexbox;
+    display: flex;
+    vertical-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    opacity: 1;
+    -webkit-transition: opacity 0.3s ease;
+    -o-transition: opacity 0.3s ease;
+    transition: opacity 0.3s ease;
+    pointer-events: initial;
+    // -webkit-box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.1);
+    // box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.1);
+
+	&.hidden {
+		opacity: 0;
+		pointer-events: none;
+	}
 }

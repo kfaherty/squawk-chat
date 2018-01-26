@@ -1,0 +1,21 @@
+
+rooms - name, population, public/private
+rooms you're in - name, population, public/private, userlist, messages, motd
+
+message - name,gender,messagetext, timestamp, mine
+
+userlist - name, gender, status, moderator
+user - name, status, gender, statustext, icon
+
+profile - name, status, gender, statustext, icon, kinks, images, inlines, body
+
+
+datasources:
+messages tab - channels you're in
+
+chat window - current channel
+	user list pan - current user list
+	profile pane - profile
+
+channels tab - channels list
+friends tab - friends list
