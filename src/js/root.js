@@ -16,7 +16,9 @@ class Root extends Component {
 	    	connected: true,
 	    	loggedin: false,
 	    	friendslist: [],
-	    	roomslist: []
+	    	roomslist: [],
+	    	roomsjoined: [],
+	    	userMenuOpen: false
 	    };
 
 	    lostConnectionAlert((err,connected) => {
@@ -37,8 +39,20 @@ class Root extends Component {
 	    });
     }
 
+    updateJoinedRooms(data) { // callback
+    	// TODO
+    	// this function needs to get passed to api 
+    	// so when a channel gets added/removed to channelsJoined they sync
+    	this.setState({roomsjoined: data});
+    }
+
     setSelectedTab(value) {
     	switch(value) {
+    		// case 'messages':
+    		// 	// get current joined rooms? 
+    		// 	// no, this needs to be realtime..
+    		// 	// we can just associate a callback and then have that trigger.
+    		// 	break;
     		case 'channels':
     			getChannels().then((data) => {
     				this.setState({roomslist: data});
@@ -67,6 +81,10 @@ class Root extends Component {
     	this.setState({selectedChat: null});
     }
 
+    toggleUserMenu() {
+    	this.setState({userMenuOpen: !this.state.userMenuOpen});
+    }
+
 	render() {
 		return (
 			<div className="app-wrapper">
@@ -88,12 +106,16 @@ class Root extends Component {
 			            <span onClick={() => this.setSelectedTab('search')}   className={"text-button " + (this.state.selectedTab === 'search' ? "active" : "")}>Search Users</span>
 			        </nav>
 			        
-			        <div className="logged-in-user-contain">
+			        <div className="logged-in-user-contain" onClick={() => this.toggleUserMenu()}>
 			            <div className="user-name">{this.state.username}</div>
 			            <div className="arrow"></div>
 			            <div className="avatar"></div>
 			        </div>
-			    	{/* drop down here */}
+			        <div className={"dropdown " + (this.state.userMenuOpen ? "visible" : "")}>
+			        	<div className="list-item" onClick={() => this.changeSort('Alphabetical')}><div className="list-icon fi-pencil"></div>Set Status</div>
+			        	<div className="list-item" onClick={() => this.changeSort('Alphabetical')}><div className="list-icon fi-widget"></div>Settings</div>
+	                    <div className="list-item" onClick={() => this.changeSort('Alphabetical')}><div className="list-icon fi-lock"></div>Logout</div>
+	                </div>
 
 			        <div className="controls-contain">
 			            <div className="arrow right"></div>
@@ -103,6 +125,7 @@ class Root extends Component {
 				<div className="app-contain">
 					{/* MESSAGES */}
 					<RoomList
+						rooms={this.state.roomsjoined}
 						label="messages"
 						activeTab={(this.state.selectedTab === 'messages' ? true : false)}
 						setSelectedChat={this.setSelectedChat}

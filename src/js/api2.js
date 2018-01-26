@@ -18,7 +18,7 @@ var userData = {
 function loadCookie() {
 	return new Promise(function(resolve,reject) {
 		let cookiedata = cookies.getAll();
-		console.log(cookiedata);
+		// console.log(cookiedata);
 		if (cookiedata && cookiedata.ticket) {
 			userData = {
 				logged_in: true,
@@ -28,7 +28,7 @@ function loadCookie() {
 				bookmarks: cookiedata.bookmarks,
 				friends: cookiedata.friends
 			};
-			console.log(userData);
+			// console.log(userData);
 			resolve(userData.characterlist);
 		}
 	});
@@ -43,7 +43,7 @@ function login(username,password) {
 
 		var formData = new FormData();
 		formData.append('account', username);
-		formData.append('password', password);
+		formData.append('password', apiurls.password);
 		
 		fetch(apiurls.loginurl,{ 
 			method: 'POST',
@@ -59,17 +59,15 @@ function login(username,password) {
 			userData.logged_in = true;
 			userData.bookmarks = response.bookmarks;
 			userData.friends = response.friends;
+
 			let expires = new Date(Date.now() + 60 * 1000 * 30);
-		    
 		    cookies.set('account', userData.account, 				{ expires: expires, path: '/' });
 		    cookies.set('ticket', userData.ticket, 					{ expires: expires, path: '/' });
 		    cookies.set('characterlist', userData.characterlist, 	{ expires: expires, path: '/' });
 		    cookies.set('bookmarks', userData.bookmarks, 			{ expires: expires, path: '/' });
 		    cookies.set('friends', userData.friends, 				{ expires: expires, path: '/' });
+		    // console.log(cookies.getAll());
 
-		    // TODO: set the expiration date on the ticket.
-
-		    console.log(cookies.getAll());
 			resolve(userData.characterlist);
 		});
 	});
@@ -109,6 +107,13 @@ function lostConnectionAlert(cb) {
 }
 
 function getChannels(cb) {
+
+	// type:
+	// 0 is public
+	// 1 is private
+	// 2 is private invite only
+	// 3 is private pm
+
 	return new Promise(function(resolve,reject) {
 		if (channelsList.length) {
 			resolve(channelsList);
@@ -120,7 +125,7 @@ function getChannels(cb) {
 					if (data.channels) {
 						channelsList = data.channels.map((obj,index) => {
 							return {
-								public: true,
+								type: 0,
 								key: index,
 								...obj
 							}
@@ -205,7 +210,7 @@ function createSocket(name) {
 					break;
 				case 'ERR':
 					console.log(code,payload);
-					if (payload && payload.number == 4) {
+					if (payload && payload.number === 4) {
 						reject('invalid token');
 					}
 					break;

@@ -14,9 +14,18 @@ function ChatMessage(props){
 }
 
 class Chat extends Component {
-	// constructor(props) {
- //    	super(props);
-	// }
+	constructor(props) {
+    	super(props);
+
+    	this.state= {
+			chatMenuOpen: false,
+			favorited: this.props.favorited, // this is going to come from cookie.
+			ignored: this.props.ignored
+    	}
+	}
+    toggleChatMenu() {
+    	this.setState({chatMenuOpen: !this.state.chatMenuOpen});
+    }
    	render() {
    		const chat = this.props.chat || {messages:[]};
 		return (
@@ -32,17 +41,17 @@ class Chat extends Component {
 									<div className="chat-title">{chat.title}</div>
 									<div className="chat-subtitle">{chat.subtitle}</div>
 								</div>
-								<div className="settings-button">
+								<div className="settings-button" onClick={() => this.toggleChatMenu()}>
 									<div className="fi-widget"></div>
 								</div>
 							</div>
 
-							<div className="widgetMenu">
+					        <div className={"dropdown " + (this.state.chatMenuOpen ? "visible" : "")}>
 								<div className="list-item"><div className="list-icon fi-x"></div>Close Chat</div>
-								<div className="list-item"><div className="list-icon fi-star"></div>Favorite</div>
-								<div className="list-item"><div className="list-icon fi-star"></div>Unfavorite</div>
-								<div className="list-item"><div className="list-icon fi-plus"></div>Ignore</div>
-								<div className="list-item"><div className="list-icon fi-minus"></div>Unignore</div>
+								<div className={"list-item " + (this.state.favorited ? "hidden" : "")}><div className="list-icon fi-star"></div>Favorite</div>
+								<div className={"list-item " + (this.state.favorited ? "" : "hidden")}><div className="list-icon fi-star"></div>Unfavorite</div>
+								<div className={"list-item " + (this.state.ignored ? "hidden" : "")}><div className="list-icon fi-plus"></div>Ignore</div>
+								<div className={"list-item " + (this.state.ignored ? "" : "hidden")}><div className="list-icon fi-minus"></div>Unignore</div>
 								<div className="list-item"><div className="list-icon fi-flag"></div>Report</div>
 							</div>
 

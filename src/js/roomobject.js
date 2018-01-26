@@ -4,12 +4,27 @@ import { RelativeTime } from './common';
 class Avatar extends Component {
 	render() {
 		let iconurl = '';
-		if(this.props.icon) {
+		
+		if(this.props.icon) { // if there's an icon, always use this.
 			iconurl = this.props.icon; // user icon
-		} else if (this.props.public) {
-			iconurl = ''; // Default public image
-		} else {
-			iconurl = ''; // Default private image
+		} else { // if not, render a default one.
+			switch(this.props.type) {
+				case 0:
+					iconurl = ''; // Default public image
+					break;
+				case 1:
+					iconurl = ''; // Default private image
+					break;
+				case 2:
+					iconurl = ''; // Default private invite only image
+					break;
+				case 3:
+					iconurl = ''; // Default private pm image
+					break;
+				default:
+					console.log('invalid type',this.props);
+					break;
+			}
 		}
 
 		const avatarStyle = {
@@ -18,6 +33,27 @@ class Avatar extends Component {
 		return (
 			<div className="avatar-contain" style={avatarStyle}></div>
 		)
+	}
+}
+
+class RoomShortObject extends Component {
+	roomObjectClicked() {
+		this.props.setSelectedChat();
+	}
+	render() {
+		const user = this.props.user;
+		return (
+			<div className={"room-object short"} onClick={() => this.roomObjectClicked()}>
+				<Avatar icon={user.icon} type={user.type} />
+
+				<div className="details-contain">
+					<div className="user-name">{user.name}</div>
+					<div className="message-type">{user.characters}</div>
+				</div>
+
+				<RelativeTime created_at={user.relativeTime} />
+			</div>
+		);
 	}
 }
 
@@ -34,8 +70,8 @@ class RoomObject extends Component {
 				<div className="user-icon-contain">
 					<div className={"user-icon fi-star " + (user.friend ? "active" : "")}></div>
 					<div className={"user-icon fi-bookmark " + (user.bookmark ? "active"  : "")}></div>
-					
 				</div>
+
 				<div className="details-contain">
 					<div className="user-name">{user.name}</div>
 					<div className="message-type">{user.userStatus}{user.statusMessage ? (": "+user.statusMessage) : ""}</div>
@@ -48,4 +84,4 @@ class RoomObject extends Component {
 	}
 }
 
-export {RoomObject};
+export {RoomObject,RoomShortObject};

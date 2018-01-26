@@ -231,6 +231,8 @@
       padding: 10px 20px;
       font-family: 'Verlag', sans-serif;
       font-size: 12px; }
+  .chat-contain .dropdown {
+    top: 34px; }
 
 .messages-contain {
   width: 100%;

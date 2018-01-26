@@ -18,6 +18,8 @@
       color: #f0fbf3; }
     .room-object.selected .timestamp {
       color: #f0fbf3; }
+  .room-object.short {
+    height: 68px; }
   .room-object .avatar-contain {
     position: absolute;
     left: 18px;

@@ -57,44 +57,6 @@
     height: calc( 100% - 72px);
     overflow-y: scroll; }
 
-.sortMenu {
-  position: absolute;
-  top: 74px;
-  right: 18px;
-  background: #FFF;
-  border: 1px solid #E5EBE9;
-  border-bottom: none;
-  z-index: 99;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease;
-  -webkit-transform-origin: 50% 0%;
-  -moz-transform-origin: 50% 0%;
-  -o-transform-origin: 50% 0%;
-  -ms-transform-origin: 50% 0%;
-  transform-origin: 50% 0%;
-  box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.1); }
-  .sortMenu .list-icon {
-    display: inline-block;
-    padding-right: 8px; }
-  .sortMenu .list-item {
-    font-weight: 600;
-    font-size: 12px;
-    padding: 12px;
-    border-bottom: 1px solid #E5EBE9;
-    transition: background 0.3s ease;
-    cursor: pointer;
-    color: #A6B2AD; }
-    .sortMenu .list-item:hover {
-      background: #F1F3F2; }
-  .sortMenu.visible {
-    -webkit-animation: animateMenu ease;
-    animation: animateMenu ease;
-    -webkit-animation-duration: 300ms;
-    animation-duration: 300ms;
-    opacity: 1;
-    pointer-events: initial; }
-
 .room-list {
   overflow-y: scroll;
   top: 20px;

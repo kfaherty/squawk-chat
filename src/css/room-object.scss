@@ -29,6 +29,11 @@
 			color: #f0fbf3;
 		}
 	}
+
+	&.short {
+		height: 68px;
+	}
+
 	.avatar-contain {
 		position: absolute;
 		left: 18px;

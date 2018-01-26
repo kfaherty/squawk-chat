@@ -1,13 +1,13 @@
 
 import React, { Component } from 'react';
 import { StandardInput } from './common';
-import { RoomObject } from './roomobject';
+import { RoomObject,RoomShortObject } from './roomobject';
 
 class RoomList extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            sortType: 'Newest First',
+            sortType: 'Alphabetical',
             sortMenuOpen: false,
             selectedChat: null,
             // filteredRooms: this.performFilterSort("",'Newest First'), // load these values from props.
@@ -45,7 +45,27 @@ class RoomList extends Component {
             if (a.name > b.name) return 1;
             return 0;
         }
-               
+        function population(a,b) {
+            if (a.characters < b.characters) return -1;
+            if (a.characters > b.characters) return 1;
+            return 0;
+        }
+        function type(a,b) {
+            if (a.type < b.type) return -1;
+            if (a.type > b.type) return 1;
+            return 0;
+        }
+        function newest(a,b) { // TODO: this should look at the message timestamps.
+            if (a.key < b.key) return -1;
+            if (a.key > b.key) return 1;
+            return 0;
+        }
+        function oldest(a,b) { // TODO: this should look at the message timestamps.
+            if (a.key > b.key) return -1;
+            if (a.key < b.key) return 1;
+            return 0;
+        }
+
         let array = this.props.rooms || [];
 
         if (searchString.length) {
@@ -55,9 +75,22 @@ class RoomList extends Component {
             });
         }
         
-        // TODO: determine which function to use here.
-
-        return array.sort(alpha);
+        // determine which function to use here.
+        switch(sortType) {
+            case 'Alphabetical':
+                return array.sort(alpha);
+            case 'Population':
+                return array.sort(population);
+            case 'Type':
+                return array.sort(type);
+            case 'Newest First':
+                return array.sort(newest);
+            case 'Oldest First':
+                return array.sort(oldest);
+            default:
+                console.log('invalid sortType',sortType);
+                return array;
+        }
     }
 
     setSelectedChat(channelid) {
@@ -83,24 +116,35 @@ class RoomList extends Component {
                   <div className="label">Sort: {this.state.sortType}</div>
                 	<div className="arrow"></div>
                 </div>
-                <div className={"sortMenu " + (this.state.sortMenuOpen ? "visible" : "")}>
-                    <div className="list-item" onClick={() => this.changeSort('Newest First')}><div className="list-icon fi-arrow-up"></div>Newest First</div>
-                    <div className="list-item" onClick={() => this.changeSort('Oldest First')}><div className="list-icon fi-arrow-down"></div>Oldest First</div>
+                <div className={"dropdown " + (this.state.sortMenuOpen ? "visible" : "")}>
                     <div className="list-item" onClick={() => this.changeSort('Alphabetical')}><div className="list-icon fi-text-color"></div>Alphabetical</div>
                     <div className="list-item" onClick={() => this.changeSort('Population')}><div className="list-icon fi-torsos"></div>Population</div>
                     <div className="list-item" onClick={() => this.changeSort('Type')}><div className="list-icon fi-filter"></div>Type</div>
+                    <div className="list-item" onClick={() => this.changeSort('Newest First')}><div className="list-icon fi-arrow-up"></div>Newest First</div>
+                    <div className="list-item" onClick={() => this.changeSort('Oldest First')}><div className="list-icon fi-arrow-down"></div>Oldest First</div>
                 </div>
 
                 <div className="room-list">
                     {rooms.map((obj) => {
                         obj.selected = ( obj.id === this.state.selectedChat ? 'selected' : '' );
-                        return (
-                            <RoomObject 
-                                key={obj.key}
-                                user={obj}
-                                setSelectedChat={() => this.setSelectedChat(obj.key)}
-                            />
-                        )
+                            if (this.props.label === 'channels'){
+                                return (
+                                    <RoomShortObject 
+                                        key={obj.key}
+                                        user={obj}
+                                        setSelectedChat={() => this.setSelectedChat(obj.key)}
+                                    />
+                                );
+                            } else {
+                                return (
+                                    <RoomObject 
+                                        key={obj.key}
+                                        user={obj}
+                                        setSelectedChat={() => this.setSelectedChat(obj.key)}
+                                    />
+                                );
+                            }
+                        
                     })}   
                     <div className={'no-rooms ' + (rooms.length ? "hidden" : "")}>No channels to show</div>
                 </div>

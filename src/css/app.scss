@@ -76,10 +76,15 @@ html{
 }
 
 .top-bar {
-  height: 74px;
-  border-bottom: 1px solid #E5EBE9;
-  background: #f7faf9;
-  position: relative;
+    height: 74px;
+    border-bottom: 1px solid #E5EBE9;
+    background: #f7faf9;
+    position: relative;
+
+    .dropdown {
+        right: 200px;
+        top: 48px;
+    }
 }
 .logo-contain {
   color: #616965;
@@ -426,11 +431,12 @@ input,textarea {
 
 .dropdown {
     position: absolute;
-    top: 32px;
-    right: 10px;
-    background: $black80;
-    border: 1px solid $gray28;
+    top: 80px;
+    right: 18px;
+    background: #FFF;
+    border: 1px solid #E5EBE9;
     border-bottom: none;
+    z-index: 99;
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.3s ease;
@@ -439,9 +445,29 @@ input,textarea {
     -o-transform-origin : 50% 0%;
     -ms-transform-origin : 50% 0%;
     transform-origin : 50% 0%;
+    box-shadow: 0px 0px 30px rgba(0, 0, 0, .1);
 
-    &.visible {
-        // opacity: 1;
+    .list-icon  {
+        display: inline-block;
+        padding-right: 8px;
+    }
+    .list-item {
+        font-weight: 600;
+        font-size: 12px;
+        padding: 12px;
+        border-bottom: 1px solid #E5EBE9;
+        transition: background 0.3s ease;
+        cursor: pointer;
+        color: #A6B2AD;
+        &:hover {
+            background: #F1F3F2;
+        }
+        &.hidden {
+            display: none;
+        }
+    }
+
+    &.visible{
         -webkit-animation: animateMenu ease;
         animation: animateMenu ease;
         -webkit-animation-duration: 300ms;
@@ -449,27 +475,5 @@ input,textarea {
         opacity: 1;
         pointer-events: initial;
     }
-
-    .list-icon  {
-        display: inline-block;
-        padding-right: 8px;
-    }
-    a {
-        color: $white;
-        text-decoration: none;
-        display: block;
-    }
-    .list-item {
-        // width: 100%;
-        // padding: 5px 0px;
-        font-size: 14px;
-        padding: 12px;
-        border-bottom: 1px solid $gray28;
-        transition: background 0.3s ease;
-        cursor: pointer;
-        color: $white;
-        &:hover {
-            background: $gray13;
-        }
-    }
 }
+
