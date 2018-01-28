@@ -4,12 +4,116 @@
 		"selected_items":
 		[
 			[
-				"log",
-				"loginPromiseResolve"
+				"chann",
+				"channelData"
+			],
+			[
+				"chan",
+				"channelData"
+			],
+			[
+				"channe",
+				"channelsList"
+			],
+			[
+				"ind",
+				"indexOf"
+			],
+			[
+				"get",
+				"getPublicChannels"
 			],
 			[
 				"re",
-				"return"
+				"resolve"
+			],
+			[
+				"prom",
+				"Promise"
+			],
+			[
+				"time",
+				"timestamp"
+			],
+			[
+				"mes",
+				"messages"
+			],
+			[
+				"toggle",
+				"toggleIgnore"
+			],
+			[
+				"userMe",
+				"userMenuOpen"
+			],
+			[
+				"set",
+				"setState"
+			],
+			[
+				"roo",
+				"roomObjectClicked"
+			],
+			[
+				"on",
+				"onClick"
+			],
+			[
+				"icon",
+				"iconurl"
+			],
+			[
+				"cha",
+				"characterlist"
+			],
+			[
+				"log",
+				"logged_in"
+			],
+			[
+				"sort",
+				"sortType"
+			],
+			[
+				"searc",
+				"searchString"
+			],
+			[
+				"rooms",
+				"roomslist"
+			],
+			[
+				"fr",
+				"friends"
+			],
+			[
+				"even",
+				"event"
+			],
+			[
+				"cons",
+				"console"
+			],
+			[
+				"frien",
+				"friendslist"
+			],
+			[
+				"User",
+				"userData"
+			],
+			[
+				"sel",
+				"selectedTab"
+			],
+			[
+				"show",
+				"showMenuOpen"
+			],
+			[
+				"paddin",
+				"padding-top"
 			],
 			[
 				"ret",
@@ -60,10 +164,6 @@
 				"validated"
 			],
 			[
-				"on",
-				"onChange"
-			],
-			[
 				"hand",
 				"handleFieldChange"
 			],
@@ -77,10 +177,6 @@
 			],
 			[
 				"select",
-				"selectedChat"
-			],
-			[
-				"sel",
 				"selectedChat"
 			],
 			[
@@ -160,10 +256,6 @@
 				"videomediadata"
 			],
 			[
-				"cons",
-				"const"
-			],
-			[
 				"hide",
 				"hideMenu"
 			],
@@ -226,10 +318,6 @@
 			[
 				"has",
 				"hasText"
-			],
-			[
-				"get",
-				"getTime"
 			],
 			[
 				"sele",
@@ -310,10 +398,6 @@
 			[
 				"mentions",
 				"mentions_timeline"
-			],
-			[
-				"time",
-				"timelinecache"
 			],
 			[
 				"reque",
@@ -430,90 +514,6 @@
 			[
 				"gray",
 				"gray28"
-			],
-			[
-				"selec",
-				"selectedUser"
-			],
-			[
-				"light",
-				"lightBlue"
-			],
-			[
-				"cl",
-				"className"
-			],
-			[
-				"lig",
-				"lightGreen"
-			],
-			[
-				"Twee",
-				"TweetStatistics"
-			],
-			[
-				"ligh",
-				"lightBlue"
-			],
-			[
-				"ba",
-				"bannerStyle"
-			],
-			[
-				"scr",
-				"screen_name"
-			],
-			[
-				"fe",
-				"fetchHomeTimeline"
-			],
-			[
-				"magin",
-				"margin-top"
-			],
-			[
-				"mag",
-				"margin-right"
-			],
-			[
-				"stat",
-				"status"
-			],
-			[
-				"acc",
-				"access_token_secret"
-			],
-			[
-				"di",
-				"display"
-			],
-			[
-				"Re",
-				"RelativeTime"
-			],
-			[
-				"dark",
-				"darkerWhite"
-			],
-			[
-				"class",
-				"className"
-			],
-			[
-				"g",
-				"gray50"
-			],
-			[
-				"pr",
-				"props"
-			],
-			[
-				"cla",
-				"className"
-			],
-			[
-				"imag",
-				"imageTemplate"
 			]
 		]
 	},
@@ -523,7 +523,7 @@
 			"file": "src/js/authorize.js",
 			"settings":
 			{
-				"buffer_size": 2689,
+				"buffer_size": 2884,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -532,16 +532,7 @@
 			"file": "src/js/root.js",
 			"settings":
 			{
-				"buffer_size": 1802,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "src/css/auth.scss",
-			"settings":
-			{
-				"buffer_size": 3177,
+				"buffer_size": 5620,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -550,7 +541,16 @@
 			"file": "src/js/api2.js",
 			"settings":
 			{
-				"buffer_size": 2875,
+				"buffer_size": 7930,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/js/roomlist.js",
+			"settings":
+			{
+				"buffer_size": 6350,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -626,17 +626,26 @@
 	],
 	"file_history":
 	[
-		"/C/Users/user/Documents/squawk-chat/src/css/root.css",
-		"/C/Users/user/Documents/squawk-chat/src/js/common.js",
-		"/C/Users/user/Documents/squawk-chat/src/css/auth.scss",
-		"/C/Users/user/Documents/squawk-chat/src/js/root.js",
-		"/C/Users/user/Documents/squawk-chat/src/js/roomlist.js",
 		"/C/Users/user/Documents/squawk-chat/src/js/roomobject.js",
-		"/C/Users/user/Documents/squawk-chat/src/js/api2.js",
-		"/C/Users/user/Documents/squawk-chat/src/css/chat-window.scss",
+		"/C/Users/user/Documents/squawk-chat/src/css/room-object.scss",
+		"/C/Users/user/Documents/squawk-chat/src/js/roomlist.js",
 		"/C/Users/user/Documents/squawk-chat/src/js/chat.js",
 		"/C/Users/user/Documents/squawk-chat/src/css/room-list.scss",
+		"/C/Users/user/Documents/squawk-chat/src/css/chat-window.scss",
 		"/C/Users/user/Documents/squawk-chat/src/css/app.scss",
+		"/C/Users/user/Documents/squawk-chat/src/js/api2.js",
+		"/C/Users/user/Documents/squawk-chat/src/js/apiurls.js",
+		"/C/Users/user/Documents/tweets-react/src/js/profile.js",
+		"/C/Users/user/Documents/tweets-react/src/js/tweet.js",
+		"/C/Users/user/Documents/squawk-chat/src/js/channelManager.js",
+		"/C/Users/user/Documents/squawk-chat/src/js/data.txt",
+		"/C/Users/user/Documents/riskbone/front-end/public/js/app/util/connectToBackendFactory.js",
+		"/C/Users/user/Documents/riskbone/front-end/public/js/app/util/connectionManager.js",
+		"/C/Users/user/Documents/riskbone/front-end/public/js/app/util/connections.js",
+		"/C/Users/user/Documents/squawk-chat/src/css/auth.scss",
+		"/C/Users/user/Documents/squawk-chat/src/css/root.css",
+		"/C/Users/user/Documents/squawk-chat/src/js/common.js",
+		"/C/Users/user/Documents/squawk-chat/src/js/root.js",
 		"/C/Users/user/Documents/squawk-chat/src/js/socketconfig.js",
 		"/C/Users/user/Documents/squawk-chat/src/js/api.js",
 		"/C/Users/user/Documents/squawk-chat/src/js/authorize.js",
@@ -651,7 +660,6 @@
 		"/C/Users/user/Documents/squawk-chat/old/app/templates/components/chat-window.hbs",
 		"/C/Users/user/Documents/tweets-react/src/js/common.js",
 		"/C/Users/user/Documents/squawk-chat/old/app/templates/components/chat-message.hbs",
-		"/C/Users/user/Documents/squawk-chat/src/css/room-object.scss",
 		"/C/Users/user/Documents/react-doctor-patient/src/css/auth.scss",
 		"/C/Users/user/Documents/react-doctor-patient/src/css/auth.css",
 		"/C/Users/user/Documents/squawk-chat/src/css/layout.scss",
@@ -692,7 +700,6 @@
 		"/C/Users/user/Documents/tweets-react/src/css/app.css",
 		"/C/Users/user/Documents/tweets-react/src/css/auth.scss",
 		"/C/Users/user/Documents/tweets-react/src/css/app.scss",
-		"/C/Users/user/Documents/tweets-react/src/js/tweet.js",
 		"/C/Users/user/Documents/tweets-react/src/js/root.js",
 		"/C/Users/user/Downloads/frontend_redshelf_challenge/frontend_platform_interview-master/app/templates/components/shrinking-box.hbs",
 		"/C/Users/user/Downloads/frontend_redshelf_challenge/frontend_platform_interview-master/app/templates/html-css-exercise.hbs",
@@ -746,14 +753,7 @@
 		"/C/Users/user/Documents/squawk-chat/tmp/broccoli_persistent_filtereslint_validation_filter-output_path-JKt9LW2v.tmp/index.html",
 		"/C/Users/user/Documents/squawk-chat/tmp/broccoli_persistent_filtereslint_validation_filter-output_path-STq70hs0.tmp/index.html",
 		"/C/Users/user/Documents/squawk-chat/tmp/config_replace-input_base_path-5lHY9f3w.tmp/0/index.html",
-		"/C/Users/user/Documents/squawk-chat/tmp/config_replace-input_base_path-6BM9VaFw.tmp/0/tests/index.html",
-		"/C/Users/user/Documents/squawk-chat/tmp/config_replace-output_path-HhsSJ9YG.tmp/index.html",
-		"/C/Users/user/Documents/squawk-chat/tmp/config_replace-output_path-P5BR8I0F.tmp/tests/index.html",
-		"/C/Users/user/Documents/squawk-chat/tmp/funnel-input_base_path-0cGTyq7Z.tmp/index.html",
-		"/C/Users/user/Documents/squawk-chat/tmp/funnel-input_base_path-C8Xzj2ZA.tmp/index.html",
-		"/C/Users/user/Documents/squawk-chat/tmp/funnel-input_base_path-H6k6EUeP.tmp/index.html",
-		"/C/Users/user/Documents/squawk-chat/tmp/funnel-input_base_path-UkH79O6c.tmp/index.html",
-		"/C/Users/user/Documents/squawk-chat/tmp/funnel-input_base_path-ul7MtAcg.tmp/index.html"
+		"/C/Users/user/Documents/squawk-chat/tmp/config_replace-input_base_path-6BM9VaFw.tmp/0/tests/index.html"
 	],
 	"find":
 	{
@@ -772,6 +772,9 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"selectedChat",
+			"public",
+			"f-list",
 			"translateX",
 			".bind(this)",
 			"./api",
@@ -908,15 +911,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2689,
+						"buffer_size": 2884,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1333,
-								1333
+								2790,
+								2790
 							]
 						],
 						"settings":
@@ -925,7 +928,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 42.0,
+						"translation.y": 210.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 3,
@@ -937,15 +940,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1802,
+						"buffer_size": 5620,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								536,
-								536
+								1618,
+								1618
 							]
 						],
 						"settings":
@@ -955,65 +958,80 @@
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				}
+			]
+		},
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 2,
+					"file": "src/js/api2.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 7930,
+						"regions":
+						{
+							"bookmarks":
+							{
+								"flags": 144,
+								"icon": "bookmark",
+								"regions":
+								[
+								],
+								"scope": "bookmarks"
+							}
+						},
+						"selection":
+						[
+							[
+								6411,
+								6411
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Babel/JavaScript (Babel).sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 3080.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
 					"type": "text"
 				},
 				{
-					"buffer": 2,
-					"file": "src/css/auth.scss",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3177,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2161,
-								2161
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/SCSS/SCSS.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 882.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
 					"buffer": 3,
-					"file": "src/js/api2.js",
+					"file": "src/js/roomlist.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2875,
+						"buffer_size": 6350,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								356,
-								356
+								2523,
+								2683
 							]
 						],
 						"settings":
 						{
 							"syntax": "Packages/Babel/JavaScript (Babel).sublime-syntax",
-							"translate_tabs_to_spaces": false
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 546.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 1,
@@ -1039,11 +1057,18 @@
 				0,
 				1,
 				1
+			],
+			[
+				1,
+				0,
+				2,
+				1
 			]
 		],
 		"cols":
 		[
 			0.0,
+			0.5,
 			1.0
 		],
 		"rows":
@@ -1099,7 +1124,7 @@
 		],
 		"width": 392.0
 	},
-	"selected_group": 0,
+	"selected_group": 1,
 	"settings":
 	{
 	},

@@ -1067,10 +1067,10 @@ input, textarea {
   -webkit-transition: opacity 0.3s ease;
   -o-transition: opacity 0.3s ease;
   transition: opacity 0.3s ease;
-  pointer-events: initial; }
+  pointer-events: initial;
+  overflow: visible; }
   .no-rooms.hidden {
-    opacity: 0;
-    pointer-events: none; }
+    display: none; }
 
 .room-object {
   width: 300px;
@@ -1120,7 +1120,7 @@ input, textarea {
   .room-object .details-contain {
     position: relative;
     left: 60px;
-    top: 20px;
+    top: 17px;
     font-size: 13px;
     width: calc( 100% - 80px); }
     .room-object .details-contain .user-name {

@@ -26,6 +26,26 @@ class Chat extends Component {
     toggleChatMenu() {
     	this.setState({chatMenuOpen: !this.state.chatMenuOpen});
     }
+    clearSelectedChat() {
+    	this.props.clearSelectedChat();
+		// this.toggleChatMenu();
+    }
+    reportSelectedChat() {
+    	this.props.reportSelectedChat();
+    	this.toggleChatMenu();
+    }
+    toggleFavorite() {
+    	// TODO: write into favorites list
+    	this.setState({favorited: !this.state.favorited});
+    	this.toggleChatMenu();
+    }
+    toggleIgnore() {
+    	// TODO: api needs to tell server we've added this.
+    	// TODO: write into ignore list.
+
+    	this.setState({ignored: !this.state.ignored});
+    	this.toggleChatMenu();
+    }
    	render() {
    		const chat = this.props.chat || {messages:[]};
 		return (
@@ -47,23 +67,22 @@ class Chat extends Component {
 							</div>
 
 					        <div className={"dropdown " + (this.state.chatMenuOpen ? "visible" : "")}>
-								<div className="list-item"><div className="list-icon fi-x"></div>Close Chat</div>
-								<div className={"list-item " + (this.state.favorited ? "hidden" : "")}><div className="list-icon fi-star"></div>Favorite</div>
-								<div className={"list-item " + (this.state.favorited ? "" : "hidden")}><div className="list-icon fi-star"></div>Unfavorite</div>
-								<div className={"list-item " + (this.state.ignored ? "hidden" : "")}><div className="list-icon fi-plus"></div>Ignore</div>
-								<div className={"list-item " + (this.state.ignored ? "" : "hidden")}><div className="list-icon fi-minus"></div>Unignore</div>
-								<div className="list-item"><div className="list-icon fi-flag"></div>Report</div>
+								<div onClick={() => this.clearSelectedChat()} className="list-item"><div className="list-icon fi-x"></div>Close Chat</div>
+								<div onClick={() => this.toggleFavorite()} className={"list-item " + (this.state.favorited ? "hidden" : "")}><div className="list-icon fi-star"></div>Favorite</div>
+								<div onClick={() => this.toggleFavorite()} className={"list-item " + (this.state.favorited ? "" : "hidden")}><div className="list-icon fi-star"></div>Unfavorite</div>
+								<div onClick={() => this.toggleIgnore()} className={"list-item " + (this.state.ignored ? "hidden" : "")}><div className="list-icon fi-plus"></div>Ignore</div>
+								<div onClick={() => this.toggleIgnore()} className={"list-item " + (this.state.ignored ? "" : "hidden")}><div className="list-icon fi-minus"></div>Unignore</div>
+								<div onClick={() => this.reportSelectedChat()} className="list-item"><div className="list-icon fi-flag"></div>Report</div>
 							</div>
 
 							<div className="messages-contain">
 								{chat.messages.map((obj) => {
-									obj.selected = ( obj.id_str === this.props.selectedChat ? 'selected' : '' );
+									// TODO filter out ignored users
+
 									return (
 									  <ChatMessage 
 									    key={obj.id_str}
 									    data={obj} 
-									    // onClick={()=>this.setSelectedTweet(obj.id_str)}
-									    // mentionHandler={(screen_name)=>this.setSelectedUser(screen_name)} 
 									  />
 									)
 								})}

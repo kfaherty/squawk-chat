@@ -46,7 +46,7 @@
   .room-object .details-contain {
     position: relative;
     left: 60px;
-    top: 20px;
+    top: 17px;
     font-size: 13px;
     width: calc( 100% - 80px); }
     .room-object .details-contain .user-name {

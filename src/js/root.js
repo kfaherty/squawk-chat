@@ -4,7 +4,7 @@ import Authorize from './authorize';
 import RoomList from './roomlist';
 import Chat from './chat';
 
-import { gotLoginPromise,getFriends,getChannels,lostConnectionAlert,gainedConnectionAlert } from './api2';
+import { gotLoginPromise,getFriends,setGetChannelsCallback,getChannels,joinChannel,lostConnectionAlert,gainedConnectionAlert } from './api2';
 
 class Root extends Component {
 	constructor(props) {
@@ -20,16 +20,28 @@ class Root extends Component {
 	    	roomsjoined: [],
 	    	userMenuOpen: false
 	    };
-
+		this.chat = undefined;
+		
 	    lostConnectionAlert((err,connected) => {
 	    	console.log('lost connection!');
 	    	this.setState({connected: false});
 	    });
 	    gainedConnectionAlert((err,connected) => this.setState({connected: true}));
 
-        this.setSelectedChat = this.setSelectedChat.bind(this);     
+        this.setSelectedChat = this.setSelectedChat.bind(this);   
+        this.reportSelectedChat = this.reportSelectedChat.bind(this);
 	}
     
+	assignCallbacks() {
+	    // messages:
+	    // channels:
+		setGetChannelsCallback((data) => {
+			console.log('root got new channel data',data);
+			this.setState({roomslist: data});
+		})
+	    // friends:
+	}
+
     componentWillMount() {
 	    gotLoginPromise().then((data) => {
 			this.setState({
@@ -37,6 +49,7 @@ class Root extends Component {
 				username: data
 			});
 	    });
+	    this.assignCallbacks();
     }
 
     updateJoinedRooms(data) { // callback
@@ -48,44 +61,38 @@ class Root extends Component {
 
     setSelectedTab(value) {
     	switch(value) {
-    		// case 'messages':
-    		// 	// get current joined rooms? 
-    		// 	// no, this needs to be realtime..
-    		// 	// we can just associate a callback and then have that trigger.
-    		// 	break;
     		case 'channels':
-    			getChannels().then((data) => {
-    				this.setState({roomslist: data});
-    			});
+    			getChannels();
     			break;
-    		case 'friends':
-	    		getFriends().then((data) => {
-					this.setState({friendslist: data})
-				})
+    		default:
     			break;
-    		default: 
-    			break;
+    		
     	}
-
     	this.setState({selectedTab: value});
     }
 
     setSelectedChat(value) {
-    	// TODO: check if we need to join this chat first.
-    	// joinChannel(value);
-
-    	// then update state so chat-window can render the contents.
-    	this.setState({selectedChat:value});
+    	if (value) {
+    		joinChannel(value);
+    		this.setState({selectedChat:value});
+    	}
     }
     clearSelectedChat() {
     	this.setState({selectedChat: null});
+    	this.chat = undefined;
     }
 
     toggleUserMenu() {
     	this.setState({userMenuOpen: !this.state.userMenuOpen});
     }
 
+    reportSelectedChat() {
+    	// TODO
+    	console.log('ok',this.state.selectedChat);
+    }
+
 	render() {
+		const chat = this.chat; //getSelectedChat();
 		return (
 			<div className="app-wrapper">
 				<Authorize visible={this.state.loggedin} />
@@ -125,6 +132,7 @@ class Root extends Component {
 				<div className="app-contain">
 					{/* MESSAGES */}
 					<RoomList
+						selectedChat={this.state.selectedChat}
 						rooms={this.state.roomsjoined}
 						label="messages"
 						activeTab={(this.state.selectedTab === 'messages' ? true : false)}
@@ -132,6 +140,7 @@ class Root extends Component {
 					/>
 					{/* CHANNELS */}
 					<RoomList
+						selectedChat={this.state.selectedChat}
 						rooms={this.state.roomslist}
 						label="channels"
 						activeTab={(this.state.selectedTab === 'channels' ? true : false)}
@@ -139,6 +148,7 @@ class Root extends Component {
 					/>
 					{/* FRIENDS */}
 					<RoomList
+						selectedChat={this.state.selectedChat}
 						rooms={this.state.friendslist}
 						label="friends"
 						activeTab={(this.state.selectedTab === 'friends' ? true : false)}
@@ -150,8 +160,10 @@ class Root extends Component {
 
 					{/* CHAT */}
 					<Chat 
+						chat={chat}
 						selectedChat={this.state.selectedChat} 
-						clearSelectedChat={(value)=>this.clearSelectedChat(value)}
+						reportSelectedChat={this.reportSelectedChat}
+						clearSelectedChat={()=>this.clearSelectedChat()}
 					/>
 				</div>
 			</div>

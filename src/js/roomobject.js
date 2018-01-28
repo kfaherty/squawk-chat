@@ -43,12 +43,12 @@ class RoomShortObject extends Component {
 	render() {
 		const user = this.props.user;
 		return (
-			<div className={"room-object short"} onClick={() => this.roomObjectClicked()}>
+			<div className={"room-object short " + (user.selected ? "selected" : "")} onClick={() => this.roomObjectClicked()}>
 				<Avatar icon={user.icon} type={user.type} />
 
 				<div className="details-contain">
 					<div className="user-name">{user.name}</div>
-					<div className="message-type">{user.characters}</div>
+					<div className="message-type">Users: {user.characters}</div>
 				</div>
 
 				<RelativeTime created_at={user.relativeTime} />
@@ -64,7 +64,7 @@ class RoomObject extends Component {
 	render() {
 		const user = this.props.user;
 		return (
-			<div className={"room-object"} onClick={() => this.roomObjectClicked()}>
+			<div className={"room-object " + (user.selected ? "selected" : "")} onClick={() => this.roomObjectClicked()}>
 				<Avatar icon={user.icon} public={user.public} />
 
 				<div className="user-icon-contain">

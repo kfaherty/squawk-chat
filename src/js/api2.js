@@ -86,78 +86,9 @@ function gotLoginPromise() {
 var socket;
 
 // data sources
-var channelsList = [];
-var channelsJoined = []; // this is just going to be a standard array.
+var channelsList = {};
+var channelsJoined = []; // this is just going to be a standard array of names.
 var usersCache = [];
-
-function gainedConnectionAlert(cb) {
-	gotLoginPromise().then(()=>{
-		socket.onopen = function(event) {
-			console.log('okok');
-			cb(null,true);
-		}
-	});
-}
-function lostConnectionAlert(cb) {
-	gotLoginPromise().then(()=>{
-		socket.onclose = function(event) {
-			cb(null,false);
-		}
-	});
-}
-
-function getChannels(cb) {
-
-	// type:
-	// 0 is public
-	// 1 is private
-	// 2 is private invite only
-	// 3 is private pm
-
-	return new Promise(function(resolve,reject) {
-		if (channelsList.length) {
-			resolve(channelsList);
-		} else {
-			gotLoginPromise().then(()=>{ 			// wait for response: 
-				socket.send( 'CHA' );
-				addListenerForSocketMessage('CHA',(data)=>{
-					// console.log('channels',data);
-					if (data.channels) {
-						channelsList = data.channels.map((obj,index) => {
-							return {
-								type: 0,
-								key: index,
-								...obj
-							}
-						});
-
-						resolve(channelsList);
-					}
-				});
-			});
-		}
-	});
-}
-
-// socket.send( 'ORS' );
-
-function addListenerForSocketMessage(eventcode,callback){
-	if (!eventcode || !callback) return;
-
-	socket.addEventListener("message",function(event) {
-		if (!event.data) {
-			return;
-		}
-		let code = event.data.substr(0,3);
-		if (code === eventcode) {
-			let payload = '';
-			if (event.data.length > 3) {
-			    payload = JSON.parse(event.data.substr(4));
-			}
-			callback(payload);
-		}
-	})
-}
 
 function createSocket(name) {
 	return new Promise(function(resolve,reject) {
@@ -228,14 +159,152 @@ function createSocket(name) {
 			console.log('socket has closed',event);
 			// TODO: determine when to reconnect
 		};
+
+		listenToData(); // create listeners.
 	});
+}
+
+function gainedConnectionAlert(cb) {
+	gotLoginPromise().then(()=>{
+		socket.onopen = function(event) {
+			console.log('okok');
+			cb(null,true);
+		}
+	});
+}
+function lostConnectionAlert(cb) {
+	gotLoginPromise().then(()=>{
+		socket.onclose = function(event) {
+			cb(null,false);
+		}
+	});
+}
+
+function addListenerForSocketMessage(eventcode,callback){
+	if (!eventcode || !callback) return;
+
+	socket.addEventListener("message",function(event) {
+		if (!event.data) {
+			return;
+		}
+		let code = event.data.substr(0,3);
+		if (code === eventcode) {
+			let payload = '';
+			if (event.data.length > 3) {
+			    payload = JSON.parse(event.data.substr(4));
+			}
+			callback(payload);
+		}
+	})
+}
+
+function listenToData() {
+	gotLoginPromise().then(()=>{ 			// wait for login: 
+		addListenerForSocketMessage('CHA',(data)=>{  // FIXME: this means that calling this multiple times will create multiple listeners.
+			let defaultTime = Date.now();
+			if (data.channels && data.channels.length) {
+				let channeldata = data.channels.map((obj,index) => {
+					return {
+						type: 0,
+						timestamp: defaultTime,
+						...obj
+					}
+				});
+				for (var i = channeldata.length - 1; i >= 0; i--) {
+					updateChannelData(channeldata[i]);
+				}
+				if (channelsCallback) {
+					channelsCallback(channelsList);
+				}
+			}
+		});
+		addListenerForSocketMessage('ORS',(data)=>{ 
+			// console.log('channels',data);
+			let defaultTime = Date.now();
+			if (data.channels && data.channels.length) {
+				let channeldata = data.channels.map((obj,index) => {
+					return {
+						type: 1,
+						timestamp: defaultTime,
+						...obj
+					}
+				});
+				for (var i = channeldata.length - 1; i >= 0; i--) {
+					updateChannelData(channeldata[i]);
+				}
+				if (channelsCallback) {
+					channelsCallback(channelsList);
+				}
+			}
+		});
+		addListenerForSocketMessage('CDS',(data)=>{
+
+		});
+	});
+}
+
+function getChannels(){
+	// type:
+	// 0 is public
+	// 1 is private
+	// 2 is private invite only
+	// 3 is private PM
+
+	socket.send( 'CHA' ); // 0
+	socket.send( 'ORS' ); // 1
+}
+
+var channelsCallback = undefined;
+function setGetChannelsCallback(cb) {
+	channelsCallback = cb;		
+}
+
+function getChannelData(name){
+	// let channelData = channelsList.filter((obj)=> {
+ //        return obj.key == id;
+ //    });
+ //    if (channelData.length) {
+ //    	return channelData[0];
+ //    } else {
+ //    	console.warn('channel with that id not found!',id);
+ //    	return undefined;
+ //    }
+ 	return channelsList[name];
+}
+
+function updateChannelData(data) {
+	if (!data || !data.name) {
+		console.log('missing stuff',data)
+		return;
+	}
+
+	if (channelsList[data.name]) { // if an entry exists, update the fields you have.
+		channelsList[data.name] = Object.assign(channelsList[data.name], data);
+	} else { // if an entry doesn't exist, add it
+		channelsList[data.name] = data;
+	}
+}
+
+function getJoinedChannels() {
+	return channelsJoined;
+}
+
+function joinChannel(name){
+	if (channelsJoined.indexOf(name) !== -1) {
+		console.log('i think youre already in here',channelsJoined,name);
+		// TODO: toast.
+		return;
+	}
+	socket.send( 'JCH '+JSON.stringify({ "channel": name }) );
+	channelsJoined.push(name);
+}
+
+function leaveChannel(name) {
+
 }
 
 function getFriends() {
-	return new Promise(function(resolve,reject) {
-		
-	});
+	return Promise.resolve( userData.friends );
 }
 
-
-export { login,loadCookie,gotLoginPromise,createSocket,getFriends,lostConnectionAlert,gainedConnectionAlert,getChannels };
+export { login,loadCookie,gotLoginPromise,createSocket,lostConnectionAlert,gainedConnectionAlert,getChannels,joinChannel,getFriends,setGetChannelsCallback };

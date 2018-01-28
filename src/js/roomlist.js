@@ -10,11 +10,9 @@ class RoomList extends Component {
             sortType: 'Alphabetical',
             sortMenuOpen: false,
             selectedChat: null,
-            // filteredRooms: this.performFilterSort("",'Newest First'), // load these values from props.
             searchString: ""
         };
         this.handleFieldChange = this.handleFieldChange.bind(this);     
-        // console.log(this.props.rooms);
     }
     
     toggleSortMenu() {
@@ -22,20 +20,15 @@ class RoomList extends Component {
     }
     
     changeSort(value) {
-      // console.log(value);
         this.toggleSortMenu();
-
         this.setState({
             sortType:value,
-            // filteredRooms: this.performFilterSort(this.state.searchString,value)
         });
     }
     
     handleFieldChange(name,value) {
-        // console.log(value);
         this.setState({
             searchString:value,
-            // filteredRooms: this.performFilterSort(value,this.state.sortType)
         });
     }
 
@@ -46,27 +39,52 @@ class RoomList extends Component {
             return 0;
         }
         function population(a,b) {
+            // pop
             if (a.characters < b.characters) return -1;
             if (a.characters > b.characters) return 1;
+            
+            //alpha
+            if (a.name < b.name) return -1;
+            if (a.name > b.name) return 1;
             return 0;
         }
-        function type(a,b) {
+        function type(a,b) { 
+            // bookmarks/favorites..
+            if (!a.favorited && b.favorited) return -1;
+            if (a.favorited && !b.favorited) return 1;
+            if (!a.bookmarked && b.bookmarked) return -1;
+            if (a.bookmarked && !b.bookmarked) return 1;
+
+            // channel type
             if (a.type < b.type) return -1;
             if (a.type > b.type) return 1;
+
+            // alpha 
+            if (a.name < b.name) return -1;
+            if (a.name > b.name) return 1;
             return 0;
         }
-        function newest(a,b) { // TODO: this should look at the message timestamps.
-            if (a.key < b.key) return -1;
-            if (a.key > b.key) return 1;
+        function newest(a,b) {
+            if (a.timestamp < b.timestamp) return -1;
+            if (a.timestamp > b.timestamp) return 1;
+            
+            if (a.name < b.name) return -1;
+            if (a.name > b.name) return 1;
             return 0;
         }
-        function oldest(a,b) { // TODO: this should look at the message timestamps.
-            if (a.key > b.key) return -1;
-            if (a.key < b.key) return 1;
+        function oldest(a,b) {
+            if (a.timestamp > b.timestamp) return -1;
+            if (a.timestamp < b.timestamp) return 1;
+            
+            if (a.name < b.name) return -1;
+            if (a.name > b.name) return 1;
             return 0;
         }
 
         let array = this.props.rooms || [];
+        if (!Array.isArray(array)) {
+            array = Object.values(array);
+        }
 
         if (searchString.length) {
             array = array.filter((obj)=> {
@@ -93,10 +111,10 @@ class RoomList extends Component {
         }
     }
 
-    setSelectedChat(channelid) {
-        console.log(channelid);
-        // this needs to go to root so root can tell chat-window.
-        this.props.setSelectedChat(channelid);
+    setSelectedChat(channelName) {
+        // console.log(channelid);
+        // this goes to root so root can tell chat-window.
+        this.props.setSelectedChat(channelName);
     }
 
     render() {
@@ -126,25 +144,24 @@ class RoomList extends Component {
 
                 <div className="room-list">
                     {rooms.map((obj) => {
-                        obj.selected = ( obj.id === this.state.selectedChat ? 'selected' : '' );
-                            if (this.props.label === 'channels'){
-                                return (
-                                    <RoomShortObject 
-                                        key={obj.key}
-                                        user={obj}
-                                        setSelectedChat={() => this.setSelectedChat(obj.key)}
-                                    />
-                                );
-                            } else {
-                                return (
-                                    <RoomObject 
-                                        key={obj.key}
-                                        user={obj}
-                                        setSelectedChat={() => this.setSelectedChat(obj.key)}
-                                    />
-                                );
-                            }
-                        
+                        obj.selected = ( obj.name === this.props.selectedChat ? 'selected' : '' );
+                        if (this.props.label === 'channels'){
+                            return (
+                                <RoomShortObject 
+                                    key={obj.name}
+                                    user={obj}
+                                    setSelectedChat={() => this.setSelectedChat(obj.name)}
+                                />
+                            );
+                        } else {
+                            return (
+                                <RoomObject 
+                                    key={obj.key}
+                                    user={obj}
+                                    setSelectedChat={() => this.setSelectedChat(obj.name)}
+                                />
+                            );
+                        }
                     })}   
                     <div className={'no-rooms ' + (rooms.length ? "hidden" : "")}>No channels to show</div>
                 </div>
