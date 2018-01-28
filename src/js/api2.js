@@ -203,15 +203,16 @@ function listenToData() {
 		addListenerForSocketMessage('CHA',(data)=>{  // FIXME: this means that calling this multiple times will create multiple listeners.
 			let defaultTime = Date.now();
 			if (data.channels && data.channels.length) {
-				let channeldata = data.channels.map((obj,index) => {
+				let channelData = data.channels.map((obj,index) => {
 					return {
 						type: 0,
 						timestamp: defaultTime,
+						channel: obj.name,
 						...obj
 					}
 				});
-				for (var i = channeldata.length - 1; i >= 0; i--) {
-					updateChannelData(channeldata[i]);
+				for (var i = channelData.length - 1; i >= 0; i--) {
+					updateChannelData(channelData[i]);
 				}
 				if (channelsCallback) {
 					channelsCallback(channelsList);
@@ -222,23 +223,63 @@ function listenToData() {
 			// console.log('channels',data);
 			let defaultTime = Date.now();
 			if (data.channels && data.channels.length) {
-				let channeldata = data.channels.map((obj,index) => {
+				let channelData = data.channels.map((obj,index) => {
 					return {
 						type: 1,
 						timestamp: defaultTime,
 						...obj
 					}
 				});
-				for (var i = channeldata.length - 1; i >= 0; i--) {
-					updateChannelData(channeldata[i]);
+				for (var i = channelData.length - 1; i >= 0; i--) {
+					updateChannelData(channelData[i]);
 				}
 				if (channelsCallback) {
 					channelsCallback(channelsList);
 				}
 			}
 		});
-		addListenerForSocketMessage('CDS',(data)=>{
+		addListenerForSocketMessage('JCH',(data)=>{
+			console.log('jch',data);
+			if (data && data.character) {
+				// one: create a toast if this is a friend or bookmark
+				// data.character[i].identity
+				// TODO
 
+				// two: join a channel if this is us and we're not in it yet.
+				console.log(data.character.identity,userData.name);
+				if (data.character.identity === userData.name) {
+					channelsJoined.push(data.channel); // add this to the list of joined channels. This should allow invites to work.
+					if (joinedChannelsCallback) { // this'll update the list of joined channels.
+						joinedChannelsCallback(getJoinedChannels());
+					}
+				}
+
+				// three: update channel data if it's a room we're in - userlist & population
+				let channelData = getChannelData(data.channel);
+				data.users = data.character;
+
+				if (channelData && channelData.users) {
+					channelData.users.push(data.character);	
+					data.users=channelData.users;
+				}
+
+				delete data.character;
+				updateChannelData(data); 
+
+				if (channelsCallback) {
+					channelsCallback(channelsList);
+				}
+			}
+			
+		});
+		addListenerForSocketMessage('COL',(data)=>{ // col.nOthing
+			updateChannelData(data);
+		});
+		addListenerForSocketMessage('ICH',(data)=>{
+			updateChannelData(data);
+		});
+		addListenerForSocketMessage('CDS',(data)=>{
+			updateChannelData(data);
 		});
 	});
 }
@@ -255,38 +296,56 @@ function getChannels(){
 }
 
 var channelsCallback = undefined;
-function setGetChannelsCallback(cb) {
+function setChannelsCallback(cb) {
 	channelsCallback = cb;		
 }
 
+var joinedChannelsCallback = undefined;
+function setJoinedChannelsCallback(cb) {
+	joinedChannelsCallback = cb;
+}
+
+var selectedChatCallback = undefined;
+function setSelectedChatCallback(cb) {
+	selectedChatCallback = cb;
+}
+
+var selectedChat = undefined;
+function setSelectedChat(value) {
+	selectedChat = value;
+}
+
 function getChannelData(name){
-	// let channelData = channelsList.filter((obj)=> {
- //        return obj.key == id;
- //    });
- //    if (channelData.length) {
- //    	return channelData[0];
- //    } else {
- //    	console.warn('channel with that id not found!',id);
- //    	return undefined;
- //    }
  	return channelsList[name];
 }
 
 function updateChannelData(data) {
-	if (!data || !data.name) {
+	if (!data || !data.channel) {
 		console.log('missing stuff',data)
 		return;
 	}
 
-	if (channelsList[data.name]) { // if an entry exists, update the fields you have.
-		channelsList[data.name] = Object.assign(channelsList[data.name], data);
+	if (data.users) {
+		data.characters = data.users.length;
+	}
+
+	if (channelsList[data.channel]) { // if an entry exists, update the fields you have.
+		channelsList[data.channel] = Object.assign(channelsList[data.channel], data);
 	} else { // if an entry doesn't exist, add it
-		channelsList[data.name] = data;
+		channelsList[data.channel] = data;
+	}
+
+	// if this is the selected chat, then do an update.
+	if (selectedChat === data.channel && selectedChatCallback) {
+		selectedChatCallback(channelsList[data.channel]);
 	}
 }
 
 function getJoinedChannels() {
-	return channelsJoined;
+	// return channelsJoined;
+	return channelsJoined.map((obj) => {
+		return channelsList[obj];
+	})
 }
 
 function joinChannel(name){
@@ -295,16 +354,26 @@ function joinChannel(name){
 		// TODO: toast.
 		return;
 	}
+
 	socket.send( 'JCH '+JSON.stringify({ "channel": name }) );
-	channelsJoined.push(name);
+	// this should only happen when we get JCH back.
+		// channelsJoined.push(name); 
+		// if (joinedChannelsCallback) {
+		// 	joinedChannelsCallback(getJoinedChannels());
+		// }
 }
 
 function leaveChannel(name) {
 
 }
 
+var friendsCallback = undefined;
+function setFriendsCallback(cb) {
+	friendsCallback = cb;
+}
+
 function getFriends() {
 	return Promise.resolve( userData.friends );
 }
 
-export { login,loadCookie,gotLoginPromise,createSocket,lostConnectionAlert,gainedConnectionAlert,getChannels,joinChannel,getFriends,setGetChannelsCallback };
+export { login,loadCookie,gotLoginPromise,createSocket,lostConnectionAlert,gainedConnectionAlert,getChannels,getChannelData,joinChannel,getFriends,setChannelsCallback,setJoinedChannelsCallback,setSelectedChatCallback,setSelectedChat,setFriendsCallback };

@@ -156,7 +156,7 @@ class RoomList extends Component {
                         } else {
                             return (
                                 <RoomObject 
-                                    key={obj.key}
+                                    key={obj.name}
                                     user={obj}
                                     setSelectedChat={() => this.setSelectedChat(obj.name)}
                                 />

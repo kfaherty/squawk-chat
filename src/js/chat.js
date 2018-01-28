@@ -13,6 +13,23 @@ function ChatMessage(props){
 	)
 }
 
+function ListUser(props){
+	const user = props.data;
+	
+	// TODO: gender stuff.
+	// TODO: status icons.
+	
+	return (
+		<div className="list-user">
+			<div className="status-icon"></div>
+			<div className="rank-icon"></div>
+			<div className="user-name">{user.identity}</div>
+		</div>
+	)
+}
+									
+
+
 class Chat extends Component {
 	constructor(props) {
     	super(props);
@@ -47,7 +64,11 @@ class Chat extends Component {
     	this.toggleChatMenu();
     }
    	render() {
-   		const chat = this.props.chat || {messages:[]};
+   		const chat = this.props.chat;
+   		let users = undefined;
+   		if (chat && chat.users) {
+   			users = Object.values(chat.users);
+   		}
 		return (
 			<div className="chat-window">
 				<div className={"no-chat " + ( this.props.selectedChat ? "hidden" : "" )}>
@@ -58,8 +79,11 @@ class Chat extends Component {
 						<div className={"chat-contain "}>
 							<div className="chat-header">
 								<div className="chat-header-wrap">
-									<div className="chat-title">{chat.title}</div>
-									<div className="chat-subtitle">{chat.subtitle}</div>
+									<div className="chat-title">{chat.channel}</div>
+									{(chat.type === 0 || chat.type === 1) && (
+										<div className="chat-subtitle">{chat.description}</div>
+									)}
+									{/* other chat types..! */}
 								</div>
 								<div className="settings-button" onClick={() => this.toggleChatMenu()}>
 									<div className="fi-widget"></div>
@@ -76,7 +100,7 @@ class Chat extends Component {
 							</div>
 
 							<div className="messages-contain">
-								{chat.messages.map((obj) => {
+								{chat.messages && chat.messages.map((obj) => {
 									// TODO filter out ignored users
 
 									return (
@@ -108,7 +132,14 @@ class Chat extends Component {
 							profile
 						</div>
 						<div className="chat-user-list-contain">
-							list
+							{users && users.map((obj) => {
+								return (
+									<ListUser
+										key={obj.identity}
+										data={obj}
+									/>
+								)	
+							})}
 						</div>
 					</div>
 				)}

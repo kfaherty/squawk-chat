@@ -22,7 +22,7 @@ class Avatar extends Component {
 					iconurl = ''; // Default private pm image
 					break;
 				default:
-					console.log('invalid type',this.props);
+					// console.trace('invalid type',this.props);
 					break;
 			}
 		}
@@ -65,7 +65,7 @@ class RoomObject extends Component {
 		const user = this.props.user;
 		return (
 			<div className={"room-object " + (user.selected ? "selected" : "")} onClick={() => this.roomObjectClicked()}>
-				<Avatar icon={user.icon} public={user.public} />
+				<Avatar icon={user.icon} type={user.type} />
 
 				<div className="user-icon-contain">
 					<div className={"user-icon fi-star " + (user.friend ? "active" : "")}></div>

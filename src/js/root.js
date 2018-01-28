@@ -4,23 +4,28 @@ import Authorize from './authorize';
 import RoomList from './roomlist';
 import Chat from './chat';
 
-import { gotLoginPromise,getFriends,setGetChannelsCallback,getChannels,joinChannel,lostConnectionAlert,gainedConnectionAlert } from './api2';
+import { gotLoginPromise,setChannelsCallback,setJoinedChannelsCallback,setFriendsCallback,getChannels,getChannelData,joinChannel,setSelectedChatCallback,setSelectedChat,getFriends,lostConnectionAlert,gainedConnectionAlert } from './api2';
 
 class Root extends Component {
 	constructor(props) {
     	super(props);
     	this.state = {
 	    	selectedTab: 'messages',
+
 	    	selectedChat: null,
+	    	chatData: undefined,
+	    	
 	    	username: null,
 	    	connected: true,
 	    	loggedin: false,
+	    	
 	    	friendslist: [],
 	    	roomslist: [],
 	    	roomsjoined: [],
+
 	    	userMenuOpen: false
 	    };
-		this.chat = undefined;
+		
 		
 	    lostConnectionAlert((err,connected) => {
 	    	console.log('lost connection!');
@@ -34,12 +39,23 @@ class Root extends Component {
     
 	assignCallbacks() {
 	    // messages:
+	    setJoinedChannelsCallback((data) => {
+			console.log('new joined data',data);
+			this.setState({roomsjoined: data});
+	    });
 	    // channels:
-		setGetChannelsCallback((data) => {
-			console.log('root got new channel data',data);
+		setChannelsCallback((data) => {
+			console.log('new channel data',data);
 			this.setState({roomslist: data});
-		})
+		});
 	    // friends:
+	    setFriendsCallback((data) => {
+			this.setState({friendslist: data});
+	    });
+	    setSelectedChatCallback((data) => {
+	    	console.log('chat update',data);
+	    	this.setState({chatData:data});
+	    })
 	}
 
     componentWillMount() {
@@ -50,13 +66,6 @@ class Root extends Component {
 			});
 	    });
 	    this.assignCallbacks();
-    }
-
-    updateJoinedRooms(data) { // callback
-    	// TODO
-    	// this function needs to get passed to api 
-    	// so when a channel gets added/removed to channelsJoined they sync
-    	this.setState({roomsjoined: data});
     }
 
     setSelectedTab(value) {
@@ -73,13 +82,21 @@ class Root extends Component {
 
     setSelectedChat(value) {
     	if (value) {
+    		setSelectedChat(value); // syncs callback to updates.
     		joinChannel(value);
-    		this.setState({selectedChat:value});
+    		this.setState({
+    			selectedChat:value,
+    			chatData: getChannelData(value) // load initial data.
+    		});
     	}
     }
+
     clearSelectedChat() {
-    	this.setState({selectedChat: null});
-    	this.chat = undefined;
+    	this.setState({
+    		selectedChat: null,
+    		chatData: undefined
+    	});
+    	setSelectedChat(undefined);
     }
 
     toggleUserMenu() {
@@ -92,7 +109,7 @@ class Root extends Component {
     }
 
 	render() {
-		const chat = this.chat; //getSelectedChat();
+		const chat = this.state.chatData; //getSelectedChat();
 		return (
 			<div className="app-wrapper">
 				<Authorize visible={this.state.loggedin} />
