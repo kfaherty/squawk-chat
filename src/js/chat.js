@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { RelativeTime } from './common';
+import { RelativeTime,ParsedText } from './common';
 import { sendMessage,privateMessage } from './api2'
 
 function ChatMessage(props){
@@ -9,7 +9,7 @@ function ChatMessage(props){
 		<div className={"chat-message " + (message.mine ? "mine" : "")}>
 			<div className="user-name">{message.character}</div>
 			<RelativeTime created_at={message.timestamp} />
-			<div className="message">{message.message}</div>
+			<div className="message"><ParsedText text={message.message} /></div>
 		</div>
 	)
 }
@@ -44,6 +44,9 @@ class Chat extends Component {
     }
     clearSelectedChat() {
     	this.props.clearSelectedChat();
+
+    	// TODO: tell the api we've left a channel
+
 		// this.toggleChatMenu();
     }
     reportSelectedChat() {
@@ -69,15 +72,15 @@ class Chat extends Component {
     }
 	handleKeyDown(event) {
 		// console.log(event.key);
-		if (event.key == 'Shift') {
+		if (event.key === 'Shift') {
   			this.shiftDown = true;
   		}
   	}
   	handleKeyUp(event) {
-  		if (event.key == 'Shift') {
+  		if (event.key === 'Shift') {
   			this.shiftDown = false;
   		}
-        if (event.key == 'Enter' && !this.shiftDown) {
+        if (event.key === 'Enter' && !this.shiftDown) {
   			this.onSendMessage();
   		}
   	}
@@ -96,7 +99,7 @@ class Chat extends Component {
    		const chat = this.props.chat;
    		let users = undefined;
    		if (chat && chat.users) {
-   			users = Object.values(chat.users);
+   			users = Object.values(chat.users); // TODO: sorting/filtering?
    		}
 
 		return (
@@ -106,14 +109,20 @@ class Chat extends Component {
 				</div>
 				{this.props.selectedChat && (
 					<div className="chat-wrap">
-						<div className={"chat-contain "}>
+						<div className={"chat-contain " + (this.props.userListOpen ? "" : "full")}>
 							<div className="chat-header">
 								<div className="chat-header-wrap">
 									<div className="chat-title">{chat.channel}</div>
-									{(chat.type === 0 || chat.type === 1) && (
-										<div className="chat-subtitle">{chat.description}</div>
-									)}
-									{/* other chat types..! */}
+									
+									{(() => {
+								        switch (chat.type) {
+								        	case 0: return <div className="chat-subtitle"><ParsedText text={chat.description} /></div>;
+								        	case 1: return <div className="chat-subtitle"><ParsedText text={chat.description} /></div>;
+								        	case 2: return <div className="chat-subtitle"><ParsedText text={chat.description} /></div>;
+								        	case 3: return ''; // TODO: render status and stuff.
+								        	default: return '';
+								        }
+								    })()}
 								</div>
 								<div className="settings-button" onClick={() => this.toggleChatMenu()}>
 									<div className="fi-widget"></div>
@@ -121,11 +130,11 @@ class Chat extends Component {
 							</div>
 
 					        <div className={"dropdown " + (this.state.chatMenuOpen ? "visible" : "")}>
-								<div onClick={() => this.clearSelectedChat()} className="list-item"><div className="list-icon fi-x"></div>Close Chat</div>
+								<div onClick={() => this.clearSelectedChat()} className="list-item"><div className="list-icon fi-trash"></div>{chat.type === 3 ? "Close Chat" : "Leave Channel"}</div>
 								<div onClick={() => this.toggleFavorite()} className={"list-item " + (this.state.favorited ? "hidden" : "")}><div className="list-icon fi-star"></div>Favorite</div>
 								<div onClick={() => this.toggleFavorite()} className={"list-item " + (this.state.favorited ? "" : "hidden")}><div className="list-icon fi-star"></div>Unfavorite</div>
-								<div onClick={() => this.toggleIgnore()} className={"list-item " + (this.state.ignored ? "hidden" : "")}><div className="list-icon fi-plus"></div>Ignore</div>
-								<div onClick={() => this.toggleIgnore()} className={"list-item " + (this.state.ignored ? "" : "hidden")}><div className="list-icon fi-minus"></div>Unignore</div>
+								{(chat.type === 3) && (<div onClick={() => this.toggleIgnore()} className={"list-item " + (this.state.ignored ? "hidden" : "")}><div className="list-icon fi-plus"></div>Ignore</div>)}
+								{(chat.type === 3) && (<div onClick={() => this.toggleIgnore()} className={"list-item " + (this.state.ignored ? "" : "hidden")}><div className="list-icon fi-minus"></div>Unignore</div>)}
 								<div onClick={() => this.reportSelectedChat()} className="list-item"><div className="list-icon fi-flag"></div>Report</div>
 							</div>
 
@@ -165,19 +174,23 @@ class Chat extends Component {
 							    <textarea type="text" name="message" resizable="false" value={this.state.inputValue} onKeyUp={(event) => this.handleKeyUp(event)} onKeyDown={(event) => this.handleKeyDown(event)} onChange={(event) => this.handleChange(event)} />
 							</div>
 						</div>
-						<div className="chat-user-profile-contain">
-							profile
-						</div>
-						<div className="chat-user-list-contain">
-							{users && users.map((obj) => {
-								return (
-									<ListUser
-										key={obj.identity}
-										data={obj}
-									/>
-								)	
-							})}
-						</div>
+						{(chat.type === 3) && (
+							<div className={"chat-user-profile-contain " + ( this.props.userListOpen ? "" : "full" )}>
+								profile
+							</div>
+						)}
+						{(chat.type !== 3) && (
+							<div className={"chat-user-list-contain " + ( this.props.userListOpen ? "" : "full" )}>
+								{users && users.map((obj) => {
+									return (
+										<ListUser
+											key={obj.identity}
+											data={obj}
+										/>
+									)	
+								})}
+							</div>
+						)}
 					</div>
 				)}
 			</div>

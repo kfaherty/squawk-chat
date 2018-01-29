@@ -1,3 +1,5 @@
+// @import "./mixins.scss";
+
 .room-object {
 	width: 300px;
 	height: 136px;
@@ -23,6 +25,12 @@
 		.details-contain {
 			.user-name,.snippet,.message-type {
 				color: #f0fbf3;
+				a {
+				    color: #f0fbf3;
+				    &:hover {
+				    	color: #fff;
+				    }
+				}
 			}
 		}
 		.timestamp {
@@ -101,11 +109,13 @@
 		    height: 65px;
     		overflow: hidden;
     		text-overflow: ellipsis; // we need to do this with js i think
+
+		    @include bbcodeStyles();
 		}
 	}	
 	.timestamp {
 		position: absolute;
-		top: 20px;
+		top: 17px;
 		right: 20px;
 		text-align: right;
 		font-size: 13px;

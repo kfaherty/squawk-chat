@@ -28,7 +28,7 @@ function loadCookie() {
 				bookmarks: cookiedata.bookmarks,
 				friends: cookiedata.friends
 			};
-			// console.log(userData);
+			console.log(userData);
 			resolve(userData.characterlist);
 		}
 	});
@@ -44,6 +44,8 @@ function login(username,password) {
 		var formData = new FormData();
 		formData.append('account', username);
 		formData.append('password', apiurls.password);
+		formData.append('no_bookmarks', true);
+		// formData.append('no_friends', true);
 		
 		fetch(apiurls.loginurl,{ 
 			method: 'POST',
@@ -51,22 +53,24 @@ function login(username,password) {
 	  	}).then(response => response.json())
 		.catch(error => console.error('Error:', error))
 		.then(response => {
-			// console.log('Success:', response);
+			console.log('Success:', response);
 			userData.account = username; // cache this too because we need it in IDN
 			userData.ticket = response.ticket;
 			userData.characterlist = response.characters;
 			userData.default_character = response.default_character;
 			userData.logged_in = true;
-			userData.bookmarks = response.bookmarks;
-			userData.friends = response.friends;
+			// userData.bookmarks = response.bookmarks;
+			if (response.friends) {
+				friendsList = response.friends.map((obj) => {
+					return obj.source_name;
+				});
+			}
 
 			let expires = new Date(Date.now() + 60 * 1000 * 30);
 		    cookies.set('account', userData.account, 				{ expires: expires, path: '/' });
 		    cookies.set('ticket', userData.ticket, 					{ expires: expires, path: '/' });
 		    cookies.set('characterlist', userData.characterlist, 	{ expires: expires, path: '/' });
-		    cookies.set('bookmarks', userData.bookmarks, 			{ expires: expires, path: '/' });
-		    cookies.set('friends', userData.friends, 				{ expires: expires, path: '/' });
-		    // console.log(cookies.getAll());
+		    cookies.set('friends', friendsList, 					{ expires: expires, path: '/' });
 
 			resolve(userData.characterlist);
 		});
@@ -88,7 +92,9 @@ var socket;
 // data sources
 var channelsList = {};
 var channelsJoined = []; // this is just going to be a standard array of names.
-var usersCache = [];
+var usersCache = []; // LIS data.
+var bookmarksList = []; // we're not going to know who is a bookmark and who is a friend unless we use the data from login.
+var friendsList = [];
 
 function createSocket(name) {
 	return new Promise(function(resolve,reject) {
@@ -212,6 +218,32 @@ var messageSeq = 0;
 
 function listenToData() {
 	gotLoginPromise().then(()=>{ 			// wait for login: 
+		addListenerForSocketMessage('LIS',(data)=>{  
+			if (data && data.characters) {
+				let parsedCharacters = [];
+				for (var i = data.characters.length - 1; i >= 0; i--) {
+					parsedCharacters[ data.characters[i][0] ] = {
+						character: data.characters[i][0],
+						gender: data.characters[i][1],
+						status: data.characters[i][2],
+						statusMessage: data.characters[i][3]
+					}
+				}
+				usersCache = parsedCharacters
+			}
+		});
+		addListenerForSocketMessage('FRL',(data)=>{  
+			if (data && data.characters) {
+				// cache this
+				bookmarksList = data.characters;
+				// if we want to know who is online, we need to correlate this with the users.
+
+				if(friendsCallback) {
+					// TODO: map friends results onto usersCache.
+					// friendsCallback();
+				}
+			}
+		});
 		addListenerForSocketMessage('CHA',(data)=>{  
 			let defaultTime = Date.now();
 			if (data.channels && data.channels.length) {
@@ -267,6 +299,8 @@ function listenToData() {
 						messages: [data]
 					}
 				}
+				channelData.timestamp = Date.now();
+				channelData.lastMessage = data.character + ": " + data.message;
 
 				updateChannelData(channelData); 
 			};
@@ -288,8 +322,11 @@ function listenToData() {
 					channelData = {
 						channel:data.character,
 						type: 3,
+						friend: friendsList.indexOf(data.character) !== -1 ? true : false,
+						bookmark: bookmarksList.indexOf(data.character) !== -1 ? true : false,
 						timestamp: Date.now(),
 						name: data.character,
+						lastMessage: data.character + ": " + data.message,
 						messages: [messageData]
 					}
 					channelsList[channelData.channel] = channelData;
@@ -301,6 +338,10 @@ function listenToData() {
 						}
 					// }
 				}
+
+				channelData.timestamp = Date.now();
+				channelData.lastMessage = data.character + ": " + data.message;
+				channelData.typing = 'clear';
 
 				updateChannelData(channelData); 
 			};
@@ -349,17 +390,22 @@ function listenToData() {
 				}
 
 				// three: update channel data if it's a room we're in - userlist & population
-				return; // TODO
 
 				let channelData = getChannelData(data.channel);
 				data.users = [data.character];
-
-				if (channelData && channelData.users) {
+				if (!channelData) {
+					// erm.
+					console.log('user left a channel you dont know about.',channelData,data);
+					return;
+				}
+				if (channelData.users) {
 					console.log(channelData.users);
 					
 					// TODO: check if this exists.
-
-					channelData.users.push(data.character);	// not a function
+					let index = channelData.users.indexOf(data.character);
+					if (index !== -1) { // check if this exists yet.
+						channelData.users.splice(index,1);	// not a function
+					}
 					data.users=channelData.users;
 				}
 
@@ -393,11 +439,10 @@ function listenToData() {
 				data.users = [data.character];
 
 				if (channelData && channelData.users) {
-					console.log(channelData.users);
-					
-					// TODO: check if this exists yet.
-
-					channelData.users.push(data.character);	// not a function
+					// console.log(channelData.users);
+					if (channelData.users.indexOf(data.character) === -1) { // check if this exists yet.
+						channelData.users.push(data.character);	// not a function
+					}
 					data.users=channelData.users;
 				}
 
@@ -469,6 +514,13 @@ function updateChannelData(data) {
 
 	if (channelsList[data.channel]) { // if an entry exists, update the fields you have.
 		channelsList[data.channel] = Object.assign(channelsList[data.channel], data);
+
+		// should we test of we're joined?
+		if (channelsJoined.indexOf(data.channel) !== -1) {
+			if (joinedChannelsCallback) { // this might be slow.
+				joinedChannelsCallback(getJoinedChannels());
+			}
+		}
 	} else { // if an entry doesn't exist, add it
 		channelsList[data.channel] = data;
 	}
@@ -510,7 +562,7 @@ function setFriendsCallback(cb) {
 }
 
 function getFriends() {
-	return Promise.resolve( userData.friends );
+	return friendsList;
 }
 
 function sendMessage(channel,message) {
@@ -538,6 +590,8 @@ function sendMessage(channel,message) {
 			messages: [data]
 		}
 	}
+	channelData.timestamp = Date.now();
+	channelData.lastMessage = userData.name + ": " + message;
 
 	updateChannelData(channelData); 
 }
@@ -566,6 +620,8 @@ function privateMessage(character,message){
 			type: 3,
 			timestamp: Date.now(),
 			name: data.character,
+			friend: friendsList.indexOf(data.character) !== -1 ? true : false,
+			bookmark: bookmarksList.indexOf(data.character) !== -1 ? true : false,
 			messages: [data]
 		}
 		channelsList[channelData.channel] = channelData;
@@ -582,6 +638,9 @@ function privateMessage(character,message){
 			messages: [data]
 		}
 	}
+
+	channelData.timestamp = Date.now();
+	channelData.lastMessage = userData.name + ": " + message;
 
 	updateChannelData(channelData); 
 }

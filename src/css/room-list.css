@@ -59,9 +59,9 @@
 
 .room-list {
   overflow-y: scroll;
-  top: 20px;
+  top: 10px;
   position: relative;
-  height: calc( 100% - 99px); }
+  height: calc( 100% - 82px); }
 
 .no-rooms {
   padding-top: 20px;

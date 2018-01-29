@@ -24,6 +24,18 @@
     padding-top: 9px;
     color: #A6B2AD;
     line-height: 22px; }
+    .chat-message .message strong {
+      font-weight: 600; }
+    .chat-message .message em {
+      font-style: italic; }
+    .chat-message .message sub, .chat-message .message sup {
+      font-size: 75%;
+      line-height: 0;
+      position: relative; }
+    .chat-message .message sup {
+      top: -0.5em; }
+    .chat-message .message sub {
+      bottom: -0.25em; }
   .chat-message .timestamp {
     position: absolute;
     top: 20px;

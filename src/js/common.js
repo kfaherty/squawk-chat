@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import parser, { Tag } from 'bbcode-to-react';
 
 class RelativeTime extends Component {
 	constructor(props) {
@@ -160,4 +161,48 @@ class StandardInput extends Component {
 		);
 	}
 }
-export  { RelativeTime,DropdownMenu,StandardInput };
+
+class noparseTag extends Tag {
+  	toReact() {
+  		console.log(this.getContent(true));
+    	return (<p>{this.getContent(true)}</p>);
+  	}
+}
+class urlTag extends Tag {
+  	toReact() {
+    	return (
+      		<a href={this.params.url || this.getComponents()}>{this.getComponents()}</a>
+    	);
+  	}
+}
+class supTag extends Tag {
+  	toReact() {
+    	return (<sup>{this.getComponents()}</sup>);
+  	}
+}
+class subTag extends Tag {
+  	toReact() {
+    	return (<sub>{this.getComponents()}</sub>);
+  	}
+}
+parser.registerTag('noparse', noparseTag);
+parser.registerTag('url', urlTag);
+parser.registerTag('sup', supTag);
+parser.registerTag('sub', subTag);
+// TODO: icon
+// TODO: eicon
+// TODO: user // can we calculate this?
+
+class ParsedText extends Component {
+	createMarkup(html) { 
+		return {__html: html}; 
+	}
+	render() {
+		var result = this.props.text;
+		return (
+		    <p>{parser.toReact(this.props.text || '')}</p>
+		)
+	}
+}
+
+export  { RelativeTime,DropdownMenu,StandardInput,ParsedText };

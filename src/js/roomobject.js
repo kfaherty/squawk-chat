@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { RelativeTime } from './common';
+import { RelativeTime,ParsedText } from './common';
 
 class Avatar extends Component {
 	render() {
@@ -51,7 +51,7 @@ class RoomShortObject extends Component {
 					<div className="message-type">Users: {user.characters}</div>
 				</div>
 
-				<RelativeTime created_at={user.relativeTime} />
+				{/* <RelativeTime created_at={user.timestamp} /> */}
 			</div>
 		);
 	}
@@ -73,12 +73,20 @@ class RoomObject extends Component {
 				</div>
 
 				<div className="details-contain">
-					<div className="user-name">{user.name}</div>
-					<div className="message-type">{user.userStatus}{user.statusMessage ? (": "+user.statusMessage) : ""}</div>
-					<div className="snippet">{user.snippet}</div>
+					<div className="user-name">{user.channel}</div>
+					{(() => {
+				        switch (user.type) {
+				        	case 0: return <div className="message-type">Public Channel</div>;
+				        	case 1: return <div className="message-type">Private Channel</div>;
+				        	case 2: return <div className="message-type">Invite Only</div>;
+				        	case 3: return <div className="message-type">{user.userStatus}{user.statusMessage ? (": "+user.statusMessage) : ""}</div>;
+				        	default: return '';
+				        }
+				    })()}
+					<div className="snippet"><ParsedText text={user.lastMessage || 'No messages to show'}/></div>
 				</div>
 
-				<RelativeTime created_at={user.relativeTime} />
+				<RelativeTime created_at={user.timestamp} />
 			</div>
 		);
 	}

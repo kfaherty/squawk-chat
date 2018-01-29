@@ -23,7 +23,8 @@ class Root extends Component {
 	    	roomslist: [],
 	    	roomsjoined: [],
 
-	    	userMenuOpen: false
+	    	userMenuOpen: false,
+	    	userListOpen: true
 	    };
 		
 		
@@ -50,6 +51,7 @@ class Root extends Component {
 		});
 	    // friends:
 	    setFriendsCallback((data) => {
+	    	console.log('friends data',data);
 			this.setState({friendslist: data});
 	    });
 	    setSelectedChatCallback((data) => {
@@ -73,6 +75,8 @@ class Root extends Component {
     		case 'channels':
     			getChannels();
     			break;
+    		// case 'friends':
+    		// 	break;
     		default:
     			break;
     		
@@ -101,6 +105,10 @@ class Root extends Component {
 
     toggleUserMenu() {
     	this.setState({userMenuOpen: !this.state.userMenuOpen});
+    }
+
+    toggleUserList() {
+    	this.setState({userListOpen: !this.state.userListOpen});
     }
 
     reportSelectedChat() {
@@ -142,7 +150,7 @@ class Root extends Component {
 	                </div>
 
 			        <div className="controls-contain">
-			            <div className="arrow right"></div>
+			            <div className="arrow right" onClick={() => this.toggleUserList()}></div>
 			        </div>
 			    </div>
 
@@ -181,6 +189,7 @@ class Root extends Component {
 						selectedChat={this.state.selectedChat} 
 						reportSelectedChat={this.reportSelectedChat}
 						clearSelectedChat={()=>this.clearSelectedChat()}
+						userListOpen={this.state.userListOpen}
 					/>
 				</div>
 			</div>

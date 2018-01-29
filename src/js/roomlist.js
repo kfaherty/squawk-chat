@@ -7,7 +7,7 @@ class RoomList extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            sortType: 'Alphabetical',
+            sortType: 'Population',
             sortMenuOpen: false,
             selectedChat: null,
             searchString: ""
@@ -40,8 +40,8 @@ class RoomList extends Component {
         }
         function population(a,b) {
             // pop
-            if (a.characters < b.characters) return -1;
-            if (a.characters > b.characters) return 1;
+            if (a.characters > b.characters) return -1;
+            if (a.characters < b.characters) return 1;
             
             //alpha
             if (a.name < b.name) return -1;

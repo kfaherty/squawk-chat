@@ -252,20 +252,23 @@
   top: 0px;
   background: white;
   opacity: 1;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.3s ease,transform 0.3s ease;
   pointer-events: initial;
   overflow-y: scroll; }
   .chat-user-list-contain.hidden, .chat-user-profile-contain.hidden {
     opacity: 0;
     pointer-events: none; }
+  .chat-user-list-contain.full, .chat-user-profile-contain.full {
+    transform: translate(140px, 0px); }
 
 .chat-user-list-contain .list-user {
-  height: 20px;
+  height: 40px;
   border-bottom: 1px solid #E5EBE9;
-  padding-left: 10px;
-  line-height: 20px;
+  padding-left: 22px;
+  line-height: 40px;
   font-weight: 600;
-  color: #99A09C;
+  font-size: 13px;
+  color: #6A6F6C;
   white-space: nowrap;
   overflow: hidden;
   -o-text-overflow: ellipsis;

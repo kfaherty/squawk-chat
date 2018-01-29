@@ -66,9 +66,21 @@
       height: 65px;
       overflow: hidden;
       text-overflow: ellipsis; }
+      .room-object .details-contain .snippet strong {
+        font-weight: 600; }
+      .room-object .details-contain .snippet em {
+        font-style: italic; }
+      .room-object .details-contain .snippet sub, .room-object .details-contain .snippet sup {
+        font-size: 75%;
+        line-height: 0;
+        position: relative; }
+      .room-object .details-contain .snippet sup {
+        top: -0.5em; }
+      .room-object .details-contain .snippet sub {
+        bottom: -0.25em; }
   .room-object .timestamp {
     position: absolute;
-    top: 20px;
+    top: 17px;
     right: 20px;
     text-align: right;
     font-size: 13px;
