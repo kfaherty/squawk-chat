@@ -1,6 +1,22 @@
 import React, { Component } from 'react';
 
 class RelativeTime extends Component {
+	constructor(props) {
+		super(props)
+		this.state = {
+			relativeTime: this.relativeTime()
+		}
+	}
+	componentDidMount() {
+    	this.interval = setInterval(()=>{
+    		this.setState({
+    			relativeTime: this.relativeTime()
+    		});
+    	}, 1000);
+  	}
+  	componentWillUnmount() {
+    	clearInterval(this.interval);
+  	}
 	relativeTime() {
 		// console.log(this.props);
 		let time = this.props.created_at;
@@ -45,7 +61,7 @@ class RelativeTime extends Component {
    	render() {
    		// console.log(this);
 		return (
-			<span className="timestamp">{this.relativeTime()}</span>
+			<span className="timestamp">{this.state.relativeTime}</span>
 		) // 
    	}
 }

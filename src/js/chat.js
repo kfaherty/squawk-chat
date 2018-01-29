@@ -98,6 +98,7 @@ class Chat extends Component {
    		if (chat && chat.users) {
    			users = Object.values(chat.users);
    		}
+
 		return (
 			<div className="chat-window">
 				<div className={"no-chat " + ( this.props.selectedChat ? "hidden" : "" )}>
@@ -140,7 +141,16 @@ class Chat extends Component {
 									)
 								})}
 
-						    	<div className="typing-indicator">
+						    	<div className={"typing-indicator " + 
+						    	    (() => {
+								        switch (chat.typing) {
+								        	case "typing": return 'visible';
+								        	case "paused": return 'paused';
+								        	case "clear":  return '';
+								        	default:      return '';
+								        }
+								    })()
+						    	}>
 						    		<div className="dot-one"></div>
 						    		<div className="dot-two"></div>
 						    		<div className="dot-three"></div>

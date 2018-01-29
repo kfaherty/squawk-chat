@@ -305,7 +305,21 @@ function listenToData() {
 				updateChannelData(channelData); 
 			};
 		});
-		//  
+		addListenerForSocketMessage('TPN',(data)=>{
+			// {"character":"Leon Priest","status":"clear"}
+			if (data && data.character) {
+				// data.channel = data.character;
+				// delete data.character;
+				let channelData = {
+					channel: data.character,
+					typing: data.status
+				}
+				// this can break stuff.
+				if (getChannelData(data.character)) { // check if this exists..
+					updateChannelData(channelData); 
+				}
+			}
+		});
 		addListenerForSocketMessage('FLN',(data)=>{
 			// global channel leave.
 			// one: create toast if this is friend/bookmark
@@ -482,7 +496,12 @@ function joinChannel(name){
 }
 
 function leaveChannel(name) {
+	if (channelsJoined.indexOf(name) === -1) {
+		console.log('youre not in here',channelsJoined,name);
+		return;
+	}
 
+	socket.send( 'LCH '+JSON.stringify({ "channel": name }) );
 }
 
 var friendsCallback = undefined;

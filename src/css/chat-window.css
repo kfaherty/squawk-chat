@@ -331,6 +331,13 @@
       animation-delay: 0.15s; }
     .typing-indicator.visible .dot-three {
       animation-delay: 0.3s; }
+  .typing-indicator.paused {
+    padding: 5px;
+    border: 1px solid #DFE4E2;
+    margin: 20px;
+    opacity: 1;
+    height: 25px;
+    transform: scale(1); }
   .typing-indicator div {
     margin-right: 2px;
     width: 4px;
