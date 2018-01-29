@@ -116,17 +116,29 @@ class Root extends Component {
     	console.log('ok',this.state.selectedChat);
     }
 
+    toggleSettings() {
+		// TODO
+    }
+
+    updateStatus() {
+    	// TODO
+    }
+
+    logout() {
+		// TODO
+    }
+
 	render() {
 		const chat = this.state.chatData; //getSelectedChat();
 		return (
 			<div className="app-wrapper">
 				<Authorize visible={this.state.loggedin} />
 
-			    <div className="top-bar">
-			    	<div className={"potential-problem " + (this.state.connected ? "" : "visible")}>
-						<p>Disconnected from data</p>
-					</div>
+   				<div className={"potential-problem " + (this.state.connected ? "" : "visible")}>
+					<p>Disconnected from data</p>
+				</div>
 
+			    <div className="top-bar">
 			        <div className="logo-contain">
 			            SquawkChat
 			        </div>
@@ -144,9 +156,9 @@ class Root extends Component {
 			            <div className="avatar"></div>
 			        </div>
 			        <div className={"dropdown " + (this.state.userMenuOpen ? "visible" : "")}>
-			        	<div className="list-item" onClick={() => this.changeSort('Alphabetical')}><div className="list-icon fi-pencil"></div>Set Status</div>
-			        	<div className="list-item" onClick={() => this.changeSort('Alphabetical')}><div className="list-icon fi-widget"></div>Settings</div>
-	                    <div className="list-item" onClick={() => this.changeSort('Alphabetical')}><div className="list-icon fi-lock"></div>Logout</div>
+			        	<div className="list-item" onClick={() => this.updateStatus()}><div className="list-icon fi-pencil"></div>Set Status</div>
+			        	<div className="list-item" onClick={() => this.toggleSettings()}><div className="list-icon fi-widget"></div>Settings</div>
+	                    <div className="list-item" onClick={() => this.logout()}><div className="list-icon fi-lock"></div>Logout</div>
 	                </div>
 
 			        <div className="controls-contain">
@@ -159,6 +171,7 @@ class Root extends Component {
 					<RoomList
 						selectedChat={this.state.selectedChat}
 						rooms={this.state.roomsjoined}
+						defaultSort={'Newest First'}
 						label="messages"
 						activeTab={(this.state.selectedTab === 'messages' ? true : false)}
 						setSelectedChat={this.setSelectedChat}
@@ -167,6 +180,7 @@ class Root extends Component {
 					<RoomList
 						selectedChat={this.state.selectedChat}
 						rooms={this.state.roomslist}
+						defaultSort={'Type'}
 						label="channels"
 						activeTab={(this.state.selectedTab === 'channels' ? true : false)}
 						setSelectedChat={this.setSelectedChat}
@@ -175,6 +189,7 @@ class Root extends Component {
 					<RoomList
 						selectedChat={this.state.selectedChat}
 						rooms={this.state.friendslist}
+						defaultSort={'Alphabetical'}
 						label="friends"
 						activeTab={(this.state.selectedTab === 'friends' ? true : false)}
 						setSelectedChat={this.setSelectedChat}

@@ -3,6 +3,7 @@ import Cookies from 'universal-cookie';
 const cookies = new Cookies();
 
 var apiurls = loadURLS();
+const useProd = false; // TODO
 
 // userData:
 var userData = {
@@ -116,7 +117,11 @@ function createSocket(name) {
 		}
 		userData.name = name;
 
-		socket = new WebSocket(apiurls.devsocketurl);
+		if (useProd) {
+			socket = new WebSocket(apiurls.prodsocketurl);
+		} else {
+			socket = new WebSocket(apiurls.devsocketurl);
+		}
 		socket.onopen = function(event) {
 			socket.send( 'IDN '+ JSON.stringify({ "method": "ticket", "account": userData.account, "ticket": userData.ticket, "character": userData.name, "cname": "SquawkChat", "cversion": "0.1" }) );
 			// CHA public channels
@@ -271,6 +276,7 @@ function listenToData() {
 					return {
 						type: 1,
 						timestamp: defaultTime,
+						channel: obj.name,
 						...obj
 					}
 				});

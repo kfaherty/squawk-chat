@@ -641,12 +641,22 @@ html {
   padding: 7px 20px;
   color: #F44336;
   font-size: 22px;
-  height: 36px;
-  line-height: 36px;
+  /* height: 36px; */
+  /* line-height: 36px; */
   opacity: 0;
+  -webkit-transition: opacity 0.3s ease;
+  -o-transition: opacity 0.3s ease;
   transition: opacity 0.3s ease;
   z-index: 99;
-  pointer-events: none; }
+  pointer-events: none;
+  /* background: #f7faf9; */
+  /* color: #616965; */
+  /* line-height: 60px; */
+  /* margin-left: 24px; */
+  font-weight: 600;
+  font-size: 20px;
+  left: 0px;
+  bottom: 0px; }
   .potential-problem.visible {
     opacity: 1;
     pointer-events: initial; }
@@ -768,7 +778,7 @@ button {
   opacity: 50%; }
   .input-label.full {
     font-size: 14px;
-    transform: translate(0px, 3px); }
+    transform: translate(0px, 2px); }
 
 input, textarea {
   -moz-appearance: textfield !important;
@@ -1007,7 +1017,7 @@ input, textarea {
       font-size: 12px;
       background: transparent;
       outline: none;
-      padding: 10px 20px 10px 37px; }
+      padding: 17px 20px 5px 37px; }
   .room-list-contain .sort {
     text-align: right;
     padding: 0px 20px; }
@@ -1435,17 +1445,23 @@ input, textarea {
     transform: translate(140px, 0px); }
 
 .chat-user-list-contain .list-user {
-  height: 40px;
-  border-bottom: 1px solid #E5EBE9;
-  padding-left: 22px;
-  line-height: 40px;
-  font-weight: 600;
-  font-size: 13px;
-  color: #6A6F6C;
-  white-space: nowrap;
-  overflow: hidden;
-  -o-text-overflow: ellipsis;
-  text-overflow: ellipsis; }
+  border-radius: 5px;
+  margin: 10px;
+  background: white;
+  position: relative;
+  border: 1px solid #E5EBE9;
+  cursor: pointer; }
+  .chat-user-list-contain .list-user .user-name {
+    font-size: 13px;
+    padding-left: 22px;
+    line-height: 40px;
+    font-weight: 600;
+    font-size: 13px;
+    color: #6A6F6C;
+    white-space: nowrap;
+    overflow: hidden;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis; }
 
 .widgetMenu {
   position: absolute;
@@ -1538,7 +1554,7 @@ input, textarea {
     background: #1cd67c;
     border: 1px solid #1cd67c;
     box-shadow: 0px 0px 14px #ccc; }
-    .chat-message.mine .user-name, .chat-message.mine .message, .chat-message.mine .timestamp {
+    .chat-message.mine .user-name, .chat-message.mine .message, .chat-message.mine .timestamp, .chat-message.mine .message .action {
       color: #f0fbf3; }
   .chat-message .user-name {
     color: #1cd67c;

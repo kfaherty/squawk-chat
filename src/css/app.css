@@ -641,12 +641,22 @@ html {
   padding: 7px 20px;
   color: #F44336;
   font-size: 22px;
-  height: 36px;
-  line-height: 36px;
+  /* height: 36px; */
+  /* line-height: 36px; */
   opacity: 0;
+  -webkit-transition: opacity 0.3s ease;
+  -o-transition: opacity 0.3s ease;
   transition: opacity 0.3s ease;
   z-index: 99;
-  pointer-events: none; }
+  pointer-events: none;
+  /* background: #f7faf9; */
+  /* color: #616965; */
+  /* line-height: 60px; */
+  /* margin-left: 24px; */
+  font-weight: 600;
+  font-size: 20px;
+  left: 0px;
+  bottom: 0px; }
   .potential-problem.visible {
     opacity: 1;
     pointer-events: initial; }
@@ -768,7 +778,7 @@ button {
   opacity: 50%; }
   .input-label.full {
     font-size: 14px;
-    transform: translate(0px, 3px); }
+    transform: translate(0px, 2px); }
 
 input, textarea {
   -moz-appearance: textfield !important;

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { RelativeTime,ParsedText } from './common';
+import { performFilterSort,RelativeTime,ParsedText } from './common';
 import { sendMessage,privateMessage } from './api2'
 
 function ChatMessage(props){
@@ -14,19 +14,43 @@ function ChatMessage(props){
 	)
 }
 
-function ListUser(props){
-	const user = props.data;
-	
-	// TODO: gender stuff.
-	// TODO: status icons.
+class UserList extends Component {
+	constructor(props) {
+    	super(props);
 
-	return (
-		<div className="list-user">
-			<div className="status-icon"></div>
-			<div className="rank-icon"></div>
-			<div className="user-name">{user.identity}</div>
-		</div>
-	)
+    	this.state= {
+    		sortType: this.props.defaultSort || 'Alphabetical',
+            searchString: ""
+    	}
+	}
+	handleClick(name) {
+		if (!name) {
+			console.log('whatd you click?',name);
+			return;
+		}
+		this.props.usernameClicked(name);
+	}
+   	render() {
+   		console.log(this.props.users);
+        const users = performFilterSort(this.props.users || [],this.state.searchString,this.state.sortType); //this.state.filteredRooms;
+
+		return (
+			<div className={"chat-user-list-contain " + ( this.props.userListOpen ? "" : "full" )}>
+				{users && users.map((obj) => {
+					// TODO: gender stuff.
+					// TODO: status icons.
+
+					return (
+						<div className="list-user" key={obj.identity} onClick={() => this.handleClick(obj.identity)}>
+							<div className="status-icon"></div>
+							<div className="rank-icon"></div>
+							<div className="user-name">{obj.identity}</div>
+						</div>
+					)	
+				})}
+			</div>
+		)
+	}
 }
 
 class Chat extends Component {
@@ -38,6 +62,7 @@ class Chat extends Component {
 			favorited: this.props.favorited, // this is going to come from cookie.
 			ignored: this.props.ignored
     	}
+    	this.usernameClicked = this.usernameClicked.bind(this);
 	}
     toggleChatMenu() {
     	this.setState({chatMenuOpen: !this.state.chatMenuOpen});
@@ -95,13 +120,13 @@ class Chat extends Component {
     		this.setState({inputValue:''}); // clear input here.
     	}
     }
+    usernameClicked(value) {
+    	console.log(value);
+    	// open a pm to this user!
+    	// TODO!
+    }
    	render() {
    		const chat = this.props.chat;
-   		let users = undefined;
-   		if (chat && chat.users) {
-   			users = Object.values(chat.users); // TODO: sorting/filtering?
-   		}
-
 		return (
 			<div className="chat-window">
 				<div className={"no-chat " + ( this.props.selectedChat ? "hidden" : "" )}>
@@ -180,16 +205,7 @@ class Chat extends Component {
 							</div>
 						)}
 						{(chat.type !== 3) && (
-							<div className={"chat-user-list-contain " + ( this.props.userListOpen ? "" : "full" )}>
-								{users && users.map((obj) => {
-									return (
-										<ListUser
-											key={obj.identity}
-											data={obj}
-										/>
-									)	
-								})}
-							</div>
+							<UserList users={chat.users} userListOpen={this.props.userListOpen} usernameClicked={this.usernameClicked} />
 						)}
 					</div>
 				)}
