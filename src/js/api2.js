@@ -78,6 +78,18 @@ function login(username,password) {
 	});
 }
 
+function logout() {
+	console.log('logging you out, byeeee');
+
+	// cookies.clear() // not a function.
+	cookies.remove('account');
+	cookies.remove('ticket');
+	cookies.remove('characterlist');
+	cookies.remove('friends');
+
+	window.location.reload();
+}
+
 var loginPromiseResolve;
 var loginPromise = new Promise(function(resolve,reject) {
  	loginPromiseResolve = resolve;
@@ -657,4 +669,4 @@ function privateMessage(character,message){
 	updateChannelData(channelData); 
 }
 
-export { login,loadCookie,gotLoginPromise,createSocket,lostConnectionAlert,gainedConnectionAlert,getChannels,getChannelData,joinChannel,getFriends,sendMessage,privateMessage,setChannelsCallback,setJoinedChannelsCallback,setSelectedChatCallback,setSelectedChat,setFriendsCallback };
+export { login,logout,loadCookie,gotLoginPromise,createSocket,lostConnectionAlert,gainedConnectionAlert,getChannels,getChannelData,joinChannel,getFriends,sendMessage,privateMessage,setChannelsCallback,setJoinedChannelsCallback,setSelectedChatCallback,setSelectedChat,setFriendsCallback };

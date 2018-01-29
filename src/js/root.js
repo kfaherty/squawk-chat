@@ -4,7 +4,7 @@ import Authorize from './authorize';
 import RoomList from './roomlist';
 import Chat from './chat';
 
-import { gotLoginPromise,setChannelsCallback,setJoinedChannelsCallback,setFriendsCallback,getChannels,getChannelData,joinChannel,setSelectedChatCallback,setSelectedChat,getFriends,lostConnectionAlert,gainedConnectionAlert } from './api2';
+import { logout,gotLoginPromise,setChannelsCallback,setJoinedChannelsCallback,setFriendsCallback,getChannels,getChannelData,joinChannel,setSelectedChatCallback,setSelectedChat,getFriends,lostConnectionAlert,gainedConnectionAlert } from './api2';
 
 class Root extends Component {
 	constructor(props) {
@@ -125,7 +125,7 @@ class Root extends Component {
     }
 
     logout() {
-		// TODO
+		logout();
     }
 
 	render() {
