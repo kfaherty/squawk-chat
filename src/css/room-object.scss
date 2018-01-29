@@ -23,13 +23,16 @@
 			}
 		}
 		.details-contain {
-			.user-name,.snippet,.message-type {
+			.user-name,.snippet,.message-type, {
 				color: #f0fbf3;
 				a {
 				    color: #f0fbf3;
 				    &:hover {
 				    	color: #fff;
 				    }
+				}
+				.action {
+					color: #f0fbf3;
 				}
 			}
 		}

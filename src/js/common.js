@@ -164,7 +164,7 @@ class StandardInput extends Component {
 
 class noparseTag extends Tag {
   	toReact() {
-  		console.log(this.getContent(true));
+  		// console.log(this.getContent(true));
     	return (<p>{this.getContent(true)}</p>);
   	}
 }
@@ -185,22 +185,32 @@ class subTag extends Tag {
     	return (<sub>{this.getComponents()}</sub>);
   	}
 }
+class meTag extends Tag {
+	toReact() {
+    	return (<span className="action">{this.getContent(true)}</span>);
+  	}
+}
 parser.registerTag('noparse', noparseTag);
 parser.registerTag('url', urlTag);
 parser.registerTag('sup', supTag);
 parser.registerTag('sub', subTag);
+parser.registerTag('averyunlikelytag',meTag)
 // TODO: icon
+
 // TODO: eicon
+
 // TODO: user // can we calculate this?
 
 class ParsedText extends Component {
-	createMarkup(html) { 
-		return {__html: html}; 
-	}
 	render() {
-		var result = this.props.text;
+		let text = this.props.text || '';
+
+		if (text.startsWith('/me')) { // this runs on the chat.js parsing.
+			text = text.replace("/me", ( '[averyunlikelytag]'+(this.props.character || '')+'[/averyunlikelytag]' )); // handle /me in here.
+		}
+
 		return (
-		    <p>{parser.toReact(this.props.text || '')}</p>
+		    <span>{parser.toReact(text)}</span>
 		)
 	}
 }

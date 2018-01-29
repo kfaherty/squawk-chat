@@ -83,7 +83,12 @@ class RoomObject extends Component {
 				        	default: return '';
 				        }
 				    })()}
-					<div className="snippet"><ParsedText text={user.lastMessage || 'No messages to show'}/></div>
+					<div className="snippet">
+						{(user.lastUser) && (
+							<span>{user.lastUser}: </span>
+						)}
+						{user.lastMessage ? (<ParsedText character={user.lastUser} text={user.lastMessage }/>) :  'No messages to show'}
+					</div>
 				</div>
 
 				<RelativeTime created_at={user.timestamp} />

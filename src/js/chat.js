@@ -9,7 +9,7 @@ function ChatMessage(props){
 		<div className={"chat-message " + (message.mine ? "mine" : "")}>
 			<div className="user-name">{message.character}</div>
 			<RelativeTime created_at={message.timestamp} />
-			<div className="message"><ParsedText text={message.message} /></div>
+			<div className="message"><ParsedText character={message.character} text={message.message} /></div>
 		</div>
 	)
 }

@@ -300,8 +300,8 @@ function listenToData() {
 					}
 				}
 				channelData.timestamp = Date.now();
-				channelData.lastMessage = data.character + ": " + data.message;
-
+				channelData.lastMessage = data.message;
+				channelData.lastUser = data.character;
 				updateChannelData(channelData); 
 			};
 		});
@@ -326,7 +326,8 @@ function listenToData() {
 						bookmark: bookmarksList.indexOf(data.character) !== -1 ? true : false,
 						timestamp: Date.now(),
 						name: data.character,
-						lastMessage: data.character + ": " + data.message,
+						lastMessage: data.message,
+						lastUser: data.character,
 						messages: [messageData]
 					}
 					channelsList[channelData.channel] = channelData;
@@ -337,10 +338,13 @@ function listenToData() {
 							joinedChannelsCallback(getJoinedChannels());
 						}
 					// }
+
+					// TODO: this might want to return here.
 				}
 
 				channelData.timestamp = Date.now();
-				channelData.lastMessage = data.character + ": " + data.message;
+				channelData.lastMessage = data.message;
+				channelData.lastUser = data.character;
 				channelData.typing = 'clear';
 
 				updateChannelData(channelData); 
@@ -591,7 +595,8 @@ function sendMessage(channel,message) {
 		}
 	}
 	channelData.timestamp = Date.now();
-	channelData.lastMessage = userData.name + ": " + message;
+	channelData.lastMessage = message;
+	channelData.lastUser = userData.name;
 
 	updateChannelData(channelData); 
 }
@@ -640,7 +645,8 @@ function privateMessage(character,message){
 	}
 
 	channelData.timestamp = Date.now();
-	channelData.lastMessage = userData.name + ": " + message;
+	channelData.lastMessage = message;
+	channelData.lastUser = userData.name;
 
 	updateChannelData(channelData); 
 }
