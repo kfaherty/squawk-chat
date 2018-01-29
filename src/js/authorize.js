@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { login,loadCookie,createSocket } from './api2';
 import {StandardInput} from './common';
 
-
 class Authorize extends Component {
 	constructor(props) {
     	super(props);
@@ -16,12 +15,14 @@ class Authorize extends Component {
     	};
 
 	    this.handleFieldChange = this.handleFieldChange.bind(this);	    
+	    this.handleKeyDown = this.handleKeyDown.bind(this);	    
 
 	    loadCookie().then((list) => {
 			this.setState({ list:list, showLogin:false });
 	    }).catch((error) => console.log(error));
     }
 	handleLoginClick() {
+
 		let validated = true;
 		if (!this.state.username) {
 			validated = false;
@@ -32,11 +33,16 @@ class Authorize extends Component {
 			this.setState({passwordhaserror:true});
 		}	
 
-		if (validated) {
+		if (validated && !this.submittedLogin) {
+			this.submittedLogin = true; // lockout button.
 			login(this.state.username,this.state.password).then((list) => {
 				// console.log('list!',list);
+				this.submittedLogin = false;
 				this.setState({ list:list, showLogin:false });
-			}).catch((error) => console.log(error));
+			}).catch((error) => {
+				this.submittedLogin = false;
+				console.log(error);
+			});
 		}
 	}
 	handleFieldChange(name,value) {
@@ -63,6 +69,12 @@ class Authorize extends Component {
 			console.error('cant parse character..',option);
 		}
 	}
+	handleKeyDown(event) {
+  		// console.log(event.key);
+        if (event.key == 'Enter') {
+    		this.handleLoginClick();
+        }
+    }
 	render() {
 		return (
 			<div className={"authorize-contain " + (this.props.visible ? "" : "visible" )}>
@@ -74,10 +86,21 @@ class Authorize extends Component {
 
 					<div className={"login "+ (this.state.showLogin? "active":"")}>
 						<div className={"login-input " + (this.state.usernamehaserror ? "error" : "")}>
-							<StandardInput inputName='Username' iconClass="fi-torso" onChange={this.handleFieldChange} />
+							<StandardInput 
+								inputName='Username' 
+								iconClass="fi-torso" 
+								onChange={this.handleFieldChange} 
+				                onKeyDown={this.handleKeyDown}
+							/>
 						</div>
 						<div className={"login-input " + (this.state.passwordhaserror ? "error" : "")}>
-							<StandardInput inputName='Password' iconClass="fi-lock" type='password' onChange={this.handleFieldChange} />
+							<StandardInput 
+								inputName='Password' 
+								iconClass="fi-lock" 
+								type='password' 
+								onChange={this.handleFieldChange} 
+				                onKeyDown={this.handleKeyDown}
+							/>
 						</div>
 						
 						<div className="login-wrap">

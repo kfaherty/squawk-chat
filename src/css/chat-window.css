@@ -213,13 +213,12 @@
       pointer-events: none; }
       .chat-contain .input-contain .label div, .chat-contain .input-contain .label span {
         display: inline-block; }
-      .chat-contain .input-contain .label .fi-magnifying-glass {
-        color: #9EA6A2;
-        font-size: 14px; }
       .chat-contain .input-contain .label span {
         color: #D6DBD9;
         font-size: 12px;
         padding-left: 5px; }
+      .chat-contain .input-contain .label.hidden {
+        display: none; }
     .chat-contain .input-contain textarea {
       resize: none;
       box-sizing: border-box;
@@ -230,7 +229,8 @@
       outline: none;
       padding: 10px 20px;
       font-family: 'Verlag', sans-serif;
-      font-size: 12px; }
+      font-size: 12px;
+      color: #6A6F6C; }
   .chat-contain .dropdown {
     top: 34px; }
 
@@ -328,7 +328,7 @@
 
 .chat-user-list-contain .list-user {
   height: 20px;
-  border-bottom: 1px solid;
+  border-bottom: 1px solid #E5EBE9;
   padding-left: 10px;
   line-height: 20px;
   font-weight: 600;

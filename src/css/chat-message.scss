@@ -3,12 +3,14 @@
 	background: white;
 	border-radius: 5px;
 	margin: 20px;
-	// width: auto;
+	width: auto;
     width: 60%;
     padding: 20px 20px 10px 20px;
 	font-size: 13px;
 	border: 1px solid #E5EBE9;
    	box-shadow: 0px 0px 30px rgba(0, 0, 0, .1);
+    // display: inline-block; // auto size messages..
+    // margin-right: 100%; // HACK to get them not to render on the same row..
 
    	&.mine {
 	    left: calc( 40% - 80px );

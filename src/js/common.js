@@ -127,6 +127,11 @@ class StandardInput extends Component {
 			this.props.onChange(this.props.inputName,event.target.value);
 		}
   	}
+  	handleKeyDown(event) {
+  		if (this.props.onKeyDown) {
+  			this.props.onKeyDown(event);
+  		}
+  	}
 	render() {
 		return (
 			<div className="input-form-contain">
@@ -134,7 +139,7 @@ class StandardInput extends Component {
 					{this.props.iconClass && (<div className={"icon "+this.props.iconClass}></div>)}
 					<span className={"input-label " + (this.state.inputValue ? "" : "full" )}>{this.props.inputName}</span>
 				</div>
-				<input type={this.props.type || "text"} value={this.state.inputValue} onChange={(event) => this.handleChange(event)} />
+				<input type={this.props.type || "text"} value={this.state.inputValue} onChange={(event) => this.handleChange(event)} onKeyDown={(event) => this.handleKeyDown(event)} />
 			</div>
 		);
 	}

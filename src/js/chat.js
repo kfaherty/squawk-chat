@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { RelativeTime } from './common';
+import { sendMessage } from './api2'
 
 function ChatMessage(props){
 	// console.log(message);
 	const message = props.data;
 	return (
 		<div className={"chat-message " + (message.mine ? "mine" : "")}>
-			<div className="user-name">{message.from}</div>
+			<div className="user-name">{message.character}</div>
 			<RelativeTime created_at={message.timestamp} />
 			<div className="message">{message.message}</div>
 		</div>
@@ -18,7 +19,7 @@ function ListUser(props){
 	
 	// TODO: gender stuff.
 	// TODO: status icons.
-	
+
 	return (
 		<div className="list-user">
 			<div className="status-icon"></div>
@@ -63,6 +64,32 @@ class Chat extends Component {
     	this.setState({ignored: !this.state.ignored});
     	this.toggleChatMenu();
     }
+    handleChange(event){
+		this.setState({
+			inputValue: event.target.value
+		});
+    }
+	handleKeyDown(event) {
+		console.log(event.key);
+		if (event.key == 'Shift') {
+  			this.shiftDown = true;
+  		}
+        if (event.key == 'Enter' && !this.shiftDown) {
+  			this.onSendMessage();
+  		}
+  	}
+  	handleKeyUp(event) {
+  		if (event.key == 'Shift') {
+  			this.shiftDown = false;
+  		}
+  	}
+ 	onSendMessage(){
+ 		if (this.state.inputValue) {
+    		sendMessage(this.props.selectedChat,this.state.inputValue);
+    		this.lastInput = this.state.inputValue; // save this incase the user wants it back.
+    		this.setState({inputValue:''}); // clear input here.
+    	}
+    }
    	render() {
    		const chat = this.props.chat;
    		let users = undefined;
@@ -105,7 +132,7 @@ class Chat extends Component {
 
 									return (
 									  <ChatMessage 
-									    key={obj.id_str}
+									    key={obj.key}
 									    data={obj} 
 									  />
 									)
@@ -118,14 +145,12 @@ class Chat extends Component {
 						    	</div>
 						    	<div className="input-padding"></div>
 							</div>
+
 							<div className="input-contain">
-								<div className="label">
+								<div className={"label " + (this.state.inputValue ? "hidden" : "")} >
 						    		<span>Type a message</span>
 							    </div>
-							    <textarea type="text" name="message" resizable="false" />
-							    <div className="send">
-							    	<div className="fi-send"></div>
-							    </div>
+							    <textarea type="text" name="message" resizable="false" value={this.state.inputValue} onKeyUp={(event) => this.handleKeyUp(event)} onKeyDown={(event) => this.handleKeyDown(event)} onChange={(event) => this.handleChange(event)} />
 							</div>
 						</div>
 						<div className="chat-user-profile-contain">

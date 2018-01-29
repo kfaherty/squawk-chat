@@ -180,7 +180,17 @@ function lostConnectionAlert(cb) {
 	});
 }
 
-function addListenerForSocketMessage(eventcode,callback){
+function addListenerForSocketMessage(eventcode,callback){ 
+	// FIXME: rewrite this to just use an object lookup. 
+
+	// this should just add a listener when it's run.
+	// and the msg up there should do the logic on if it needs to be routed.
+
+	// for var i in listeners['MSG'] do listeners['MSG'].callback() type.
+
+	// this will get slower each listener you add because each one
+	// is doing the math to find out if a code is the one we want.
+
 	if (!eventcode || !callback) return;
 
 	socket.addEventListener("message",function(event) {
@@ -198,9 +208,11 @@ function addListenerForSocketMessage(eventcode,callback){
 	})
 }
 
+var messageSeq = 0;
+
 function listenToData() {
 	gotLoginPromise().then(()=>{ 			// wait for login: 
-		addListenerForSocketMessage('CHA',(data)=>{  // FIXME: this means that calling this multiple times will create multiple listeners.
+		addListenerForSocketMessage('CHA',(data)=>{  
 			let defaultTime = Date.now();
 			if (data.channels && data.channels.length) {
 				let channelData = data.channels.map((obj,index) => {
@@ -238,28 +250,106 @@ function listenToData() {
 				}
 			}
 		});
+		addListenerForSocketMessage('MSG',(data)=>{
+			if (data && data.message) {
+				let dataChannel = data.channel;
+				delete data.channel;
+
+				data.timestamp = Date.now();
+				data.key = messageSeq++;
+
+				let channelData = getChannelData(dataChannel);
+				if (channelData && channelData.messages) {
+					// TODO: mine or not
+					channelData.messages.push(data);
+				} else {
+					channelData = {
+						channel:dataChannel,
+						messages: [data]
+					}
+				}
+
+				updateChannelData(channelData); 
+			};
+		});
+		addListenerForSocketMessage('FLN',(data)=>{
+			// global channel leave.
+			// one: create toast if this is friend/bookmark
+			// TODO
+
+			// two: update channel data to leave all channels this character is in (slow, probably..)
+			// does this only run if they're in a channel we're in? 
+			// probably not! :c
+		});
+		addListenerForSocketMessage('LCH',(data)=>{
+			if (data && data.character) {
+				// one: create a toast if this is a friend or bookmark
+				// data.character.identity
+				// TODO
+
+				// two: leave a channel if this is us and we're in it.
+				if (data.character.identity === userData.name) {
+					let index = channelsJoined.indexOf(data.channel);
+					if (index !== -1) {
+						console.log('you left a channel',channelsJoined,index);
+						channelsJoined.splice(index,1); // find joined channel and remove it.
+						console.log('you left:',channelsJoined);
+						if (joinedChannelsCallback) { // this'll update the list of joined channels.
+							joinedChannelsCallback(getJoinedChannels());
+						}
+					}
+				}
+
+				// three: update channel data if it's a room we're in - userlist & population
+				return; // TODO
+
+				let channelData = getChannelData(data.channel);
+				data.users = [data.character];
+
+				if (channelData && channelData.users) {
+					console.log(channelData.users);
+					
+					// TODO: check if this exists.
+
+					channelData.users.push(data.character);	// not a function
+					data.users=channelData.users;
+				}
+
+				delete data.character;
+				updateChannelData(data); 
+
+				if (channelsCallback) {
+					channelsCallback(channelsList);
+				}
+			}
+		});
 		addListenerForSocketMessage('JCH',(data)=>{
 			console.log('jch',data);
 			if (data && data.character) {
 				// one: create a toast if this is a friend or bookmark
-				// data.character[i].identity
+				// data.character.identity
 				// TODO
 
 				// two: join a channel if this is us and we're not in it yet.
-				console.log(data.character.identity,userData.name);
 				if (data.character.identity === userData.name) {
-					channelsJoined.push(data.channel); // add this to the list of joined channels. This should allow invites to work.
-					if (joinedChannelsCallback) { // this'll update the list of joined channels.
-						joinedChannelsCallback(getJoinedChannels());
+					if (channelsJoined.indexOf(data.channel) == -1) {
+						channelsJoined.push(data.channel); // add this to the list of joined channels. This should allow invites to work.
+						if (joinedChannelsCallback) { // this'll update the list of joined channels.
+							joinedChannelsCallback(getJoinedChannels());
+						}
 					}
 				}
 
 				// three: update channel data if it's a room we're in - userlist & population
 				let channelData = getChannelData(data.channel);
-				data.users = data.character;
+				data.users = [data.character];
 
 				if (channelData && channelData.users) {
-					channelData.users.push(data.character);	
+					console.log(channelData.users);
+					
+					// TODO: check if this exists yet.
+
+					channelData.users.push(data.character);	// not a function
 					data.users=channelData.users;
 				}
 
@@ -350,17 +440,11 @@ function getJoinedChannels() {
 
 function joinChannel(name){
 	if (channelsJoined.indexOf(name) !== -1) {
-		console.log('i think youre already in here',channelsJoined,name);
-		// TODO: toast.
+		console.log('youre already in here',channelsJoined,name);
 		return;
 	}
 
 	socket.send( 'JCH '+JSON.stringify({ "channel": name }) );
-	// this should only happen when we get JCH back.
-		// channelsJoined.push(name); 
-		// if (joinedChannelsCallback) {
-		// 	joinedChannelsCallback(getJoinedChannels());
-		// }
 }
 
 function leaveChannel(name) {
@@ -376,4 +460,12 @@ function getFriends() {
 	return Promise.resolve( userData.friends );
 }
 
-export { login,loadCookie,gotLoginPromise,createSocket,lostConnectionAlert,gainedConnectionAlert,getChannels,getChannelData,joinChannel,getFriends,setChannelsCallback,setJoinedChannelsCallback,setSelectedChatCallback,setSelectedChat,setFriendsCallback };
+function sendMessage(channel,message) {
+	if (!channel || !message) {
+		console.error('missing stuff: ',channel,message);
+		return;
+	}
+	socket.send('MSG '+JSON.stringify({ "channel": channel,"message":message }) );
+}
+
+export { login,loadCookie,gotLoginPromise,createSocket,lostConnectionAlert,gainedConnectionAlert,getChannels,getChannelData,joinChannel,getFriends,sendMessage,setChannelsCallback,setJoinedChannelsCallback,setSelectedChatCallback,setSelectedChat,setFriendsCallback };
