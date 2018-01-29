@@ -74,13 +74,13 @@ class Chat extends Component {
 		if (event.key == 'Shift') {
   			this.shiftDown = true;
   		}
-        if (event.key == 'Enter' && !this.shiftDown) {
-  			this.onSendMessage();
-  		}
   	}
   	handleKeyUp(event) {
   		if (event.key == 'Shift') {
   			this.shiftDown = false;
+  		}
+        if (event.key == 'Enter' && !this.shiftDown) {
+  			this.onSendMessage();
   		}
   	}
  	onSendMessage(){

@@ -260,7 +260,6 @@ function listenToData() {
 
 				let channelData = getChannelData(dataChannel);
 				if (channelData && channelData.messages) {
-					// TODO: mine or not
 					channelData.messages.push(data);
 				} else {
 					channelData = {
@@ -466,6 +465,27 @@ function sendMessage(channel,message) {
 		return;
 	}
 	socket.send('MSG '+JSON.stringify({ "channel": channel,"message":message }) );
+
+	// manually insert this..
+	let data = {
+		timestamp: Date.now(),
+		key: messageSeq++,
+		mine: true,
+		message: message,
+		character: userData.name
+	}
+
+	let channelData = getChannelData(channel);
+	if (channelData && channelData.messages) {
+		channelData.messages.push(data);
+	} else {
+		channelData = {
+			channel: channel,
+			messages: [data]
+		}
+	}
+
+	updateChannelData(channelData); 
 }
 
 export { login,loadCookie,gotLoginPromise,createSocket,lostConnectionAlert,gainedConnectionAlert,getChannels,getChannelData,joinChannel,getFriends,sendMessage,setChannelsCallback,setJoinedChannelsCallback,setSelectedChatCallback,setSelectedChat,setFriendsCallback };
