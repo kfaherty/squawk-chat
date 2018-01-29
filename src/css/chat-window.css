@@ -253,10 +253,23 @@
   background: white;
   opacity: 1;
   transition: opacity 0.3s ease;
-  pointer-events: initial; }
+  pointer-events: initial;
+  overflow-y: scroll; }
   .chat-user-list-contain.hidden, .chat-user-profile-contain.hidden {
     opacity: 0;
     pointer-events: none; }
+
+.chat-user-list-contain .list-user {
+  height: 20px;
+  border-bottom: 1px solid #E5EBE9;
+  padding-left: 10px;
+  line-height: 20px;
+  font-weight: 600;
+  color: #99A09C;
+  white-space: nowrap;
+  overflow: hidden;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis; }
 
 .widgetMenu {
   position: absolute;
@@ -325,15 +338,3 @@
     background: #A6B2AD;
     border-radius: 10px;
     display: inline-block; }
-
-.chat-user-list-contain .list-user {
-  height: 20px;
-  border-bottom: 1px solid #E5EBE9;
-  padding-left: 10px;
-  line-height: 20px;
-  font-weight: 600;
-  color: #6A6F6C;
-  white-space: nowrap;
-  overflow: hidden;
-  -o-text-overflow: ellipsis;
-  text-overflow: ellipsis; }

@@ -134,7 +134,7 @@ function createSocket(name) {
 				case 'IDN':
 					resolve();
 					loginPromiseResolve(userData.name);
-					console.log(code,payload);
+					// console.log(code,payload);
 					break;
 				case 'PIN':
 					socket.send('PIN');
@@ -271,6 +271,41 @@ function listenToData() {
 				updateChannelData(channelData); 
 			};
 		});
+		addListenerForSocketMessage('PRI',(data)=>{
+			if (data && data.message) {
+				// data.channel = data.character;
+				let messageData = {
+					timestamp: Date.now(),
+					key: messageSeq++,
+					character: data.character,
+					message: data.message
+				}
+				
+				let channelData = getChannelData(data.character);
+				if (channelData) {
+					channelData.messages.push(messageData);
+				} else {
+					channelData = {
+						channel:data.character,
+						type: 3,
+						timestamp: Date.now(),
+						name: data.character,
+						messages: [messageData]
+					}
+					channelsList[channelData.channel] = channelData;
+
+					// if (channelsJoined.indexOf(channelData.channel) == -1) { // this is probably redundant..
+						channelsJoined.push(channelData.channel);
+						if (joinedChannelsCallback) { // this'll update the list of joined channels.
+							joinedChannelsCallback(getJoinedChannels());
+						}
+					// }
+				}
+
+				updateChannelData(channelData); 
+			};
+		});
+		//  
 		addListenerForSocketMessage('FLN',(data)=>{
 			// global channel leave.
 			// one: create toast if this is friend/bookmark
@@ -488,4 +523,48 @@ function sendMessage(channel,message) {
 	updateChannelData(channelData); 
 }
 
-export { login,loadCookie,gotLoginPromise,createSocket,lostConnectionAlert,gainedConnectionAlert,getChannels,getChannelData,joinChannel,getFriends,sendMessage,setChannelsCallback,setJoinedChannelsCallback,setSelectedChatCallback,setSelectedChat,setFriendsCallback };
+function privateMessage(character,message){
+	if (!character || !message) {
+		console.error('missing stuff: ',character,message);
+		return;
+	}
+	socket.send('PRI '+JSON.stringify({ "recipient": character,"message":message }) );
+
+	// manually insert this..
+	let data = {
+		timestamp: Date.now(),
+		key: messageSeq++,
+		mine: true,
+		message: message,
+		character: userData.name
+	}
+
+	let channelData = getChannelData(character);
+	if (!channelData) {
+		console.log('we need to create a pm!');
+		channelData = {
+			channel:data.character,
+			type: 3,
+			timestamp: Date.now(),
+			name: data.character,
+			messages: [data]
+		}
+		channelsList[channelData.channel] = channelData;
+
+		channelsJoined.push(channelData.channel);
+		if (joinedChannelsCallback) { // this'll update the list of joined channels.
+			joinedChannelsCallback(getJoinedChannels());
+		}
+	} else if (channelData.messages) {
+		channelData.messages.push(data);
+	} else {
+		channelData = {
+			channel: character,
+			messages: [data]
+		}
+	}
+
+	updateChannelData(channelData); 
+}
+
+export { login,loadCookie,gotLoginPromise,createSocket,lostConnectionAlert,gainedConnectionAlert,getChannels,getChannelData,joinChannel,getFriends,sendMessage,privateMessage,setChannelsCallback,setJoinedChannelsCallback,setSelectedChatCallback,setSelectedChat,setFriendsCallback };

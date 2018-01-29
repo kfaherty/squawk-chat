@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { RelativeTime } from './common';
-import { sendMessage } from './api2'
+import { sendMessage,privateMessage } from './api2'
 
 function ChatMessage(props){
 	// console.log(message);
@@ -28,8 +28,6 @@ function ListUser(props){
 		</div>
 	)
 }
-									
-
 
 class Chat extends Component {
 	constructor(props) {
@@ -70,7 +68,7 @@ class Chat extends Component {
 		});
     }
 	handleKeyDown(event) {
-		console.log(event.key);
+		// console.log(event.key);
 		if (event.key == 'Shift') {
   			this.shiftDown = true;
   		}
@@ -85,7 +83,11 @@ class Chat extends Component {
   	}
  	onSendMessage(){
  		if (this.state.inputValue) {
-    		sendMessage(this.props.selectedChat,this.state.inputValue);
+ 			if (this.props.chat.type === 3) {
+ 				privateMessage(this.props.selectedChat,this.state.inputValue.trim());
+ 			} else {
+    			sendMessage(this.props.selectedChat,this.state.inputValue.trim());
+    		}
     		this.lastInput = this.state.inputValue; // save this incase the user wants it back.
     		this.setState({inputValue:''}); // clear input here.
     	}
