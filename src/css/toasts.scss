@@ -24,19 +24,20 @@
 }
 
 .toast-item {
-	width: 100%;
+	width: calc( 100% - 20px );
 	height: 100%;
 	color: #6A6F6C;
 
 	.content-wrap {
-		width: calc( 100% - 65px );
-		// position: absolute;
-		left: 0px;
-		top: 0px;
-		font-size: 13px;
-		padding-left: 10px;
+	    width: calc( 100% - 75px);
+	    left: 0px;
+	    top: 0px;
+	    font-size: 13px;
+	    padding-left: 10px;
+	    padding-right: 10px;
 	}
 	.toast-header {
+	    height: 14px;
 	    padding-top: 9px;
 	    font-weight: 600;
 	    color: #6A6F6C;
@@ -46,13 +47,14 @@
 	    text-overflow: ellipsis;
 	}
 	.toast-content {
-		padding-top: 4px;
+		padding-top: 2px;
 	    color: #A6B2AD;
 	    line-height: 22px;
 	    // height: 65px;
 	    overflow: hidden;
 	    -o-text-overflow: ellipsis;
 	    text-overflow: ellipsis;
+        max-height: 70px; // limit the length of a toast body.
 	}
 	button {
 		width: 65px;
@@ -67,6 +69,8 @@
 	}	
 
 	&.error {
-		color: #F44336;
+		.toast-header {
+			color: #F44336;
+		}
 	}
 }

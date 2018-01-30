@@ -40,16 +40,18 @@
   min-height: 19px; }
 
 .toast-item {
-  width: 100%;
+  width: calc( 100% - 20px);
   height: 100%;
   color: #6A6F6C; }
   .toast-item .content-wrap {
-    width: calc( 100% - 65px);
+    width: calc( 100% - 75px);
     left: 0px;
     top: 0px;
     font-size: 13px;
-    padding-left: 10px; }
+    padding-left: 10px;
+    padding-right: 10px; }
   .toast-item .toast-header {
+    height: 14px;
     padding-top: 9px;
     font-weight: 600;
     color: #6A6F6C;
@@ -58,12 +60,13 @@
     -o-text-overflow: ellipsis;
     text-overflow: ellipsis; }
   .toast-item .toast-content {
-    padding-top: 4px;
+    padding-top: 2px;
     color: #A6B2AD;
     line-height: 22px;
     overflow: hidden;
     -o-text-overflow: ellipsis;
-    text-overflow: ellipsis; }
+    text-overflow: ellipsis;
+    max-height: 70px; }
   .toast-item button {
     width: 65px;
     position: absolute;
@@ -74,5 +77,5 @@
     border-left: 1px solid;
     border-radius: 0px;
     background: none; }
-  .toast-item.error {
+  .toast-item.error .toast-header {
     color: #F44336; }
