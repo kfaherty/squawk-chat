@@ -29,15 +29,30 @@
 	color: #6A6F6C;
 
 	.content-wrap {
-		width: calc( 100% - 100px );
-		position: absolute;
+		width: calc( 100% - 65px );
+		// position: absolute;
 		left: 0px;
 		top: 0px;
+		font-size: 13px;
+		padding-left: 10px;
+	}
+	.toast-header {
+	    padding-top: 9px;
+	    font-weight: 600;
+	    color: #6A6F6C;
+	    white-space: nowrap;
+	    overflow: hidden;
+	    -o-text-overflow: ellipsis;
+	    text-overflow: ellipsis;
 	}
 	.toast-content {
-		padding: 10px;
-		font-size: 14px;
-		line-height: 14px;
+		padding-top: 4px;
+	    color: #A6B2AD;
+	    line-height: 22px;
+	    // height: 65px;
+	    overflow: hidden;
+	    -o-text-overflow: ellipsis;
+	    text-overflow: ellipsis;
 	}
 	button {
 		width: 65px;

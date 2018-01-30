@@ -26,6 +26,7 @@ class NotificationTemplate extends Component {
 	    return (
         	<div className={"toast-item " + (this.props.error ? "error" : "")}>
         		<div className="content-wrap">
+        			<div className="toast-header">{this.props.header}</div>
 			    	<div className="toast-content">{this.props.text}</div>
 			    </div>
 			    <button onClick={this.props.closeToast}>Dismiss</button>
@@ -93,8 +94,9 @@ class Root extends Component {
 	    	this.setState({chatData:data});
 	    })
 	    // melba toasts
-	    setCreateToastCallback((data) => {
-	    	this.createToast(data);
+	    setCreateToastCallback((props) => {
+	    	// this.createToast(props);
+    		toast(<NotificationTemplate {...props} />)
 	    })
 	}
 
@@ -183,7 +185,12 @@ class Root extends Component {
 				<Authorize visible={this.state.loggedin} />
           		
           		<div className="toasts-contain">
-          			<ToastContainer autoClose={15000} newestOnTop={true} hideProgressBar={true} closeButton={false} />
+          			<ToastContainer 
+          				autoClose={false}//{30000} 
+          				newestOnTop={true} 
+          				hideProgressBar={true} 
+          				closeButton={false} 
+          			/>
 				</div>
 
    				<div className={"potential-problem " + (this.state.connected ? "" : "visible")}>

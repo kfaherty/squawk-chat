@@ -175,9 +175,19 @@ function createSocket(name) {
 				case 'ERR':
 					console.log(code,payload);
 					if (toastCallback) {
-						toastCallback({
-							text: 'Error: '+payload
-						});
+						if (payload.message){
+							toastCallback({
+								header: 'Error',
+								text: payload.message,
+								error: true
+							});
+						} else {
+							toastCallback({
+								header: 'Error',
+								text: JSON.stringify(payload),
+								error: true
+							});
+						}
 					}
 					if (payload && payload.number === 4) {
 						reject('invalid token');
@@ -352,7 +362,8 @@ function listenToData() {
 				// create toast if this isn't the selected chat.
 				if (toastCallback && selectedChat !== data.character) {
 					toastCallback({
-						text: 'New message from '+data.character+': '+data.message
+						header: 'New message from '+data.character+'!',
+						text: data.message
 					});
 				}
 				
