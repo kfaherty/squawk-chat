@@ -3,7 +3,7 @@ import Cookies from 'universal-cookie';
 const cookies = new Cookies();
 
 var apiurls = loadURLS();
-const useProd = false; // TODO
+const useProd = true; // TODO
 
 // userData:
 var userData = {
@@ -194,7 +194,7 @@ function createSocket(name) {
 					}
 					break;
 				default: 
-					console.log(code,payload);
+					// console.log(code,payload); // log spam dot txt
 					break;
 			}
 		};
@@ -241,7 +241,7 @@ function addListenerForSocketMessage(eventcode,callback){
 
 	if (!eventcode || !callback) return;
 
-	socket.addEventListener("message",function(event) {
+	socket.addEventListener("message",function(event) { // FIXME this is slow.
 		if (!event.data) {
 			return;
 		}
@@ -261,18 +261,21 @@ var messageSeq = 0;
 function listenToData() {
 	gotLoginPromise().then(()=>{ 			// wait for login: 
 		addListenerForSocketMessage('LIS',(data)=>{  
-			if (data && data.characters) {
-				let parsedCharacters = [];
-				for (var i = data.characters.length - 1; i >= 0; i--) {
-					parsedCharacters[ data.characters[i][0] ] = {
-						character: data.characters[i][0],
-						gender: data.characters[i][1],
-						status: data.characters[i][2],
-						statusMessage: data.characters[i][3]
-					}
-				}
-				usersCache = parsedCharacters
-			}
+			// we can just use the api for this. 
+			// although we wont have gender, then..
+
+			// if (data && data.characters) {
+			// 	let parsedCharacters = [];
+			// 	for (var i = data.characters.length - 1; i >= 0; i--) {
+			// 		parsedCharacters[ data.characters[i][0] ] = {
+			// 			character: data.characters[i][0],
+			// 			gender: data.characters[i][1],
+			// 			status: data.characters[i][2],
+			// 			statusMessage: data.characters[i][3]
+			// 		}
+			// 	}
+			// 	usersCache = parsedCharacters
+			// }
 		});
 		addListenerForSocketMessage('FRL',(data)=>{  
 			if (data && data.characters) {
@@ -417,10 +420,36 @@ function listenToData() {
 				}
 			}
 		});
-		addListenerForSocketMessage('FLN',(data)=>{
-			// global channel leave.
+		addListenerForSocketMessage('STA',(data)=>{  // status update
+			if (bookmarksList.indexOf(data.character) !== -1) {
+				toastCallback({
+					header: data.character + " is " + data.status, // NOTE: make sure this works..
+					text: data.statusmsg
+				});
+			}
+
+			// NOTE: this should probably cache.
+		});
+		addListenerForSocketMessage('NLN',(data)=>{  // global chat connect.
 			// one: create toast if this is friend/bookmark
-			// TODO
+			if (bookmarksList.indexOf(data.identity) !== -1) {
+				toastCallback({
+					header: data.identity + " is online", // NOTE: make sure this works..
+					// text:
+				})
+			}
+
+			// two: add to users cache if we don't have it already..?
+		});
+		addListenerForSocketMessage('FLN',(data)=>{  // global channel leave.
+			
+			// one: create toast if this is friend/bookmark
+			if (bookmarksList.indexOf(data.character) !== -1) {
+				toastCallback({
+					header: data.character + " is offline", // NOTE: make sure this works..
+					// text:
+				})
+			}
 
 			// two: update channel data to leave all channels this character is in (slow, probably..)
 			// does this only run if they're in a channel we're in? 
@@ -429,8 +458,14 @@ function listenToData() {
 		addListenerForSocketMessage('LCH',(data)=>{
 			if (data && data.character) {
 				// one: create a toast if this is a friend or bookmark
-				// data.character.identity
-				// TODO
+				// do we care if they left the channel? 
+				// maybe we can just use a system message.
+				// if (bookmarksList.indexOf(data.character.identity) !== -1) {
+				// 	toastCallback({
+				// 		header: data.character.identity + " is offline", // NOTE: make sure this works..
+				// 		// text:
+				// 	})
+				// }
 
 				// two: leave a channel if this is us and we're in it.
 				if (data.character.identity === userData.name) {
@@ -451,11 +486,11 @@ function listenToData() {
 				data.users = [data.character];
 				if (!channelData) {
 					// erm.
-					console.log('user left a channel you dont know about.',channelData,data);
+					console.log('user left a channel i dont know about.',channelData,data);
 					return;
 				}
 				if (channelData.users) {
-					console.log(channelData.users);
+					// console.log(channelData.users);
 					
 					// TODO: check if this exists.
 					let index = channelData.users.indexOf(data.character);
@@ -474,11 +509,16 @@ function listenToData() {
 			}
 		});
 		addListenerForSocketMessage('JCH',(data)=>{
-			console.log('jch',data);
+			// console.log('jch',data);
 			if (data && data.character) {
 				// one: create a toast if this is a friend or bookmark
-				// data.character.identity
-				// TODO
+				// do we care if they join? Maybe just use a system message.
+				// if (bookmarksList.indexOf(data.character.identity) !== -1) { // NOTE: make sure this works..
+				// 	toastCallback({
+				// 		header: data.character.identity + " is online",
+				// 		// text:
+				// 	})
+				// }
 
 				// two: join a channel if this is us and we're not in it yet.
 				if (data.character.identity === userData.name) {

@@ -90,8 +90,7 @@
         .room-object .details-contain .snippet a:hover {
           color: #a4b1ad; }
       .room-object .details-contain .snippet .action {
-        font-weight: 600;
-        color: #1cd67c; }
+        font-weight: 600; }
   .room-object .timestamp {
     position: absolute;
     top: 17px;

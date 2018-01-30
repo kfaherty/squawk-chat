@@ -31,7 +31,7 @@ class UserList extends Component {
 		this.props.usernameClicked(name);
 	}
    	render() {
-   		console.log(this.props.users);
+   		// console.log(this.props.users);
         const users = performFilterSort(this.props.users || [],this.state.searchString,this.state.sortType); //this.state.filteredRooms;
 
 		return (
@@ -102,10 +102,14 @@ class Chat extends Component {
   		}
   	}
   	handleKeyUp(event) {
+		// TODO: TPN  		
+
   		if (event.key === 'Shift') {
   			this.shiftDown = false;
   		}
         if (event.key === 'Enter' && !this.shiftDown) {
+        	event.preventDefault();
+        	event.stopPropagation();
   			this.onSendMessage();
   		}
   	}

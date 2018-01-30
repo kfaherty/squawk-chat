@@ -546,6 +546,8 @@ html {
   .top-bar .dropdown {
     right: 200px;
     top: 48px; }
+    .top-bar .dropdown.full {
+      right: 85px; }
 
 .logo-contain {
   color: #616965;
@@ -574,7 +576,8 @@ html {
   position: absolute;
   top: 0px;
   right: 160px;
-  cursor: pointer; }
+  cursor: pointer;
+  transition: transform 0.3s ease; }
   .logged-in-user-contain .user-name {
     display: inline-block;
     color: #99A09C;
@@ -593,6 +596,8 @@ html {
     background: black;
     border-radius: 38px;
     box-shadow: 0px 0px 14px rgba(0, 0, 0, 0.3); }
+  .logged-in-user-contain.full {
+    transform: translateX(115px); }
 
 .controls-contain {
   position: absolute;
@@ -600,7 +605,12 @@ html {
   right: 0px;
   width: 140px;
   height: 100%;
-  background: white; }
+  background: white;
+  transition: transform 0.3s ease; }
+  .controls-contain.full {
+    transform: translateX(115px); }
+    .controls-contain.full .arrow.right {
+      transform: translate3d(0, -50%, 0) rotate(225deg); }
 
 .arrow {
   cursor: pointer;
@@ -1166,8 +1176,7 @@ input, textarea {
         .room-object .details-contain .snippet a:hover {
           color: #a4b1ad; }
       .room-object .details-contain .snippet .action {
-        font-weight: 600;
-        color: #1cd67c; }
+        font-weight: 600; }
   .room-object .timestamp {
     position: absolute;
     top: 17px;
@@ -1358,8 +1367,7 @@ input, textarea {
       .chat-header .chat-subtitle a:hover {
         color: #a4b1ad; }
     .chat-header .chat-subtitle .action {
-      font-weight: 600;
-      color: #1cd67c; }
+      font-weight: 600; }
   .chat-header .settings-button {
     position: absolute;
     top: 0px;
@@ -1408,7 +1416,9 @@ input, textarea {
       top: 10px;
       left: 15px;
       box-sizing: border-box;
-      pointer-events: none; }
+      pointer-events: none;
+      opacity: 1;
+      transition: opacity 0.3s ease,transform 0.3s ease; }
       .chat-contain .input-contain .label div, .chat-contain .input-contain .label span {
         display: inline-block; }
       .chat-contain .input-contain .label span {
@@ -1416,7 +1426,8 @@ input, textarea {
         font-size: 12px;
         padding-left: 5px; }
       .chat-contain .input-contain .label.hidden {
-        display: none; }
+        transform: translateX(25px);
+        opacity: 0; }
     .chat-contain .input-contain textarea {
       resize: none;
       box-sizing: border-box;
@@ -1425,9 +1436,10 @@ input, textarea {
       border: none;
       background: transparent;
       outline: none;
-      padding: 10px 20px;
+      padding: 9px 20px 6px;
       font-family: 'Verlag', sans-serif;
-      font-size: 12px;
+      font-size: 13px;
+      line-height: 22px;
       color: #6A6F6C; }
   .chat-contain .dropdown {
     top: 34px; }
@@ -1560,7 +1572,7 @@ input, textarea {
   margin: 20px;
   width: auto;
   width: 60%;
-  padding: 20px 20px 10px 20px;
+  padding: 14px 20px 10px 20px;
   font-size: 13px;
   border: 1px solid #E5EBE9;
   box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.1); }
@@ -1576,7 +1588,7 @@ input, textarea {
     font-weight: 600; }
   .chat-message .message {
     display: inline-block;
-    padding-top: 9px;
+    padding-top: 3px;
     color: #A6B2AD;
     line-height: 22px; }
     .chat-message .message strong {
@@ -1597,8 +1609,7 @@ input, textarea {
       .chat-message .message a:hover {
         color: #a4b1ad; }
     .chat-message .message .action {
-      font-weight: 600;
-      color: #1cd67c; }
+      font-weight: 600; }
   .chat-message .timestamp {
     position: absolute;
     top: 20px;
@@ -1657,11 +1668,9 @@ input, textarea {
     left: 0px;
     top: 0px;
     font-size: 13px;
-    padding-left: 10px;
-    padding-right: 10px; }
+    padding: 4px 10px 0px 10px; }
   .toast-item .toast-header {
     height: 14px;
-    padding-top: 9px;
     font-weight: 600;
     color: #6A6F6C;
     white-space: nowrap;

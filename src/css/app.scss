@@ -84,6 +84,11 @@ html{
     .dropdown {
         right: 200px;
         top: 48px;
+
+        &.full {
+            // transform: translateX(115px);
+            right: 85px;
+        }
     }
 }
 .logo-contain {
@@ -121,6 +126,7 @@ html{
     top: 0px;
     right: 160px;
     cursor: pointer;
+    transition: transform 0.3s ease;
 
     .user-name {
         display: inline-block;
@@ -144,6 +150,10 @@ html{
         border-radius: 38px;
         box-shadow: 0px 0px 14px rgba(0, 0, 0, .3);
     }
+
+    &.full {
+        transform: translateX(115px);
+    }
 }
 .controls-contain {
     position: absolute;
@@ -152,6 +162,14 @@ html{
     width: 140px;
     height: 100%;
     background: white;
+    transition: transform 0.3s ease;
+    &.full {
+        transform: translateX(115px);
+        // flip arrow
+        .arrow.right {
+            transform: translate3d(0, -50%, 0) rotate(225deg);
+        }
+    }
 }
 .arrow {
     cursor: pointer;

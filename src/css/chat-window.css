@@ -180,8 +180,7 @@
       .chat-header .chat-subtitle a:hover {
         color: #a4b1ad; }
     .chat-header .chat-subtitle .action {
-      font-weight: 600;
-      color: #1cd67c; }
+      font-weight: 600; }
   .chat-header .settings-button {
     position: absolute;
     top: 0px;
@@ -230,7 +229,9 @@
       top: 10px;
       left: 15px;
       box-sizing: border-box;
-      pointer-events: none; }
+      pointer-events: none;
+      opacity: 1;
+      transition: opacity 0.3s ease,transform 0.3s ease; }
       .chat-contain .input-contain .label div, .chat-contain .input-contain .label span {
         display: inline-block; }
       .chat-contain .input-contain .label span {
@@ -238,7 +239,8 @@
         font-size: 12px;
         padding-left: 5px; }
       .chat-contain .input-contain .label.hidden {
-        display: none; }
+        transform: translateX(25px);
+        opacity: 0; }
     .chat-contain .input-contain textarea {
       resize: none;
       box-sizing: border-box;
@@ -247,9 +249,10 @@
       border: none;
       background: transparent;
       outline: none;
-      padding: 10px 20px;
+      padding: 9px 20px 6px;
       font-family: 'Verlag', sans-serif;
-      font-size: 12px;
+      font-size: 13px;
+      line-height: 22px;
       color: #6A6F6C; }
   .chat-contain .dropdown {
     top: 34px; }

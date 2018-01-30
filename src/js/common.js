@@ -24,10 +24,10 @@ function performFilterSort(array,searchString,sortType,label) {
     }
     function type(a,b) { 
         // bookmarks/favorites..
-        if (!a.favorited && b.favorited) return -1;
-        if (a.favorited && !b.favorited) return 1;
-        if (!a.bookmarked && b.bookmarked) return -1;
-        if (a.bookmarked && !b.bookmarked) return 1;
+        if (!a.favorited && b.favorited) return 1;
+        if (a.favorited && !b.favorited) return -1;
+        if (!a.bookmarked && b.bookmarked) return 1;
+        if (a.bookmarked && !b.bookmarked) return -1;
 
         // channel type
         if (a.type < b.type) return -1;
@@ -278,8 +278,10 @@ class noparseTag extends Tag {
 }
 class urlTag extends Tag {
   	toReact() {
+  		const url = this.params.url || this.getContent(true);
+  		const body = this.getContent(true) || this.params.url();
     	return (
-      		<a href={this.params.url || this.getComponents()}>{this.getComponents()}</a>
+      		<a href={url}>{body}</a>
     	);
   	}
 }

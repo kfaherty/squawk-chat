@@ -75,22 +75,22 @@ class Root extends Component {
 	assignCallbacks() {
 	    // messages:
 	    setJoinedChannelsCallback((data) => {
-			console.log('new joined data',data);
+			// console.log('new joined data',data);
 			this.setState({roomsjoined: data});
 	    });
 	    // channels:
 		setChannelsCallback((data) => {
-			console.log('new channel data',data);
+			// console.log('new channel data',data);
 			this.setState({roomslist: data});
 		});
 	    // friends:
 	    setFriendsCallback((data) => {
-	    	console.log('friends data',data);
+	    	// console.log('friends data',data);
 			this.setState({friendslist: data});
 	    });
 	    // sselected chat
 	    setSelectedChatCallback((data) => {
-	    	console.log('chat update',data);
+	    	// console.log('chat update',data);
 	    	this.setState({chatData:data});
 	    })
 	    // melba toasts
@@ -186,7 +186,7 @@ class Root extends Component {
           		
           		<div className="toasts-contain">
           			<ToastContainer 
-          				autoClose={false}//{30000} 
+          				autoClose={30000} 
           				newestOnTop={true} 
           				hideProgressBar={true} 
           				closeButton={false} 
@@ -209,18 +209,18 @@ class Root extends Component {
 			            <span onClick={() => this.setSelectedTab('search')}   className={"text-button " + (this.state.selectedTab === 'search' ? "active" : "")}>Search Users</span>
 			        </nav>
 			        
-			        <div className="logged-in-user-contain" onClick={() => this.toggleUserMenu()}>
+			        <div className={"logged-in-user-contain " + (this.state.userListOpen ? "" : "full")} onClick={() => this.toggleUserMenu()}> 
 			            <div className="user-name">{this.state.username}</div>
 			            <div className="arrow"></div>
 			            <div className="avatar"></div>
 			        </div>
-			        <div className={"dropdown " + (this.state.userMenuOpen ? "visible" : "")}>
+			        <div className={"dropdown " + (this.state.userMenuOpen ? "visible " : "") + (this.state.userListOpen ? "" : "full")}>
 			        	<div className="list-item" onClick={() => this.updateStatus()}><div className="list-icon fi-pencil"></div>Set Status</div>
 			        	<div className="list-item" onClick={() => this.toggleSettings()}><div className="list-icon fi-widget"></div>Settings</div>
 	                    <div className="list-item" onClick={() => this.logout()}><div className="list-icon fi-lock"></div>Logout</div>
 	                </div>
 
-			        <div className="controls-contain">
+			        <div className={"controls-contain " + (this.state.userListOpen ? "" : "full")}>
 			            <div className="arrow right" onClick={() => this.toggleUserList()}></div>
 			        </div>
 			    </div>
