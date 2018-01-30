@@ -1,10 +1,43 @@
 import React, { Component } from 'react';
+import { ToastContainer, toast, style } from 'react-toastify';
 
 import Authorize from './authorize';
 import RoomList from './roomlist';
 import Chat from './chat';
 
-import { logout,gotLoginPromise,setChannelsCallback,setJoinedChannelsCallback,setFriendsCallback,getChannels,getChannelData,joinChannel,setSelectedChatCallback,setSelectedChat,getFriends,lostConnectionAlert,gainedConnectionAlert } from './api2';
+import { logout,gotLoginPromise,setChannelsCallback,setJoinedChannelsCallback,setFriendsCallback,getChannels,getChannelData,joinChannel,setSelectedChatCallback,setSelectedChat,getFriends,lostConnectionAlert,gainedConnectionAlert,setCreateToastCallback } from './api2';
+
+style({ // toasts style overrides.
+  	width: "320px",
+  	colorDefault: "#fff",
+  	colorProgressDefault: "transparent",
+  	mobile: "only screen and (max-width : 480px)",
+  	fontFamily: "'Verlag', sans-serif",
+  	zIndex: 9999,
+
+  	TOP_RIGHT: {
+    	top: 	'20px',
+    	right: 	'20px'
+  	},
+});
+
+class NotificationTemplate extends Component {
+    render(){
+	    return (
+        	<div className={"toast-item " + (this.props.error ? "error" : "")}>
+        		<div className="content-wrap">
+			    	<div className="toast-content">{this.props.text}</div>
+			    </div>
+			    <button onClick={this.props.closeToast}>Dismiss</button>
+			</div>
+      	);
+    }
+}
+
+
+function createToast(props) {
+	toast(<NotificationTemplate {...props} />)
+}
 
 class Root extends Component {
 	constructor(props) {
@@ -54,9 +87,14 @@ class Root extends Component {
 	    	console.log('friends data',data);
 			this.setState({friendslist: data});
 	    });
+	    // sselected chat
 	    setSelectedChatCallback((data) => {
 	    	console.log('chat update',data);
 	    	this.setState({chatData:data});
+	    })
+	    // melba toasts
+	    setCreateToastCallback((data) => {
+	    	this.createToast(data);
 	    })
 	}
 
@@ -114,6 +152,9 @@ class Root extends Component {
     reportSelectedChat() {
     	// TODO
     	console.log('ok',this.state.selectedChat);
+    	// SFC
+    	// << SFC { "action": "report", "report": string, "character": string }
+
     }
 
     toggleSettings() {
@@ -122,6 +163,13 @@ class Root extends Component {
 
     updateStatus() {
     	// TODO
+    	// << STA { "status": enum, "statusmsg": string }
+		// Status: Valid values are "online", "looking", "busy", "dnd", "idle", "away", and "crown".
+    }
+
+    createChannel() {
+    	// << CCR { "channel": string }
+
     }
 
     logout() {
@@ -133,6 +181,10 @@ class Root extends Component {
 		return (
 			<div className="app-wrapper">
 				<Authorize visible={this.state.loggedin} />
+          		
+          		<div className="toasts-contain">
+          			<ToastContainer autoClose={15000} newestOnTop={true} hideProgressBar={true} closeButton={false} />
+				</div>
 
    				<div className={"potential-problem " + (this.state.connected ? "" : "visible")}>
 					<p>Disconnected from data</p>

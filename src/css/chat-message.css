@@ -14,7 +14,7 @@
     background: #1cd67c;
     border: 1px solid #1cd67c;
     box-shadow: 0px 0px 14px #ccc; }
-    .chat-message.mine .user-name, .chat-message.mine .message, .chat-message.mine .timestamp {
+    .chat-message.mine .user-name, .chat-message.mine .message, .chat-message.mine .timestamp, .chat-message.mine .message .action {
       color: #f0fbf3; }
   .chat-message .user-name {
     color: #1cd67c;
@@ -36,6 +36,14 @@
       top: -0.5em; }
     .chat-message .message sub {
       bottom: -0.25em; }
+    .chat-message .message a {
+      color: #99A09C;
+      transition: color 0.3s ease; }
+      .chat-message .message a:hover {
+        color: #a4b1ad; }
+    .chat-message .message .action {
+      font-weight: 600;
+      color: #1cd67c; }
   .chat-message .timestamp {
     position: absolute;
     top: 20px;

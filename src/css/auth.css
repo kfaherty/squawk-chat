@@ -110,3 +110,18 @@
 .login-wrap {
   padding: 10px;
   text-align: center; }
+
+.error-wrap {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  position: absolute;
+  z-index: 99;
+  text-align: center;
+  top: calc( 50vh + 125px);
+  left: calc( 50vw - 200px);
+  color: red;
+  width: 50%;
+  max-width: 420px;
+  padding-top: 10px; }
+  .error-wrap.visible {
+    opacity: 1; }

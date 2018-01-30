@@ -41,17 +41,17 @@ class Authorize extends Component {
 				this.setState({ list:list, showLogin:false });
 			}).catch((error) => {
 				this.submittedLogin = false;
-				console.log(error);
+				this.setState({error: error,showError:true});
 			});
 		}
 	}
 	handleFieldChange(name,value) {
 		switch(name) {
 			case 'Username':
-				this.setState({username:value,usernamehaserror:false});
+				this.setState({username:value,usernamehaserror:false,showError: false});
 				break;
 			case 'Password':
-				this.setState({password:value,passwordhaserror:false});
+				this.setState({password:value,passwordhaserror:false,showError: false});
 				break
 			default:
 				break;
@@ -76,9 +76,11 @@ class Authorize extends Component {
         }
     }
 	render() {
+		const characterlist = this.state.list || [];
 		return (
 			<div className={"authorize-contain " + (this.props.visible ? "" : "visible" )}>
 				<div className="authorize-background"></div>
+				
 				<div className="authorize-modal">
 					<div className="logo-row">
 						<h1>SquawkChat</h1>
@@ -109,7 +111,7 @@ class Authorize extends Component {
 					</div>
 					<div className={"character-select " + (this.state.showLogin? "":"active")}>
 						<div className="select-wrap">
-							{this.state.list.map((obj,index) => {
+							{characterlist.map((obj,index) => {
 								return (
 									<button className="character-option" onClick={() => this.handleConnectClick({obj})} key={index}>{obj}</button>
 								)
@@ -117,6 +119,8 @@ class Authorize extends Component {
 						</div>
 					</div>
 				</div>
+
+				<div className={"error-wrap " + (this.state.showError ? "visible":"")}>{this.state.error}</div>
 			</div>
 		);
 	}

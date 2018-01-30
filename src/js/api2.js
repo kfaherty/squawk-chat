@@ -55,6 +55,11 @@ function login(username,password) {
 		.catch(error => console.error('Error:', error))
 		.then(response => {
 			console.log('Success:', response);
+			if (response.error) {
+				reject(response.error);
+				return;
+			}
+
 			userData.account = username; // cache this too because we need it in IDN
 			userData.ticket = response.ticket;
 			userData.characterlist = response.characters;
@@ -97,6 +102,11 @@ var loginPromise = new Promise(function(resolve,reject) {
 
 function gotLoginPromise() {
   	return loginPromise;
+}
+
+var toastCallback = undefined;
+function setCreateToastCallback(cb) {
+	toastCallback = cb;
 }
 
 // socket
@@ -164,6 +174,11 @@ function createSocket(name) {
 					break;
 				case 'ERR':
 					console.log(code,payload);
+					if (toastCallback) {
+						toastCallback({
+							text: 'Error: '+payload
+						});
+					}
 					if (payload && payload.number === 4) {
 						reject('invalid token');
 					}
@@ -326,11 +341,19 @@ function listenToData() {
 		addListenerForSocketMessage('PRI',(data)=>{
 			if (data && data.message) {
 				// data.channel = data.character;
+
 				let messageData = {
 					timestamp: Date.now(),
 					key: messageSeq++,
 					character: data.character,
 					message: data.message
+				}
+
+				// create toast if this isn't the selected chat.
+				if (toastCallback && selectedChat !== data.character) {
+					toastCallback({
+						text: 'New message from '+data.character+': '+data.message
+					});
 				}
 				
 				let channelData = getChannelData(data.character);
@@ -669,4 +692,4 @@ function privateMessage(character,message){
 	updateChannelData(channelData); 
 }
 
-export { login,logout,loadCookie,gotLoginPromise,createSocket,lostConnectionAlert,gainedConnectionAlert,getChannels,getChannelData,joinChannel,getFriends,sendMessage,privateMessage,setChannelsCallback,setJoinedChannelsCallback,setSelectedChatCallback,setSelectedChat,setFriendsCallback };
+export { login,logout,loadCookie,gotLoginPromise,createSocket,lostConnectionAlert,gainedConnectionAlert,getChannels,getChannelData,joinChannel,getFriends,sendMessage,privateMessage,setChannelsCallback,setJoinedChannelsCallback,setSelectedChatCallback,setSelectedChat,setFriendsCallback,setCreateToastCallback };

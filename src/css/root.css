@@ -974,6 +974,21 @@ input, textarea {
   padding: 10px;
   text-align: center; }
 
+.error-wrap {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  position: absolute;
+  z-index: 99;
+  text-align: center;
+  top: calc( 50vh + 125px);
+  left: calc( 50vw - 200px);
+  color: red;
+  width: 50%;
+  max-width: 420px;
+  padding-top: 10px; }
+  .error-wrap.visible {
+    opacity: 1; }
+
 .room-list-contain {
   width: 340px;
   height: calc( 100vh - 75px);
@@ -1591,3 +1606,70 @@ input, textarea {
     text-align: right;
     font-size: 13px;
     color: #A6B2AD; }
+
+@-webkit-keyframes animateToast {
+  0% {
+    opacity: 0;
+    transform: translateX(320px); }
+  100% {
+    opacity: 1;
+    transform: translateX(0px); } }
+
+@-moz-keyframes animateToast {
+  0% {
+    opacity: 0;
+    transform: translateX(320px); }
+  100% {
+    opacity: 1;
+    transform: translateX(0px); } }
+
+@-o-keyframes animateToast {
+  0% {
+    opacity: 0;
+    transform: translateX(320px); }
+  100% {
+    opacity: 1;
+    transform: translateX(0px); } }
+
+@keyframes animateToast {
+  0% {
+    opacity: 0;
+    transform: translateX(320px); }
+  100% {
+    opacity: 1;
+    transform: translateX(0px); } }
+
+.toasts-contain .css-1qtol5d, .toasts-contain [data-css-1qtol5d] {
+  border-radius: 5px;
+  color: #6A6F6C;
+  box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.1);
+  animation-duration: 0.6s;
+  animation-fill-mode: both;
+  animation-name: animateToast;
+  min-height: 19px; }
+
+.toast-item {
+  width: 100%;
+  height: 100%;
+  color: #6A6F6C; }
+  .toast-item .content-wrap {
+    width: calc( 100% - 100px);
+    position: absolute;
+    left: 0px;
+    top: 0px; }
+  .toast-item .toast-content {
+    padding: 10px;
+    font-size: 14px;
+    line-height: 14px; }
+  .toast-item button {
+    width: 65px;
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    height: 100%;
+    border: none;
+    border-left: 1px solid;
+    border-radius: 0px;
+    background: none; }
+  .toast-item.error {
+    color: #F44336; }
