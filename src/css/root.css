@@ -648,7 +648,7 @@ html {
   position: absolute;
   text-align: center;
   display: block;
-  padding: 7px 20px;
+  padding: 10px 20px;
   color: #F44336;
   font-size: 22px;
   /* height: 36px; */
@@ -1405,7 +1405,7 @@ input, textarea {
     bottom: 0px;
     left: 0px;
     margin: 20px;
-    height: 100px;
+    min-height: 81px;
     background: white;
     border-radius: 4px;
     width: calc( 100% - 40px);

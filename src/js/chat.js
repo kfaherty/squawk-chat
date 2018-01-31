@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { performFilterSort,RelativeTime,ParsedText } from './common';
 import { sendMessage,privateMessage } from './api2'
+import Textarea from "react-textarea-autosize";
 
 function ChatMessage(props){
 	// console.log(message);
@@ -95,22 +96,35 @@ class Chat extends Component {
 			inputValue: event.target.value
 		});
     }
+    scrollToBottom(){
+ 		this.messagesEnd.scrollIntoView({ behavior: "smooth" });
+	}
 	handleKeyDown(event) {
 		// console.log(event.key);
+        if (event.key === 'Enter' && !this.shiftDown) {
+        	event.preventDefault();
+        	event.nativeEvent.stopPropagation();
+        	event.nativeEvent.preventDefault(); 
+    	  	event.nativeEvent.stopImmediatePropagation();
+    	}
 		if (event.key === 'Shift') {
   			this.shiftDown = true;
   		}
   	}
   	handleKeyUp(event) {
 		// TODO: TPN  		
-
+		// TODO height of input-contain to keep from needing to scroll.
   		if (event.key === 'Shift') {
   			this.shiftDown = false;
   		}
         if (event.key === 'Enter' && !this.shiftDown) {
         	event.preventDefault();
-        	event.stopPropagation();
+        	event.nativeEvent.stopPropagation();
+        	event.nativeEvent.preventDefault(); 
+    	  	event.nativeEvent.stopImmediatePropagation();
+
   			this.onSendMessage();
+  			this.scrollToBottom();
   		}
   	}
  	onSendMessage(){
@@ -123,6 +137,9 @@ class Chat extends Component {
     		this.lastInput = this.state.inputValue; // save this incase the user wants it back.
     		this.setState({inputValue:''}); // clear input here.
     	}
+    }
+    getLogs(value) {
+    	// TODO
     }
     usernameClicked(value) {
     	console.log(value);
@@ -164,6 +181,7 @@ class Chat extends Component {
 								<div onClick={() => this.toggleFavorite()} className={"list-item " + (this.state.favorited ? "" : "hidden")}><div className="list-icon fi-star"></div>Unfavorite</div>
 								{(chat.type === 3) && (<div onClick={() => this.toggleIgnore()} className={"list-item " + (this.state.ignored ? "hidden" : "")}><div className="list-icon fi-plus"></div>Ignore</div>)}
 								{(chat.type === 3) && (<div onClick={() => this.toggleIgnore()} className={"list-item " + (this.state.ignored ? "" : "hidden")}><div className="list-icon fi-minus"></div>Unignore</div>)}
+								<div onClick={() => this.getLogs()} className="list-item"><div className="list-icon fi-page"></div>Get logs</div>								
 								<div onClick={() => this.reportSelectedChat()} className="list-item"><div className="list-icon fi-flag"></div>Report</div>
 							</div>
 
@@ -193,14 +211,26 @@ class Chat extends Component {
 						    		<div className="dot-two"></div>
 						    		<div className="dot-three"></div>
 						    	</div>
-						    	<div className="input-padding"></div>
+						    	<div className="input-padding" ref={(el) => { this.messagesEnd = el; }}></div>
 							</div>
 
 							<div className="input-contain">
 								<div className={"label " + (this.state.inputValue ? "hidden" : "")} >
 						    		<span>Type a message</span>
 							    </div>
-							    <textarea type="text" name="message" resizable="false" value={this.state.inputValue} onKeyUp={(event) => this.handleKeyUp(event)} onKeyDown={(event) => this.handleKeyDown(event)} onChange={(event) => this.handleChange(event)} />
+	
+							    <Textarea
+								  	minRows={3}
+							  	  	maxRows={12}
+							  	  	type="text"
+							  	  	name="message"
+							  	  	resizable="false"
+						  	  	    useCacheForDOMMeasurements={true}
+							  	  	value={this.state.inputValue}
+							  	  	onKeyUp={(event) => this.handleKeyUp(event)}
+							  	  	onKeyDown={(event) => this.handleKeyDown(event)}
+							  	  	onChange={(event) => this.handleChange(event)}
+								/>
 							</div>
 						</div>
 						{(chat.type === 3) && (

@@ -2,8 +2,14 @@ import loadURLS from './apiurls';
 import Cookies from 'universal-cookie';
 const cookies = new Cookies();
 
-var apiurls = loadURLS();
-const useProd = true; // TODO
+const apiurls = loadURLS();
+const useProd = false; // TODO c:
+
+// client announce stuff
+const clientIdentity = {
+	name: "SquawkChat",
+	version: "0.2"
+}
 
 // userData:
 var userData = {
@@ -16,6 +22,7 @@ var userData = {
 	logged_in: false
 }
 
+// login
 function loadCookie() {
 	return new Promise(function(resolve,reject) {
 		let cookiedata = cookies.getAll();
@@ -44,7 +51,7 @@ function login(username,password) {
 
 		var formData = new FormData();
 		formData.append('account', username);
-		formData.append('password', apiurls.password);
+		formData.append('password', password);
 		formData.append('no_bookmarks', true);
 		// formData.append('no_friends', true);
 		
@@ -145,7 +152,7 @@ function createSocket(name) {
 			socket = new WebSocket(apiurls.devsocketurl);
 		}
 		socket.onopen = function(event) {
-			socket.send( 'IDN '+ JSON.stringify({ "method": "ticket", "account": userData.account, "ticket": userData.ticket, "character": userData.name, "cname": "SquawkChat", "cversion": "0.1" }) );
+			socket.send( 'IDN '+ JSON.stringify({ "method": "ticket", "account": userData.account, "ticket": userData.ticket, "character": userData.name, "cname": clientIdentity.name, "cversion": clientIdentity.version }) );
 			// CHA public channels
 			// ORS is open private rooms.
 		}

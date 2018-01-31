@@ -218,7 +218,7 @@
     bottom: 0px;
     left: 0px;
     margin: 20px;
-    height: 100px;
+    min-height: 81px;
     background: white;
     border-radius: 4px;
     width: calc( 100% - 40px);
