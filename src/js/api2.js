@@ -344,32 +344,42 @@ function listenToData() {
 				data.timestamp = Date.now();
 				data.key = messageSeq++;
 
-				// pings.
-				// const pings = [userData.name]; // TODO: load this from settings.
-				if ((new RegExp(userData.name,'i')).test(data.message)) {
-					if (toastCallback) {
-						toastCallback({
-							header: data.character+' mentioned '+userData.name+'!',
-							text: data.message,
-							character: data.character
-						});
-					}
-					data.ping = true;
-				}
-
 				let channelData = getChannelData(dataChannel);
 				if (channelData && channelData.messages) {
 					channelData.messages.push(data);
 				} else {
 					channelData = {
 						channel:dataChannel,
+						unread: 0,
 						messages: [data]
 					}
+					// might need to join this channel.
 				}
+
+				// pings.
+				// const pings = [userData.name]; // TODO: load this from settings.
+				if ((new RegExp(userData.name,'i')).test(data.message)) {
+					data.ping = true; // set message to ping
+
+					if (selectedChat !== data.character) {
+						channelData.unread++; // increment badge.
+
+						if (toastCallback) {
+							toastCallback({
+								header: data.character+' mentioned '+userData.name+'!',
+								text: data.message,
+								character: data.character
+							});
+						}
+					}
+				}
+
 				channelData.timestamp = Date.now();
 				channelData.lastMessage = data.message;
 				channelData.lastUser = data.character;
 				updateChannelData(channelData); 
+
+				// TODO: potentially join this channel if we're not in it.
 			};
 		});
 		addListenerForSocketMessage('PRI',(data)=>{
@@ -383,15 +393,6 @@ function listenToData() {
 					message: data.message
 				}
 
-				// create toast if this isn't the selected chat.
-				if (toastCallback && selectedChat !== data.character) {
-					toastCallback({
-						header: 'New message from '+data.character+'!',
-						text: data.message,
-						character: data.character
-					});
-				}
-				
 				let channelData = getChannelData(data.character);
 				if (channelData) {
 					channelData.messages.push(messageData);
@@ -401,15 +402,24 @@ function listenToData() {
 						type: 3,
 						friend: friendsList.indexOf(data.character) !== -1 ? true : false,
 						bookmark: bookmarksList.indexOf(data.character) !== -1 ? true : false,
-						// timestamp: Date.now(),
 						name: data.character,
-						// lastMessage: data.message,
-						// lastUser: data.character,
+						unread: 0,						
 						messages: [messageData]
 					}
-
-					// channelsList[channelData.channel] = channelData; // this will create an extra update.
 				}
+
+				if (selectedChat !== data.character) {
+					channelData.unread++; // increment badge.
+				
+					if (toastCallback) { // create toast if this isn't the selected chat.
+						toastCallback({
+							header: 'New message from '+data.character+'!',
+							text: data.message,
+							character: data.character
+						});
+					}
+				}
+				
 
 				channelData.timestamp = Date.now();
 				channelData.lastMessage = data.message;
@@ -612,6 +622,12 @@ function setSelectedChatCallback(cb) {
 var selectedChat = undefined;
 function setSelectedChat(value) {
 	selectedChat = value;
+
+	if (value){ // clear unread if this is actually a room.
+		let channelData = getChannelData(value);
+		channelData.unread = 0;
+		updateChannelData(channelData);
+	}
 }
 
 function getChannelData(name){

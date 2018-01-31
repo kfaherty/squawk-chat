@@ -39,6 +39,10 @@
 		.timestamp {
 			color: #f0fbf3;
 		}
+		.unread-badge {
+			background: #f0fbf3;
+			color: #1cd67c;
+		}
 	}
 
 	&.short {
@@ -96,6 +100,10 @@
 		.user-name{
 			color: #1cd67c;
 			font-weight: 600;
+		    width: 168px;
+		    white-space: nowrap;
+			overflow: hidden;
+    		text-overflow: ellipsis;
 		}
 		.message-type{
 			padding-top: 9px;
@@ -103,7 +111,7 @@
 			color: #6A6F6C;
 		    white-space: nowrap;
 			overflow: hidden;
-    		text-overflow: ellipsis; // we need to do this with js i think
+    		text-overflow: ellipsis;
 		}
 		.snippet {
 			padding-top: 4px;
@@ -123,5 +131,27 @@
 		text-align: right;
 		font-size: 13px;
 	    color: #A6B2AD;
+	}
+	.unread-badge {
+	    position: absolute;
+	    top: 14px;
+    	right: 41px;
+    	left: initial;
+	    background: #1cd67c;
+	    color: white;
+	    border-radius: 9px;
+	    height: 21px;
+	    line-height: 20px;
+	    padding: 0px 6px 0px 6px;
+	    text-align: right;
+	    font-size: 13px;
+	    font-family: Verlag, sans-serif;
+	    font-weight: 600;
+	    opacity: 1;
+	    // transition: opacity 0.3s ease;
+
+	    &.hidden {
+	    	opacity: 0;
+	    }
 	}
 }

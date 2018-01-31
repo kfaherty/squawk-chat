@@ -565,6 +565,7 @@ html {
     color: #99A09C;
     line-height: 74px;
     text-decoration: none;
+    font-weight: 600;
     font-size: 17px;
     cursor: pointer; }
     .text-buttons-contain span:hover {
@@ -1110,6 +1111,9 @@ input, textarea {
         color: #f0fbf3; }
     .room-object.selected .timestamp {
       color: #f0fbf3; }
+    .room-object.selected .unread-badge {
+      background: #f0fbf3;
+      color: #1cd67c; }
   .room-object.short {
     height: 68px; }
   .room-object .avatar-contain {
@@ -1143,7 +1147,11 @@ input, textarea {
     width: calc( 100% - 80px); }
     .room-object .details-contain .user-name {
       color: #1cd67c;
-      font-weight: 600; }
+      font-weight: 600;
+      width: 168px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis; }
     .room-object .details-contain .message-type {
       padding-top: 9px;
       font-weight: 600;
@@ -1184,6 +1192,24 @@ input, textarea {
     text-align: right;
     font-size: 13px;
     color: #A6B2AD; }
+  .room-object .unread-badge {
+    position: absolute;
+    top: 14px;
+    right: 41px;
+    left: initial;
+    background: #1cd67c;
+    color: white;
+    border-radius: 9px;
+    height: 21px;
+    line-height: 20px;
+    padding: 0px 6px 0px 6px;
+    text-align: right;
+    font-size: 13px;
+    font-family: Verlag, sans-serif;
+    font-weight: 600;
+    opacity: 1; }
+    .room-object .unread-badge.hidden {
+      opacity: 0; }
 
 @-webkit-keyframes animateMenu {
   0% {

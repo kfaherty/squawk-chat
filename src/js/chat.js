@@ -156,7 +156,7 @@ class Chat extends Component {
 							<div onClick={() => this.toggleFavorite()} className={"list-item " + (this.state.favorited ? "" : "hidden")}><div className="list-icon fi-star"></div>Unfavorite</div>
 							{(chat.type === 3) && (<div onClick={() => this.toggleIgnore()} className={"list-item " + (this.state.ignored ? "hidden" : "")}><div className="list-icon fi-plus"></div>Ignore</div>)}
 							{(chat.type === 3) && (<div onClick={() => this.toggleIgnore()} className={"list-item " + (this.state.ignored ? "" : "hidden")}><div className="list-icon fi-minus"></div>Unignore</div>)}
-							<div onClick={() => this.getLogs()} className="list-item"><div className="list-icon fi-page"></div>Get logs</div>								
+							<div onClick={() => this.getLogs()} className="list-item"><div className="list-icon fi-page-filled"></div>Get logs</div>								
 							<div onClick={() => this.reportSelectedChat()} className="list-item"><div className="list-icon fi-flag"></div>Report</div>
 						</div>
 

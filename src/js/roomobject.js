@@ -50,8 +50,6 @@ class RoomShortObject extends Component {
 					<div className="user-name">{user.name}</div>
 					<div className="message-type">Users: {user.characters}</div>
 				</div>
-
-				{/* <RelativeTime created_at={user.timestamp} /> */}
 			</div>
 		);
 	}
@@ -66,6 +64,8 @@ class RoomObject extends Component {
 		return (
 			<div className={"room-object " + (user.selected ? "selected" : "")} onClick={() => this.roomObjectClicked()}>
 				<Avatar icon={user.icon} type={user.type} />
+
+				<div className={"unread-badge " + (user.unread > 0 ? "" : "hidden")}>{user.unread}</div>
 
 				<div className="user-icon-contain">
 					<div className={"user-icon fi-star " + (user.friend ? "active" : "")}></div>
