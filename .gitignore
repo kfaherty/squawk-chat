@@ -19,3 +19,4 @@ node-backend/node_modules/
 node-backend/pg_creds.json
 old/
 src/js/apiurls.js
+build/

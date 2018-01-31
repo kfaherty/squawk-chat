@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react';
-import { performFilterSort,StandardInput } from './common';
+import { StandardInput } from './common';
 import { RoomObject,RoomShortObject } from './roomobject';
 
 class RoomList extends Component {
@@ -14,7 +14,112 @@ class RoomList extends Component {
         };
         this.handleFieldChange = this.handleFieldChange.bind(this);     
     }
-    
+    performFilterSort(array,searchString,sortType,label) {
+        // if (!array) {
+        //  console.log('missing stuff');
+        //  return;
+        // }
+
+        function alpha(a,b) {
+            if (a.name < b.name) return -1;
+            if (a.name > b.name) return 1;
+            return 0;
+        }
+        function population(a,b) {
+            // pop
+            if (a.characters > b.characters) return -1;
+            if (a.characters < b.characters) return 1;
+            
+            //alpha
+            if (a.name < b.name) return -1;
+            if (a.name > b.name) return 1;
+            return 0;
+        }
+        function type(a,b) { 
+            // bookmarks/favorites..
+            if (!a.favorited && b.favorited) return 1;
+            if (a.favorited && !b.favorited) return -1;
+            if (!a.bookmarked && b.bookmarked) return 1;
+            if (a.bookmarked && !b.bookmarked) return -1;
+
+            // channel type
+            if (a.type < b.type) return -1;
+            if (a.type > b.type) return 1;
+
+            // alpha 
+            if (a.name < b.name) return -1;
+            if (a.name > b.name) return 1;
+            return 0;
+        }
+        function newest(a,b) {
+            if (a.timestamp > b.timestamp) return -1;
+            if (a.timestamp < b.timestamp) return 1;
+            
+            if (a.name < b.name) return -1;
+            if (a.name > b.name) return 1;
+            return 0;
+        }
+        function oldest(a,b) {
+            if (a.timestamp < b.timestamp) return -1;
+            if (a.timestamp > b.timestamp) return 1;
+            
+            if (a.name < b.name) return -1;
+            if (a.name > b.name) return 1;
+            return 0;
+        }
+
+        if (!Array.isArray(array)) {
+            array = Object.values(array);
+        }
+
+        switch(label) {
+            // type:
+            // 0 is public
+            // 1 is private
+            // 2 is private invite only
+            // 3 is private PM
+
+            case 'messages':
+                break;
+            case 'channels':
+                array = array.filter((obj)=> {
+                    return obj.type < 2;
+                });
+                break;
+            case 'friends':
+                array = array.filter((obj)=> {
+                    return obj.type == 3;
+                });
+                break;
+            default:
+                // console.log('missing label',array,label);
+                break;
+        }
+
+
+        if (searchString.length) {
+            array = array.filter((obj)=> {
+                return obj.name.search(new RegExp(searchString, "i")) !== -1;
+            });
+        }
+        
+        // determine which function to use here.
+        switch(sortType) {
+            case 'Alphabetical':
+                return array.sort(alpha);
+            case 'Population':
+                return array.sort(population);
+            case 'Type':
+                return array.sort(type);
+            case 'Newest First':
+                return array.sort(newest);
+            case 'Oldest First':
+                return array.sort(oldest);
+            default:
+                console.log('invalid sortType',sortType);
+                return array;
+        }
+    }
     toggleSortMenu() {
         this.setState({sortMenuOpen: !this.state.sortMenuOpen });
     }
@@ -39,7 +144,7 @@ class RoomList extends Component {
     }
 
     render() {
-        const rooms = performFilterSort(this.props.rooms || [],this.state.searchString,this.state.sortType,this.props.label);
+        const rooms = this.performFilterSort(this.props.rooms || [],this.state.searchString,this.state.sortType,this.props.label);
         // console.log(rooms);
         return (
             <div className={"room-list-contain " + this.props.label+" " + (this.props.activeTab ? "visible" : "")}>

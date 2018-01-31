@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { performFilterSort,RelativeTime,ParsedText } from './common';
+import { RelativeTime,ParsedText } from './common';
 import { sendMessage,privateMessage } from './api2'
 import Textarea from "react-textarea-autosize";
 
@@ -17,9 +17,6 @@ function ChatMessage(props){
 
 class UserProfile extends Component {
 	render() {
-   		// console.log(this.props.users);
-        const users = performFilterSort(this.props.users || [],this.state.searchString,this.state.sortType); //this.state.filteredRooms;
-
 		return (
 			<div className="chat-user-profile-contain">
 				profile.
@@ -37,6 +34,74 @@ class UserList extends Component {
             searchString: ""
     	}
 	}
+	performFilterSort(array,searchString,sortType,label) {
+	    function alpha(a,b) {
+	        if (a.identity < b.identity) return -1;
+	        if (a.identity > b.identity) return 1;
+	        return 0;
+	    }
+	  
+	    function type(a,b) { 
+	        // bookmarks/favorites..
+	        if (!a.favorited && b.favorited) return 1;
+	        if (a.favorited && !b.favorited) return -1;
+	        if (!a.bookmarked && b.bookmarked) return 1;
+	        if (a.bookmarked && !b.bookmarked) return -1;
+
+	        // TODO: gender
+
+	        // alpha 
+	        if (a.identity < b.identity) return -1;
+	        if (a.identity > b.identity) return 1;
+	        return 0;
+	    }
+
+	    if (!Array.isArray(array)) {
+	        array = Object.values(array);
+	    }
+
+	    switch(label) {
+	        // type:
+	        // 0 is public
+	        // 1 is private
+	        // 2 is private invite only
+	        // 3 is private PM
+
+	        case 'messages':
+	            break;
+	        case 'channels':
+	            array = array.filter((obj)=> {
+	                return obj.type < 2;
+	            });
+	            break;
+	        case 'friends':
+	            array = array.filter((obj)=> {
+	                return obj.type == 3;
+	            });
+	            break;
+	        default:
+	            // console.log('missing label',array,label);
+	            break;
+	    }
+
+
+	    if (searchString.length) {
+	        array = array.filter((obj)=> {
+	            return obj.identity.search(new RegExp(searchString, "i")) !== -1;
+	        });
+	    }
+	    
+	    // determine which function to use here.
+	    switch(sortType) {
+	        case 'Alphabetical':
+	            return array.sort(alpha);
+	        case 'Type':
+	            return array.sort(type);
+	        default:
+	            console.log('invalid sortType',sortType);
+	            return array;
+	    }
+	}
 	handleClick(name) {
 		if (!name) {
 			console.log('whatd you click?',name);
@@ -45,9 +110,7 @@ class UserList extends Component {
 		this.props.usernameClicked(name);
 	}
    	render() {
-   		// console.log(this.props.users);
-        const users = performFilterSort(this.props.users || [],this.state.searchString,this.state.sortType); //this.state.filteredRooms;
-
+        const users = this.performFilterSort(this.props.users || [],this.state.searchString,this.state.sortType); //this.state.filteredRooms;
 		return (
 			<div className={"chat-user-list-contain " + ( this.props.userListOpen ? "" : "full" )}>
 				{users && users.map((obj) => {

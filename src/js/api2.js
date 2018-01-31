@@ -3,7 +3,7 @@ import Cookies from 'universal-cookie';
 const cookies = new Cookies();
 
 const apiurls = loadURLS();
-const useProd = false; // TODO c:
+const useProd = false; 
 
 // client announce stuff
 const clientIdentity = {
@@ -430,7 +430,7 @@ function listenToData() {
 		addListenerForSocketMessage('STA',(data)=>{  // status update
 			if (bookmarksList.indexOf(data.character) !== -1) {
 				toastCallback({
-					header: data.character + " is " + data.status, // NOTE: make sure this works..
+					header: data.character + " is " + data.status,
 					text: data.statusmsg
 				});
 			}
@@ -441,7 +441,7 @@ function listenToData() {
 			// one: create toast if this is friend/bookmark
 			if (bookmarksList.indexOf(data.identity) !== -1) {
 				toastCallback({
-					header: data.identity + " is online", // NOTE: make sure this works..
+					header: data.identity + " is online",
 					// text:
 				})
 			}
@@ -449,11 +449,10 @@ function listenToData() {
 			// two: add to users cache if we don't have it already..?
 		});
 		addListenerForSocketMessage('FLN',(data)=>{  // global channel leave.
-			
 			// one: create toast if this is friend/bookmark
 			if (bookmarksList.indexOf(data.character) !== -1) {
 				toastCallback({
-					header: data.character + " is offline", // NOTE: make sure this works..
+					header: data.character + " is offline",
 					// text:
 				})
 			}
@@ -648,6 +647,13 @@ function joinChannel(name){
 	}
 
 	socket.send( 'JCH '+JSON.stringify({ "channel": name }) );
+}
+
+function createPM(name) {
+	if (channelsJoined.indexOf(name) !== -1) {
+		console.log('youre already in here',channelsJoined,name);
+		return;
+	}
 }
 
 function leaveChannel(name) {
