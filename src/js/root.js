@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { ParsedText } from './common';
 import { ToastContainer, toast, style } from 'react-toastify';
 
 import Authorize from './authorize';
@@ -27,17 +28,12 @@ class NotificationTemplate extends Component {
         	<div className={"toast-item " + (this.props.error ? "error" : "")}>
         		<div className="content-wrap">
         			<div className="toast-header">{this.props.header}</div>
-			    	<div className="toast-content">{this.props.text}</div>
+			    	<div className="toast-content"><ParsedText character={this.props.character} text={this.props.text} /></div>
 			    </div>
 			    <button onClick={this.props.closeToast}>Dismiss</button>
 			</div>
       	);
     }
-}
-
-
-function createToast(props) {
-	toast(<NotificationTemplate {...props} />)
 }
 
 class Root extends Component {
@@ -95,11 +91,12 @@ class Root extends Component {
 	    })
 	    // melba toasts
 	    setCreateToastCallback((props) => {
-	    	// this.createToast(props);
-    		toast(<NotificationTemplate {...props} />)
+	    	this.createToast(props);
 	    })
 	}
-
+	createToast(props) {
+		toast(<NotificationTemplate {...props} />)
+	}
     componentWillMount() {
 	    gotLoginPromise().then((data) => {
 			this.setState({
@@ -115,8 +112,9 @@ class Root extends Component {
     		case 'channels':
     			getChannels();
     			break;
-    		// case 'friends':
-    		// 	break;
+    		case 'friends':
+    			getFriends();
+    			break;
     		default:
     			break;
     		

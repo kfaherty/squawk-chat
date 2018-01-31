@@ -65,6 +65,25 @@
     -o-text-overflow: ellipsis;
     text-overflow: ellipsis;
     max-height: 70px; }
+    .toast-item .toast-content strong {
+      font-weight: 600; }
+    .toast-item .toast-content em {
+      font-style: italic; }
+    .toast-item .toast-content sub, .toast-item .toast-content sup {
+      font-size: 75%;
+      line-height: 0;
+      position: relative; }
+    .toast-item .toast-content sup {
+      top: -0.5em; }
+    .toast-item .toast-content sub {
+      bottom: -0.25em; }
+    .toast-item .toast-content a {
+      color: #99A09C;
+      transition: color 0.3s ease; }
+      .toast-item .toast-content a:hover {
+        color: #a4b1ad; }
+    .toast-item .toast-content .action {
+      font-weight: 600; }
   .toast-item button {
     width: 65px;
     position: absolute;

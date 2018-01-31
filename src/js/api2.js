@@ -118,6 +118,7 @@ function setCreateToastCallback(cb) {
 
 // socket
 var socket;
+listenToData(); // create listeners.
 
 // data sources
 var channelsList = {};
@@ -125,6 +126,7 @@ var channelsJoined = []; // this is just going to be a standard array of names.
 var usersCache = []; // LIS data.
 var bookmarksList = []; // we're not going to know who is a bookmark and who is a friend unless we use the data from login.
 var friendsList = [];
+var socketListeners = [];
 
 function createSocket(name) {
 	return new Promise(function(resolve,reject) {
@@ -180,7 +182,7 @@ function createSocket(name) {
 					socket.send('PIN');
 					break;
 				case 'ERR':
-					console.log(code,payload);
+					// console.log(code,payload);
 					if (toastCallback) {
 						if (payload.message){
 							toastCallback({
@@ -196,11 +198,16 @@ function createSocket(name) {
 							});
 						}
 					}
-					if (payload && payload.number === 4) {
-						reject('invalid token');
-					}
+					// if (payload && payload.number === 4) {
+					reject(payload.message);
+					// }
 					break;
 				default: 
+					if (socketListeners[code]) {
+						for (var i = socketListeners[code].length - 1; i >= 0; i--) {
+							socketListeners[code][i](payload);
+						}
+					}
 					// console.log(code,payload); // log spam dot txt
 					break;
 			}
@@ -214,8 +221,6 @@ function createSocket(name) {
 			console.log('socket has closed',event);
 			// TODO: determine when to reconnect
 		};
-
-		listenToData(); // create listeners.
 	});
 }
 
@@ -236,31 +241,27 @@ function lostConnectionAlert(cb) {
 }
 
 function addListenerForSocketMessage(eventcode,callback){ 
-	// FIXME: rewrite this to just use an object lookup. 
-
-	// this should just add a listener when it's run.
-	// and the msg up there should do the logic on if it needs to be routed.
-
-	// for var i in listeners['MSG'] do listeners['MSG'].callback() type.
-
-	// this will get slower each listener you add because each one
-	// is doing the math to find out if a code is the one we want.
-
 	if (!eventcode || !callback) return;
+	// console.log(socketListeners);
+	if (socketListeners[eventcode]) {
+		socketListeners[eventcode].push(callback);
+		return;
+	}
+	socketListeners[eventcode] = [callback];
 
-	socket.addEventListener("message",function(event) { // FIXME this is slow.
-		if (!event.data) {
-			return;
-		}
-		let code = event.data.substr(0,3);
-		if (code === eventcode) {
-			let payload = '';
-			if (event.data.length > 3) {
-			    payload = JSON.parse(event.data.substr(4));
-			}
-			callback(payload);
-		}
-	})
+	// socket.addEventListener("message",function(event) { // this is slow.
+	// 	if (!event.data) {
+	// 		return;
+	// 	}
+	// 	let code = event.data.substr(0,3);
+	// 	if (code === eventcode) {
+	// 		let payload = '';
+	// 		if (event.data.length > 3) {
+	// 		    payload = JSON.parse(event.data.substr(4));
+	// 		}
+	// 		callback(payload);
+	// 	}
+	// });
 }
 
 var messageSeq = 0;
@@ -343,6 +344,19 @@ function listenToData() {
 				data.timestamp = Date.now();
 				data.key = messageSeq++;
 
+				// pings.
+				// const pings = [userData.name]; // TODO: load this from settings.
+				if ((new RegExp(userData.name,'i')).test(data.message)) {
+					if (toastCallback) {
+						toastCallback({
+							header: data.character+' mentioned '+userData.name+'!',
+							text: data.message,
+							character: data.character
+						});
+					}
+					data.ping = true;
+				}
+
 				let channelData = getChannelData(dataChannel);
 				if (channelData && channelData.messages) {
 					channelData.messages.push(data);
@@ -373,7 +387,8 @@ function listenToData() {
 				if (toastCallback && selectedChat !== data.character) {
 					toastCallback({
 						header: 'New message from '+data.character+'!',
-						text: data.message
+						text: data.message,
+						character: data.character
 					});
 				}
 				
@@ -386,22 +401,14 @@ function listenToData() {
 						type: 3,
 						friend: friendsList.indexOf(data.character) !== -1 ? true : false,
 						bookmark: bookmarksList.indexOf(data.character) !== -1 ? true : false,
-						timestamp: Date.now(),
+						// timestamp: Date.now(),
 						name: data.character,
-						lastMessage: data.message,
-						lastUser: data.character,
+						// lastMessage: data.message,
+						// lastUser: data.character,
 						messages: [messageData]
 					}
-					channelsList[channelData.channel] = channelData;
 
-					// if (channelsJoined.indexOf(channelData.channel) == -1) { // this is probably redundant..
-						channelsJoined.push(channelData.channel);
-						if (joinedChannelsCallback) { // this'll update the list of joined channels.
-							joinedChannelsCallback(getJoinedChannels());
-						}
-					// }
-
-					// TODO: this might want to return here.
+					// channelsList[channelData.channel] = channelData; // this will create an extra update.
 				}
 
 				channelData.timestamp = Date.now();
@@ -410,6 +417,13 @@ function listenToData() {
 				channelData.typing = 'clear';
 
 				updateChannelData(channelData); 
+
+				if (channelsJoined.indexOf(channelData.channel) == -1) {
+					channelsJoined.push(channelData.channel);
+					if (joinedChannelsCallback) { // this'll update the list of joined channels.
+						joinedChannelsCallback(getJoinedChannels());
+					}
+				}
 			};
 		});
 		addListenerForSocketMessage('TPN',(data)=>{
@@ -441,7 +455,7 @@ function listenToData() {
 			// one: create toast if this is friend/bookmark
 			if (bookmarksList.indexOf(data.identity) !== -1) {
 				toastCallback({
-					header: data.identity + " is online",
+					header: data.identity + " connected",
 					// text:
 				})
 			}
@@ -452,7 +466,7 @@ function listenToData() {
 			// one: create toast if this is friend/bookmark
 			if (bookmarksList.indexOf(data.character) !== -1) {
 				toastCallback({
-					header: data.character + " is offline",
+					header: data.character + " disconnected",
 					// text:
 				})
 			}
@@ -728,18 +742,12 @@ function privateMessage(character,message){
 		channelData = {
 			channel:data.character,
 			type: 3,
-			timestamp: Date.now(),
 			name: data.character,
 			friend: friendsList.indexOf(data.character) !== -1 ? true : false,
 			bookmark: bookmarksList.indexOf(data.character) !== -1 ? true : false,
 			messages: [data]
 		}
-		channelsList[channelData.channel] = channelData;
-
-		channelsJoined.push(channelData.channel);
-		if (joinedChannelsCallback) { // this'll update the list of joined channels.
-			joinedChannelsCallback(getJoinedChannels());
-		}
+		// channelsList[channelData.channel] = channelData; // updateChannelData does this already.
 	} else if (channelData.messages) {
 		channelData.messages.push(data);
 	} else {
@@ -754,6 +762,12 @@ function privateMessage(character,message){
 	channelData.lastUser = userData.name;
 
 	updateChannelData(channelData); 
+
+	// // if we're not in this, join (this should never happen!)
+	// channelsJoined.push(channelData.channel); // we need to check if this exists.
+	// if (joinedChannelsCallback) { // this'll update the list of joined channels.
+	// 	joinedChannelsCallback(getJoinedChannels());
+	// }
 }
 
 export { login,logout,loadCookie,gotLoginPromise,createSocket,lostConnectionAlert,gainedConnectionAlert,getChannels,getChannelData,joinChannel,getFriends,sendMessage,privateMessage,setChannelsCallback,setJoinedChannelsCallback,setSelectedChatCallback,setSelectedChat,setFriendsCallback,setCreateToastCallback };

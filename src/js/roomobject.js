@@ -79,7 +79,13 @@ class RoomObject extends Component {
 				        	case 0: return <div className="message-type">Public Channel</div>;
 				        	case 1: return <div className="message-type">Private Channel</div>;
 				        	case 2: return <div className="message-type">Invite Only</div>;
-				        	case 3: return <div className="message-type">{user.userStatus}{user.statusMessage ? (": "+user.statusMessage) : ""}</div>;
+				        	case 3:
+				        		switch (user.typing) {
+						        	case "typing": return <div className="message-type">{user.channel} is typing..</div>;
+						        	case "paused": return <div className="message-type">{user.channel} has entered text</div>;
+						        	case "clear":  return <div className="message-type">{user.userStatus}{user.statusMessage ? (": "+user.statusMessage) : ""}</div>;
+						        	default:       return <div className="message-type">{user.userStatus}{user.statusMessage ? (": "+user.statusMessage) : ""}</div>;
+						        } 
 				        	default: return '';
 				        }
 				    })()}

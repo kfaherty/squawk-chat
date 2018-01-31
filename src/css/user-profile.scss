@@ -1,0 +1,22 @@
+.chat-user-profile-contain {
+	position: absolute;
+	right: 0px;
+	width: 140px;
+	height: 100%;
+	border-left: 1px solid #E5EBE9;
+	top: 0px;
+	background: white;
+	opacity: 1;
+	transition: opacity 0.3s ease,transform 0.3s ease;
+	pointer-events: initial;
+	overflow-y: scroll;
+
+	&.hidden {
+		opacity: 0;
+		pointer-events: none;
+	}
+
+	&.full {
+        transform: translate(140px, 0px);
+	}
+}

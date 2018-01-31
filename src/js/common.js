@@ -8,37 +8,43 @@ class RelativeTime extends Component {
 			relativeTime: this.relativeTime()
 		}
 	}
-	componentDidMount() {
-    	this.interval = setInterval(()=>{
+	createInterval(time) {
+		// console.log('create',time);
+		this.interval = setInterval(()=>{
+			// console.log('tick',time);
     		this.setState({
     			relativeTime: this.relativeTime()
     		});
-    	}, 1000);
+    	}, time);
+	}
+	componentDidMount() {
+    	this.createInterval(1000);
   	}
   	componentWillUnmount() {
     	clearInterval(this.interval);
   	}
 	relativeTime() {
-		// console.log(this.props);
 		let time = this.props.created_at;
-
 	 	if (!time) return;
 
 	    // let day,month,year;
 	    let date = new Date(time),
-	        diff = ( (( new Date().getTime() ) - date.getTime()) / 1000),
-	        // day_diff = ( new Date(new Date().getFullYear(),new Date().getMonth(),new Date().getDate()).getTime() - new Date(date.getFullYear(),date.getMonth(),date.getDate()).getTime() ) / 1000 / 86400, //
+	        diff = ((new Date().getTime() - date.getTime()) / 1000 ),
 	        day_diff = Math.floor(diff / 86400);
 	    
-	    if (isNaN(day_diff) || diff <= 0)
-	        return (
-	        	"now"
-	            // year.toString()+'-'+
-	            // ((month<10) ? '0'+month.toString() : month.toString())+'-'+
-	            // ((day<10) ? '0'+day.toString() : day.toString())
-	        );
-	    
-	    var r = (
+	    if (isNaN(day_diff) || diff <= 0) {
+	        return "now";
+	    }
+
+	    if (diff > 62 && diff < 80 ) {
+	    	clearInterval(this.interval);
+        	this.createInterval(60000);
+        } else if (diff > 3600 && diff < 3680 ) {
+	    	clearInterval(this.interval);
+        	this.createInterval(3600000);
+		}
+        
+	    return (
 	        diff > 0 &&
 	        (
 	        	// eslint-disable-next-line
@@ -56,14 +62,11 @@ class RelativeTime extends Component {
 	            (Math.ceil(day_diff) + "d")
 	        )
 	    );
-	    // console.log(r);
-	    return r;
 	}
    	render() {
-   		// console.log(this);
 		return (
 			<span className="timestamp">{this.state.relativeTime}</span>
-		) // 
+		)
    	}
 }
 
@@ -171,7 +174,7 @@ class noparseTag extends Tag {
 class urlTag extends Tag {
   	toReact() {
   		const url = this.params.url || this.getContent(true);
-  		const body = this.getContent(true) || this.params.url();
+  		const body = this.getContent(true) || this.params.url;
     	return (
       		<a href={url}>{body}</a>
     	);

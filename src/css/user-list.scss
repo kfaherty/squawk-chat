@@ -1,0 +1,47 @@
+
+.chat-user-list-contain {
+	position: absolute;
+	right: 0px;
+	width: 140px;
+	height: 100%;
+	border-left: 1px solid #E5EBE9;
+	top: 0px;
+	background: white;
+	opacity: 1;
+	transition: opacity 0.3s ease,transform 0.3s ease;
+	pointer-events: initial;
+	overflow-y: scroll;
+
+	&.hidden {
+		opacity: 0;
+		pointer-events: none;
+	}
+
+	&.full {
+        transform: translate(140px, 0px);
+	}
+	
+	.status-icon {
+	}
+	.list-user {
+	    border-radius: 5px;
+	    margin: 10px;
+	    background: white;
+	    position: relative;
+	    border: 1px solid #E5EBE9;
+	    cursor: pointer;
+
+	    .user-name {
+	    	font-size: 13px;
+		    padding-left: 22px;
+		    line-height: 40px;
+		    font-weight: 600;
+		    font-size: 13px;
+		    color: #6A6F6C;
+		    white-space: nowrap;
+		    overflow: hidden;
+		    -o-text-overflow: ellipsis;
+		    text-overflow: ellipsis;	
+	    }
+	}
+}
