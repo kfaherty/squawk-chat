@@ -326,7 +326,7 @@ html{
 
 button {
     // border:none;
-    border: 1px solid $darkestwhite;
+    border: 1px solid #99A09C;
     border-radius: 5px;
     // margin-left: 20px;
     background: transparent;
@@ -344,7 +344,7 @@ button {
     transition:color 0.3s ease,background 0.3s ease,border 0.3s ease;
     outline: none;
     // background: $white;
-    color: $darkestwhite;
+    color: #99A09C;
 
     transform: scale(1, 1);
     
@@ -387,7 +387,7 @@ button {
 
 .input-label{
     position: absolute;
-    color: $darkestwhite;
+    color: #99A09C;
     font-size: 10px;
     // text-transform: uppercase;
     padding: 4px 10px;
@@ -421,9 +421,6 @@ input,textarea {
     resize: none;
 
     &:focus{
-        background:$gray28;
-        color:$white;
-        // border:$gray28 1px solid;
         border: none;
         outline-color: transparent;
         outline-style: none;

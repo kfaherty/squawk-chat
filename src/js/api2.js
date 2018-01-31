@@ -61,7 +61,7 @@ function login(username,password) {
 	  	}).then(response => response.json())
 		.catch(error => console.error('Error:', error))
 		.then(response => {
-			console.log('Success:', response);
+			// console.log('Success:', response);
 			if (response.error) {
 				reject(response.error);
 				return;
