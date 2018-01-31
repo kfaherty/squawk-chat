@@ -16,7 +16,7 @@
         transform: scaleY(1);
     }
 }
-@include keyframes(animateTyping) {  // this doesn't adjust the height.
+@include keyframes(animateTyping) {
     0% { 
         transform: translatey(-3px); 
     }
@@ -28,27 +28,15 @@
     }
 }
 
-.chat-wrap{
-	width: 100%;
-	height: 100%;
-	position: relative;
-	opacity: 1;
-	transition: opacity 0.3s ease;
-	pointer-events: initial;
-
-	&.hidden {
-		opacity: 0;
-		pointer-events: none;
-	}
-}
 .chat-window {
 	background: #EDF0EF;
-
 	position: absolute;
     top: 75px;
     left: 341px;
     height: calc( 100vh - 75px);
     width: calc( 100% - 341px);
+
+    overflow: hidden;
 
 	 &.showWidgetMenu {
         .widgetMenu {
@@ -85,6 +73,19 @@
 	transition: opacity 0.3s ease;
 	pointer-events: initial;
 	box-shadow: 0px 0px 30px rgba(0, 0, 0, .1);
+
+	&.hidden {
+		opacity: 0;
+		pointer-events: none;
+	}
+}
+.chat-wrap{
+	width: 100%;
+	height: 100%;
+	position: relative;
+	opacity: 1;
+	transition: opacity 0.3s ease;
+	pointer-events: initial;
 
 	&.hidden {
 		opacity: 0;

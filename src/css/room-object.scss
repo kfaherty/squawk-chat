@@ -12,6 +12,10 @@
 	border: 1px solid #E5EBE9;
 	cursor: pointer;
 	
+	&:first-child {
+	    margin-top: 0px;
+	}
+
 	&.selected {
 		background: #1cd67c;
 		border: 1px solid #1cd67c;

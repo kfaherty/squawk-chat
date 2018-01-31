@@ -17,7 +17,7 @@ style({ // toasts style overrides.
   	zIndex: 9999,
 
   	TOP_RIGHT: {
-    	top: 	'100px',
+    	top: 	'90px',
     	right: 	'20px'
   	},
 });
