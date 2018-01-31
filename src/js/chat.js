@@ -15,6 +15,19 @@ function ChatMessage(props){
 	)
 }
 
+class UserProfile extends Component {
+	render() {
+   		// console.log(this.props.users);
+        const users = performFilterSort(this.props.users || [],this.state.searchString,this.state.sortType); //this.state.filteredRooms;
+
+		return (
+			<div className="chat-user-profile-contain">
+				profile.
+			</div>
+		)
+	}
+}
+
 class UserList extends Component {
 	constructor(props) {
     	super(props);
@@ -235,7 +248,7 @@ class Chat extends Component {
 						</div>
 						{(chat.type === 3) && (
 							<div className={"chat-user-profile-contain " + ( this.props.userListOpen ? "" : "full" )}>
-								profile
+								<UserProfile />
 							</div>
 						)}
 						{(chat.type !== 3) && (
