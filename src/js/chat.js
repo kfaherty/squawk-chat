@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom'
 import Textarea from "react-textarea-autosize";
 
 import { ParsedText } from './common';
-import { sendMessage,privateMessage,sendTyping,createPrivateMessage } from './api2'
+import { sendMessage,privateMessage,sendTyping,createPrivateMessage,leaveChannel } from './api2'
 
 import ChatMessage from './chatmessage';
 import UserList from './userlist';
@@ -27,11 +27,8 @@ class Chat extends Component {
 
     clearSelectedChat() {
 		clearTimeout(this.timeout);
+		leaveChannel(this.props.selectedChat);
     	this.props.clearSelectedChat();
-
-    	// TODO: tell the api we've left a channel
-
-		// this.toggleChatMenu();
     }
     setSelectedChat(channelName) {
         this.props.setSelectedChat(channelName);

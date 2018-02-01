@@ -745,12 +745,20 @@ function createPrivateMessage(name) {
 }
 
 function leaveChannel(name) {
-	if (channelsJoined.indexOf(name) === -1) {
+	let index = channelsJoined.indexOf(name);
+	if (index === -1) {
 		console.log('youre not in here',channelsJoined,name);
 		return;
 	}
+	channelsJoined.splice(index,1); // find joined channel and remove it.
+	if (joinedChannelsCallback) {
+		joinedChannelsCallback(getJoinedChannels());
+	}
 
-	socket.send( 'LCH '+JSON.stringify({ "channel": name }) );
+	let channelData = getChannelData(name); // get type
+	if(channelData.type !== 3) { // if type isnt 3
+		socket.send( 'LCH '+JSON.stringify({ "channel": name }) );
+	}
 }
 
 var friendsCallback = undefined;
@@ -856,7 +864,7 @@ export {
 	login,logout,
 	loadCookie,gotLoginPromise,createSocket,
 	lostConnectionAlert,gainedConnectionAlert,
-	getChannels,getChannelData,joinChannel,createPrivateMessage,
+	getChannels,getChannelData,joinChannel,createPrivateMessage,leaveChannel,
 	getFriends,
 	sendMessage,privateMessage,sendTyping,
 	setChannelsCallback,setJoinedChannelsCallback,setSelectedChatCallback,setSelectedChat,setFriendsCallback,setCreateToastCallback 
