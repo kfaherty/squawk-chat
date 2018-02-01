@@ -146,6 +146,19 @@ class Chat extends Component {
     		this.setSelectedChat(value); // change selected chat.
     	}
     }
+
+    componentWillReceiveProps(nextProps)  {
+		if (nextProps.selectedChat !== this.props.selectedChat) { // if you've changed chats
+	    	this.setState({
+	    		chatMenuOpen: false // reset chat menu.
+	    	});
+
+	    	// if you switched chats, clear the statuses here.
+    		this.typing = false;
+    		this.paused = false;
+	   	}
+    }
+
    	render() {
    		const chat = this.props.chat || {messages: []};
 		return (
@@ -249,11 +262,6 @@ class Chat extends Component {
 	componentDidUpdate(prevProps) {
 		if (prevProps.selectedChat !== this.props.selectedChat) { // scroll to the bottom if you've changed chats
 			this.scrollToBottom(true);
-			
-			// if you switched chats, clear the statuses here.
-    		this.typing = false;
-    		this.paused = false;
-
 			return;
 		}
 
