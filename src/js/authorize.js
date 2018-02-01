@@ -77,8 +77,19 @@ class Authorize extends Component {
     		this.handleLoginClick();
         }
     }
+
+    sortCharacters(array) {
+	    function alpha(a,b) {
+    		return a.toLowerCase().localeCompare(b.toLowerCase());
+        }
+    
+        return array.sort(alpha);
+    }
+
 	render() {
-		const characterlist = this.state.list || [];
+		const characterlist = this.sortCharacters(this.state.list || []);
+		// console.log(characterlist);
+		
 		return (
 			<div className={"authorize-contain " + (this.props.visible ? "" : "visible" )}>
 				{/* <div className="authorize-background"></div> */}

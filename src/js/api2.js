@@ -31,7 +31,7 @@ function loadCookie() {
 				bookmarks: cookiedata.bookmarks,
 				friends: cookiedata.friends
 			};
-			console.log(userData);
+			// console.log(userData);
 			resolve(userData.characterlist);
 		}
 	});

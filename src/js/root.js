@@ -198,9 +198,7 @@ class Root extends Component {
 				</div>
 
 			    <div className={"top-bar "  + (this.state.loggedin ? "" : "blurred")}>
-			        <div className="logo-contain">
-			            SquawkChat
-			        </div>
+			        <div className="logo-contain">SquawkChat</div>
 
 			        <nav className="text-buttons-contain">
 			            <span onClick={() => this.setSelectedTab('messages')} className={"text-button " + (this.state.selectedTab === 'messages' ? "active" : "")}>Messages</span>

@@ -123,6 +123,12 @@
         height: 34px;
         width: calc( 100% - 25px );
         margin-bottom: 10px;
+        white-space: nowrap;
+        overflow: hidden;
+        -o-text-overflow: ellipsis;
+        text-overflow: ellipsis;    
+        max-width: 388px; // kinda hacky but
+
         &.selected {
             background: #EDF0EF;
         }
@@ -143,7 +149,7 @@
     h1 {
         display: inline-block;
         font-size: 32px;
-        font-weight: 400;
+        font-weight: 600;
     }
 }
 .login-wrap {
