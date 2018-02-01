@@ -156,7 +156,6 @@ class Root extends Component {
     	console.log('ok',this.state.selectedChat);
     	// SFC
     	// << SFC { "action": "report", "report": string, "character": string }
-
     }
 
     toggleSettings() {
@@ -267,6 +266,7 @@ class Root extends Component {
 						reportSelectedChat={this.reportSelectedChat}
 						clearSelectedChat={()=>this.clearSelectedChat()}
 						userListOpen={this.state.userListOpen}
+						setSelectedChat={this.setSelectedChat}						
 					/>
 				</div>
 			</div>

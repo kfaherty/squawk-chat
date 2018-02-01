@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom'
 import Textarea from "react-textarea-autosize";
 
 import { ParsedText } from './common';
-import { sendMessage,privateMessage,sendTyping } from './api2'
+import { sendMessage,privateMessage,sendTyping,createPrivateMessage } from './api2'
 
 import ChatMessage from './chatmessage';
 import UserList from './userlist';
@@ -33,7 +33,10 @@ class Chat extends Component {
 
 		// this.toggleChatMenu();
     }
-    
+    setSelectedChat(channelName) {
+        this.props.setSelectedChat(channelName);
+    }
+
     toggleChatMenu() {
     	this.setState({chatMenuOpen: !this.state.chatMenuOpen});
     }
@@ -141,9 +144,10 @@ class Chat extends Component {
     	// TODO
     }
     usernameClicked(value) {
-    	console.log(value);
-    	// open a pm to this user!
-    	// TODO!
+    	if (value) {
+    		createPrivateMessage(value); // open a pm to this user!
+    		this.setSelectedChat(value); // change selected chat.
+    	}
     }
    	render() {
    		const chat = this.props.chat || {messages: []};

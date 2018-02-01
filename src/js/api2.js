@@ -724,11 +724,24 @@ function joinChannel(name){
 	socket.send( 'JCH '+JSON.stringify({ "channel": name }) );
 }
 
-function createPM(name) {
+function createPrivateMessage(name) {
 	if (channelsJoined.indexOf(name) !== -1) {
 		console.log('youre already in here',channelsJoined,name);
 		return;
 	}
+
+	let channelData = {
+		channel:name,
+		type: 3,
+		name: name,
+		friend: friendsList.indexOf(name) !== -1 ? true : false,
+		bookmark: bookmarksList.indexOf(name) !== -1 ? true : false,
+		messages: [],
+		timestamp: Date.now()
+	};
+
+	updateChannelData(channelData); // create data
+	channelsJoined.push(name);
 }
 
 function leaveChannel(name) {
@@ -839,4 +852,12 @@ function sendTyping(type,selectedChat) {
 	socket.send('TPN '+JSON.stringify({ "character": selectedChat,"status": type }) );
 }
 
-export { login,logout,loadCookie,gotLoginPromise,createSocket,lostConnectionAlert,gainedConnectionAlert,getChannels,getChannelData,joinChannel,getFriends,sendMessage,privateMessage,sendTyping,setChannelsCallback,setJoinedChannelsCallback,setSelectedChatCallback,setSelectedChat,setFriendsCallback,setCreateToastCallback };
+export { 	
+	login,logout,
+	loadCookie,gotLoginPromise,createSocket,
+	lostConnectionAlert,gainedConnectionAlert,
+	getChannels,getChannelData,joinChannel,createPrivateMessage,
+	getFriends,
+	sendMessage,privateMessage,sendTyping,
+	setChannelsCallback,setJoinedChannelsCallback,setSelectedChatCallback,setSelectedChat,setFriendsCallback,setCreateToastCallback 
+};
