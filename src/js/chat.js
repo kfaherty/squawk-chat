@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom'
 import Textarea from "react-textarea-autosize";
 
 import { ParsedText } from './common';
-import { sendMessage,privateMessage } from './api2'
+import { sendMessage,privateMessage,sendTyping } from './api2'
 
 import ChatMessage from './chatmessage';
 import UserList from './userlist';
@@ -26,13 +26,13 @@ class Chat extends Component {
 	}
 
     clearSelectedChat() {
+		clearTimeout(this.timeout);
     	this.props.clearSelectedChat();
 
     	// TODO: tell the api we've left a channel
 
 		// this.toggleChatMenu();
     }
-    
     
     toggleChatMenu() {
     	this.setState({chatMenuOpen: !this.state.chatMenuOpen});
@@ -75,6 +75,28 @@ class Chat extends Component {
 		this.setState({
 			inputValue: event.target.value
 		});
+
+    	if (this.props.chat.type === 3) { // this only needs to run if this is a private chat.
+	    	if (this.typing && !event.target.value) {
+	    		this.typing = false;
+	    		this.paused = false;
+	    		clearTimeout(this.timeout);
+	    		
+	    		sendTyping('clear',this.props.selectedChat); // send tpn clear
+	    	}
+	    	if ((!this.typing || this.paused) && event.target.value){
+	    		this.typing = true;
+	    		this.paused = false;
+
+	    		sendTyping('typing',this.props.selectedChat); // send tpn typing
+
+	    		let thisPM = this.props.selectedChat;
+	    		this.timeout = setTimeout(() => {
+		    		sendTyping('paused',thisPM); // send tpn paused
+	    			this.paused = true;
+				},3000);
+	    	}
+		}
     }
 	handleKeyDown(event) {
         if (event.key === 'Enter' && !this.shiftDown) {
@@ -87,9 +109,7 @@ class Chat extends Component {
   			this.shiftDown = true;
   		}
   	}
-  	handleKeyUp(event) {
-		// TODO: TPN  		
-
+  	handleKeyUp(event) {		
   		if (event.key === 'Shift') {
   			this.shiftDown = false;
   		}
@@ -105,6 +125,10 @@ class Chat extends Component {
  	onSendMessage(){
  		if (this.state.inputValue) {
  			if (this.props.chat.type === 3) {
+ 				this.typing = false;
+	    		this.paused = false;
+	    		clearTimeout(this.timeout);
+
  				privateMessage(this.props.selectedChat,this.state.inputValue.trim());
  			} else {
     			sendMessage(this.props.selectedChat,this.state.inputValue.trim());
@@ -224,6 +248,11 @@ class Chat extends Component {
 	componentDidUpdate(prevProps) {
 		if (prevProps.selectedChat !== this.props.selectedChat) { // scroll to the bottom if you've changed chats
 			this.scrollToBottom(true);
+			
+			// if you switched chats, clear the statuses here.
+    		this.typing = false;
+    		this.paused = false;
+
 			return;
 		}
 

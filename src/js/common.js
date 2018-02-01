@@ -176,7 +176,7 @@ class urlTag extends Tag {
   		const url = this.params.url || this.getContent(true);
   		const body = this.getContent(true) || this.params.url;
     	return (
-      		<a href={url}>{body}</a>
+      		<a target="_blank" href={url}>{body}</a>
     	);
   	}
 }

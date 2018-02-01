@@ -10,7 +10,7 @@
     padding: 14px 20px 10px 20px;
 	font-size: 13px;
 	border: 1px solid #E5EBE9;
-   	box-shadow: 0px 0px 30px rgba(0, 0, 0, .1);
+   	box-shadow: 0px 0px 17px rgba(0, 0, 0, 0.1); //0px 0px 30px rgba(0, 0, 0, .1);
 	white-space: pre-wrap;
 
    	&.mine {
@@ -36,7 +36,9 @@
 		padding-top: 3px;
 	    color: #A6B2AD;
 	    line-height: 22px;
-
+	    width: 100%;
+		overflow: hidden;
+		text-overflow: ellipsis;
 	    @include bbcodeStyles();
 	}
 	.timestamp {

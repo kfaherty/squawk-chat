@@ -13,7 +13,7 @@
 @font-face { 
     font-family: 'Verlag'; 
     font-style: normal; 
-    font-weight: 400; 
+    font-weight: 600; 
     src: local('Verlag Bold'), local('Verlag-Bold'), url(verlagbold.woff) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000; 
 }
 @font-face { 
@@ -67,14 +67,6 @@ html{
     // background: $black80;
     overflow: hidden; // TODO: check this hasn't broken anything.
 }
-
-.app-contain {
-    width: 100%;
-    height: 100%;
-    // font-family: sans-serif;
-    font-family: 'Verlag', sans-serif;
-}
-
 .top-bar {
     height: 74px;
     border-bottom: 1px solid #E5EBE9;
@@ -91,11 +83,25 @@ html{
         }
     }
 }
+.app-contain {
+    width: 100%;
+    height: 100%;
+    font-family: 'Verlag', sans-serif;
+}
+
+.top-bar,.app-contain {
+    transition: filter 0.3s ease;
+
+    &.blurred {
+        filter: saturate(180%) blur(10px);
+    }
+}
+
 .logo-contain {
   color: #616965;
   line-height: 74px;
   margin-left: 24px;
-  font-weight: 600;
+  font-weight: 400;
   font-size: 20px;
 }
 .text-buttons-contain {
@@ -108,7 +114,7 @@ html{
     color: #99A09C;
     line-height: 74px;
     text-decoration: none;
-    font-weight: 600;
+    font-weight: 400;
     font-size: 17px;
     cursor: pointer;
     
@@ -133,7 +139,7 @@ html{
         color: #99A09C;
         line-height: 74px;
         text-decoration: none;
-        // font-weight: 600;
+        // font-weight: 400;
         font-size: 17px;
         padding-right: 5px;
     }
@@ -146,7 +152,7 @@ html{
         display: inline-block;
         width: 38px;
         height: 38px;
-        background: black;
+        background: transparent;
         border-radius: 38px;
         box-shadow: 0px 0px 14px rgba(0, 0, 0, .3);
     }
@@ -168,6 +174,31 @@ html{
         // flip arrow
         .arrow.right {
             transform: translate3d(0, -50%, 0) rotate(225deg);
+        }
+    }
+
+    .chat-toggles{
+        position: absolute;
+        right: 10px;
+        top: 0px;
+        height: 100%;
+        display: flex;
+        vertical-align: center;
+        align-items: center;
+        justify-content: center;
+        div {
+            padding: 5px;
+            margin: 5px;
+            border: 1px solid #DFE4E2;
+            color: #DFE4E2;
+            width: 20px;
+            // height: 40px;
+            text-align: center;
+            vertical-align: baseline;
+            transition: color 0.3s ease;
+            &:hover,&.selected {
+                color: #89908C;
+            }
         }
     }
 }
@@ -229,7 +260,7 @@ html{
     /* color: #616965; */
     /* line-height: 60px; */
     /* margin-left: 24px; */
-    font-weight: 600;
+    font-weight: 400;
     font-size: 20px;
     left: 0px;
     bottom: 0px;
@@ -477,7 +508,7 @@ input,textarea {
         padding-right: 8px;
     }
     .list-item {
-        font-weight: 600;
+        font-weight: 400;
         font-size: 12px;
         padding: 12px;
         border-bottom: 1px solid #E5EBE9;

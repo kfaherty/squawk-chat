@@ -5,6 +5,7 @@ import { ToastContainer, toast, style } from 'react-toastify';
 import Authorize from './authorize';
 import RoomList from './roomlist';
 import Chat from './chat';
+import Search from './search';
 
 import { logout,gotLoginPromise,setChannelsCallback,setJoinedChannelsCallback,setFriendsCallback,getChannels,getChannelData,joinChannel,setSelectedChatCallback,setSelectedChat,getFriends,lostConnectionAlert,gainedConnectionAlert,setCreateToastCallback } from './api2';
 
@@ -95,7 +96,8 @@ class Root extends Component {
 	    })
 	}
 	createToast(props) {
-		toast(<NotificationTemplate {...props} />)
+		toast(<NotificationTemplate {...props} />);
+		// TODO: add this to the list of notifications.
 	}
     componentWillMount() {
 	    gotLoginPromise().then((data) => {
@@ -195,7 +197,7 @@ class Root extends Component {
 					<p>Disconnected from data</p>
 				</div>
 
-			    <div className="top-bar">
+			    <div className={"top-bar "  + (this.state.loggedin ? "" : "blurred")}>
 			        <div className="logo-contain">
 			            SquawkChat
 			        </div>
@@ -220,10 +222,15 @@ class Root extends Component {
 
 			        <div className={"controls-contain " + (this.state.userListOpen ? "" : "full")}>
 			            <div className="arrow right" onClick={() => this.toggleUserList()}></div>
+
+			            {/*<div className="chat-toggles">
+			            	<div className="fi-list selected"></div>
+			            	<div className="fi-list-thumbnails"></div>
+			            </div>*/}
 			        </div>
 			    </div>
 
-				<div className="app-contain">
+				<div className={"app-contain "  + (this.state.loggedin ? "" : "blurred")}>
 					{/* MESSAGES */}
 					<RoomList
 						selectedChat={this.state.selectedChat}
@@ -253,7 +260,7 @@ class Root extends Component {
 					/>
 					
 					{/* SEARCH */}
-					{/* // TODO */}
+					<Search />
 
 					{/* CHAT */}
 					<Chat 

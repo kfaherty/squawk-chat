@@ -35,31 +35,6 @@ class UserList extends Component {
 	        array = Object.values(array);
 	    }
 
-	    switch(label) {
-	        // type:
-	        // 0 is public
-	        // 1 is private
-	        // 2 is private invite only
-	        // 3 is private PM
-
-	        case 'messages':
-	            break;
-	        case 'channels':
-	            array = array.filter((obj)=> {
-	                return obj.type < 2;
-	            });
-	            break;
-	        case 'friends':
-	            array = array.filter((obj)=> {
-	                return obj.type == 3;
-	            });
-	            break;
-	        default:
-	            // console.log('missing label',array,label);
-	            break;
-	    }
-
-
 	    if (searchString.length) {
 	        array = array.filter((obj)=> {
 	            return obj.identity.search(new RegExp(searchString, "i")) !== -1;

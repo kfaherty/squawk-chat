@@ -88,7 +88,7 @@ class RoomList extends Component {
                 break;
             case 'friends':
                 array = array.filter((obj)=> {
-                    return obj.type == 3;
+                    return obj.type === 3;
                 });
                 break;
             default:

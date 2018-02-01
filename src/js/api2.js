@@ -3,13 +3,6 @@ import Cookies from 'universal-cookie';
 const cookies = new Cookies();
 
 const apiurls = loadURLS();
-const useProd = false; 
-
-// client announce stuff
-const clientIdentity = {
-	name: "SquawkChat",
-	version: "0.2"
-}
 
 // userData:
 var userData = {
@@ -21,6 +14,8 @@ var userData = {
 	default_character: '',
 	logged_in: false
 }
+
+var globalUnread = 0;
 
 // login
 function loadCookie() {
@@ -148,13 +143,13 @@ function createSocket(name) {
 		}
 		userData.name = name;
 
-		if (useProd) {
+		if (apiurls.useProd) {
 			socket = new WebSocket(apiurls.prodsocketurl);
 		} else {
 			socket = new WebSocket(apiurls.devsocketurl);
 		}
 		socket.onopen = function(event) {
-			socket.send( 'IDN '+ JSON.stringify({ "method": "ticket", "account": userData.account, "ticket": userData.ticket, "character": userData.name, "cname": clientIdentity.name, "cversion": clientIdentity.version }) );
+			socket.send( 'IDN '+ JSON.stringify({ "method": "ticket", "account": userData.account, "ticket": userData.ticket, "character": userData.name, "cname": "SquawkChat", "cversion": apiurls.version }) );
 			// CHA public channels
 			// ORS is open private rooms.
 		}
@@ -285,6 +280,42 @@ function listenToData() {
 			// 	usersCache = parsedCharacters
 			// }
 		});
+		addListenerForSocketMessage('RTB',(data)=>{  
+			if (data) {
+				switch(data.type) {
+					case 'note':
+						toastCallback({
+							header: 'You recieved a note from '+data.sender,
+							text: '[url=https://www.f-list.net/view_note.php?note_id='+data.id+']Subject: '+data.subject+'[/url]'
+						});
+						break;
+					case 'grouprequest':
+						toastCallback({header: 'You recieved a group request from '+data.name});
+						break;
+					case 'comment':
+						toastCallback({header: 'You recieved a comment from '+data.name});  // #effort
+						break;
+					case 'trackadd':
+						toastCallback({header: 'You added '+data.name+' to your bookmarks'});
+						break;
+					case 'trackrem':
+						toastCallback({header: 'You removed '+data.name+' from your bookmarks'});
+						break;
+					case 'friendadd':
+						toastCallback({header: 'You and '+data.name+' are now friends!'});
+						break;
+					case 'friendremove':
+						toastCallback({header: 'You unfriended '+data.name});
+						break;
+					case 'friendrequest':
+						toastCallback({header: data.name+' sent you a friend request!'});
+						break;
+					default:
+						console.log('rtb data',data);		
+						break;
+				}
+			}
+		});
 		addListenerForSocketMessage('FRL',(data)=>{  
 			if (data && data.characters) {
 				// cache this
@@ -336,6 +367,9 @@ function listenToData() {
 				}
 			}
 		});
+		addListenerForSocketMessage('LRP',(data)=>{
+			// TODO
+		});
 		addListenerForSocketMessage('MSG',(data)=>{
 			if (data && data.message) {
 				let dataChannel = data.channel;
@@ -361,9 +395,10 @@ function listenToData() {
 				if ((new RegExp(userData.name,'i')).test(data.message)) {
 					data.ping = true; // set message to ping
 
-					if (selectedChat !== data.character) {
+					if (selectedChat !== data.character || !document.hasFocus()) {
 						channelData.unread++; // increment badge.
-
+						globalUnread++;
+						document.title = 'SquawkChat (' + globalUnread + ')';
 						if (toastCallback) {
 							toastCallback({
 								header: data.character+' mentioned '+userData.name+'!',
@@ -408,9 +443,10 @@ function listenToData() {
 					}
 				}
 
-				if (selectedChat !== data.character) {
+				if (selectedChat !== data.character || !document.hasFocus()) {
 					channelData.unread++; // increment badge.
-				
+					globalUnread++;
+					document.title = 'SquawkChat (' + globalUnread + ')';
 					if (toastCallback) { // create toast if this isn't the selected chat.
 						toastCallback({
 							header: 'New message from '+data.character+'!',
@@ -428,7 +464,7 @@ function listenToData() {
 
 				updateChannelData(channelData); 
 
-				if (channelsJoined.indexOf(channelData.channel) == -1) {
+				if (channelsJoined.indexOf(channelData.channel) === -1) {
 					channelsJoined.push(channelData.channel);
 					if (joinedChannelsCallback) { // this'll update the list of joined channels.
 						joinedChannelsCallback(getJoinedChannels());
@@ -552,7 +588,7 @@ function listenToData() {
 
 				// two: join a channel if this is us and we're not in it yet.
 				if (data.character.identity === userData.name) {
-					if (channelsJoined.indexOf(data.channel) == -1) {
+					if (channelsJoined.indexOf(data.channel) === -1) {
 						channelsJoined.push(data.channel); // add this to the list of joined channels. This should allow invites to work.
 						if (joinedChannelsCallback) { // this'll update the list of joined channels.
 							joinedChannelsCallback(getJoinedChannels());
@@ -594,14 +630,10 @@ function listenToData() {
 }
 
 function getChannels(){
-	// type:
-	// 0 is public
-	// 1 is private
-	// 2 is private invite only
-	// 3 is private PM
-
-	socket.send( 'CHA' ); // 0
-	socket.send( 'ORS' ); // 1
+	gotLoginPromise().then(()=>{ 			// wait for login: 
+		socket.send( 'CHA' ); // 0
+		socket.send( 'ORS' ); // 1
+	});
 }
 
 var channelsCallback = undefined;
@@ -625,6 +657,19 @@ function setSelectedChat(value) {
 
 	if (value){ // clear unread if this is actually a room.
 		let channelData = getChannelData(value);
+		if (channelData.unread){
+			globalUnread = globalUnread - channelData.unread;
+			if (globalUnread < 0) {
+				globalUnread = 0;
+			}
+			if (globalUnread !== 0) {
+				document.title = 'SquawkChat (' + globalUnread + ')';
+			} else {
+				document.title = 'SquawkChat';
+			}
+			
+
+		}
 		channelData.unread = 0;
 		updateChannelData(channelData);
 	}
@@ -786,4 +831,12 @@ function privateMessage(character,message){
 	// }
 }
 
-export { login,logout,loadCookie,gotLoginPromise,createSocket,lostConnectionAlert,gainedConnectionAlert,getChannels,getChannelData,joinChannel,getFriends,sendMessage,privateMessage,setChannelsCallback,setJoinedChannelsCallback,setSelectedChatCallback,setSelectedChat,setFriendsCallback,setCreateToastCallback };
+function sendTyping(type,selectedChat) {
+	if (!type || !selectedChat) {
+		console.log('missing stuff',type,selectedChat)
+		return;
+	}
+	socket.send('TPN '+JSON.stringify({ "character": selectedChat,"status": type }) );
+}
+
+export { login,logout,loadCookie,gotLoginPromise,createSocket,lostConnectionAlert,gainedConnectionAlert,getChannels,getChannelData,joinChannel,getFriends,sendMessage,privateMessage,sendTyping,setChannelsCallback,setJoinedChannelsCallback,setSelectedChatCallback,setSelectedChat,setFriendsCallback,setCreateToastCallback };

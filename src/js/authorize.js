@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { login,loadCookie,createSocket } from './api2';
-import {StandardInput} from './common';
+import { StandardInput } from './common';
+import loadURLS from './apiurls';
+const apiurls = loadURLS();
 
 class Authorize extends Component {
 	constructor(props) {
@@ -71,7 +73,7 @@ class Authorize extends Component {
 	}
 	handleKeyDown(event) {
   		// console.log(event.key);
-        if (event.key == 'Enter') {
+        if (event.key === 'Enter') {
     		this.handleLoginClick();
         }
     }
@@ -79,8 +81,10 @@ class Authorize extends Component {
 		const characterlist = this.state.list || [];
 		return (
 			<div className={"authorize-contain " + (this.props.visible ? "" : "visible" )}>
-				<div className="authorize-background"></div>
-				
+				{/* <div className="authorize-background"></div> */}
+
+				<div className="version-wrap">version {apiurls.version}</div>
+
 				<div className="authorize-modal">
 					<div className="logo-row">
 						<h1>SquawkChat</h1>
@@ -110,6 +114,8 @@ class Authorize extends Component {
 						</div>
 					</div>
 					<div className={"character-select " + (this.state.showLogin? "":"active")}>
+						<div className="subtitle">Select Character </div>
+
 						<div className="select-wrap">
 							{characterlist.map((obj,index) => {
 								return (
