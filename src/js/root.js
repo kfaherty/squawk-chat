@@ -9,8 +9,8 @@ import Search from './search';
 
 import { 
 	logout,gotLoginPromise,lostConnectionAlert,gainedConnectionAlert,
-	getChannels,getChannelData,joinChannel,getChannelMessages,getChannelUsers,
-	getFriends,
+	getChannelData,joinChannel,getChannelMessages,getChannelUsers,
+	// getFriends,getChannels,
 	setChannelsCallback,setJoinedChannelsCallback,setFriendsCallback,setSelectedChatCallback,setSelectedChat,setCreateToastCallback,setChannelMessagesCallback,setChannelUsersCallback
 } from './api2';
 
@@ -131,17 +131,16 @@ class Root extends Component {
     }
 
     setSelectedTab(value) {
-    	switch(value) {
-    		case 'channels':
-    			getChannels();
-    			break;
-    		case 'friends':
-    			getFriends();
-    			break;
-    		default:
-    			break;
-    		
-    	}
+    	// switch(value) {
+    	// 	case 'channels':
+    	// 		getChannels();
+    	// 		break;
+    	// 	case 'friends':
+    	// 		getFriends();
+    	// 		break;
+    	// 	default:
+    	// 		break;
+    	// }
     	this.setState({selectedTab: value});
     }
 

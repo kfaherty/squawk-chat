@@ -221,6 +221,11 @@ function createSocket(name) {
 			console.log('socket has closed',event);
 			// TODO: determine when to reconnect
 		};
+
+		gotLoginPromise().then(()=>{
+	        socket.send( 'CHA' ); // 0
+        	socket.send( 'ORS' ); // 1
+		});
 	});
 }
 
@@ -321,13 +326,11 @@ function listenToData() {
 		});
 		addListenerForSocketMessage('FRL',(data)=>{  
 			if (data && data.characters) {
-				// cache this
-				bookmarksList = data.characters;
-				// if we want to know who is online, we need to correlate this with the users.
+				bookmarksList = data.characters; // cache this
 
+				// NOTE: if we want to know who is online, we need to correlate this with the users.
 				if(friendsCallback) {
-					// TODO: map friends results onto usersCache.
-					// friendsCallback();
+					friendsCallback(getFriends());
 				}
 			}
 		});
@@ -546,7 +549,7 @@ function listenToData() {
 					}
 				} else { // if this isn't us we should update the userlist- if it is us, we don't care anymore.
 					// four: userlist
-					let users = channelUsers[data.channel]; // FIXME undefined
+					let users = channelUsers[data.channel]; 
 					let index = users.indexOf(data.character);
 					if (index !== -1) {
 						users.splice(index,1); // find joined channel and remove it.
@@ -659,13 +662,6 @@ function setSelectedChat(value) {
 	}
 }
 
-function getChannels(){
-	gotLoginPromise().then(()=>{ 			// wait for login: 
-		socket.send( 'CHA' ); // 0
-		socket.send( 'ORS' ); // 1
-	});
-}
-
 function getChannelData(name){
  	return channelsList[name];
 }
@@ -676,7 +672,7 @@ function getChannelMessages(name) {
 
 function getChannelUsers(name) {
 	if (channelUsers[name]) {
-		return channelUsers[name].map((obj) => {
+		return channelUsers[name].map((obj) => { // TODO: use the usersCache to fill this data in.
 			return {identity: obj}
 		});	
 	}
@@ -699,7 +695,7 @@ function updateChannelData(data) {
 		channelsList[data.channel] = data;
 	}
 
-	// should we test of we're joined?
+	// should we test if we're joined?
 	if (channelsJoined.indexOf(data.channel) !== -1) {
 		if (joinedChannelsCallback) { // this might be slow.
 			joinedChannelsCallback(getJoinedChannels());
@@ -803,7 +799,17 @@ function setFriendsCallback(cb) {
 }
 
 function getFriends() {
-	return friendsList;
+	let array = friendsList || [];
+	array = array.concat(bookmarksList);
+	array = array.map((obj) => {
+		return { // TODO match this with the 
+			channel: obj,
+			name: obj,
+			type: 3
+		};
+	});
+	// console.log(array);
+	return array;
 }
 
 function sendMessage(channel,message) {
@@ -867,8 +873,8 @@ export {
 	login,logout,
 	loadCookie,gotLoginPromise,createSocket,
 	lostConnectionAlert,gainedConnectionAlert,
-	getChannels,getChannelData,joinChannel,createPrivateMessage,leaveChannel,getChannelMessages,getChannelUsers,
-	getFriends,
+	getChannelData,joinChannel,createPrivateMessage,leaveChannel,getChannelMessages,getChannelUsers,
+	// getFriends,getChannels
 	sendMessage,privateMessage,sendTyping,
 	setChannelsCallback,setJoinedChannelsCallback,setSelectedChatCallback,setSelectedChat,setFriendsCallback,setCreateToastCallback,setChannelMessagesCallback,setChannelUsersCallback
 };
