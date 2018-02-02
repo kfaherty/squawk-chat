@@ -116,12 +116,13 @@ var socket;
 listenToData(); // create listeners.
 
 // data sources
-var channelsList = {};
+var channelsList = {}; // hashmap of rooms
+var channelMessages = {}; // this is a hashmap of room messages
 var channelsJoined = []; // this is just going to be a standard array of names.
-var usersCache = []; // LIS data.
+// var usersCache = []; // LIS data.
 var bookmarksList = []; // we're not going to know who is a bookmark and who is a friend unless we use the data from login.
 var friendsList = [];
-var socketListeners = [];
+var socketListeners = []; // listeners hashmap
 
 function createSocket(name) {
 	return new Promise(function(resolve,reject) {
@@ -379,15 +380,11 @@ function listenToData() {
 				data.key = messageSeq++;
 
 				let channelData = getChannelData(dataChannel);
-				if (channelData && channelData.messages) {
-					channelData.messages.push(data);
-				} else {
+				if (!channelData){
 					channelData = {
 						channel:dataChannel,
 						unread: 0,
-						messages: [data]
 					}
-					// might need to join this channel.
 				}
 
 				// pings.
@@ -413,6 +410,7 @@ function listenToData() {
 				channelData.lastMessage = data.message;
 				channelData.lastUser = data.character;
 				updateChannelData(channelData); 
+				updateMessageData(dataChannel,data);
 
 				// TODO: potentially join this channel if we're not in it.
 			};
@@ -429,9 +427,7 @@ function listenToData() {
 				}
 
 				let channelData = getChannelData(data.character);
-				if (channelData) {
-					channelData.messages.push(messageData);
-				} else {
+				if (!channelData) {
 					channelData = {
 						channel:data.character,
 						type: 3,
@@ -439,7 +435,7 @@ function listenToData() {
 						bookmark: bookmarksList.indexOf(data.character) !== -1 ? true : false,
 						name: data.character,
 						unread: 0,						
-						messages: [messageData]
+						// messages: [messageData]
 					}
 				}
 
@@ -456,20 +452,17 @@ function listenToData() {
 					}
 				}
 				
-
 				channelData.timestamp = Date.now();
 				channelData.lastMessage = data.message;
 				channelData.lastUser = data.character;
 				channelData.typing = 'clear';
 
-				updateChannelData(channelData); 
-
 				if (channelsJoined.indexOf(channelData.channel) === -1) {
 					channelsJoined.push(channelData.channel);
-					if (joinedChannelsCallback) { // this'll update the list of joined channels.
-						joinedChannelsCallback(getJoinedChannels());
-					}
 				}
+
+				updateChannelData(channelData); 
+				updateMessageData(data.character,messageData);
 			};
 		});
 		addListenerForSocketMessage('TPN',(data)=>{
@@ -540,7 +533,7 @@ function listenToData() {
 						console.log('you left a channel',channelsJoined,index);
 						channelsJoined.splice(index,1); // find joined channel and remove it.
 						console.log('you left:',channelsJoined);
-						if (joinedChannelsCallback) { // this'll update the list of joined channels.
+						if (joinedChannelsCallback) { // this'll update the list of joined channels. // HACK: this needs to run here because we wont know we left otherwise.
 							joinedChannelsCallback(getJoinedChannels());
 						}
 					}
@@ -590,9 +583,9 @@ function listenToData() {
 				if (data.character.identity === userData.name) {
 					if (channelsJoined.indexOf(data.channel) === -1) {
 						channelsJoined.push(data.channel); // add this to the list of joined channels. This should allow invites to work.
-						if (joinedChannelsCallback) { // this'll update the list of joined channels.
-							joinedChannelsCallback(getJoinedChannels());
-						}
+						// if (joinedChannelsCallback) { // this'll update the list of joined channels. // this'll happen later.
+						// 	joinedChannelsCallback(getJoinedChannels());
+						// }
 					}
 				}
 
@@ -646,6 +639,11 @@ function setJoinedChannelsCallback(cb) {
 	joinedChannelsCallback = cb;
 }
 
+var channelMessagesCallback = undefined;
+function setChannelMessagesCallback(cb) {
+	channelMessagesCallback = cb;
+}
+
 var selectedChatCallback = undefined;
 function setSelectedChatCallback(cb) {
 	selectedChatCallback = cb;
@@ -679,6 +677,10 @@ function getChannelData(name){
  	return channelsList[name];
 }
 
+function getChannelMessages(name) {
+	return channelMessages[name];
+}
+
 function updateChannelData(data) {
 	if (!data || !data.channel) {
 		console.log('missing stuff',data)
@@ -691,20 +693,34 @@ function updateChannelData(data) {
 
 	if (channelsList[data.channel]) { // if an entry exists, update the fields you have.
 		channelsList[data.channel] = Object.assign(channelsList[data.channel], data);
-
-		// should we test of we're joined?
-		if (channelsJoined.indexOf(data.channel) !== -1) {
-			if (joinedChannelsCallback) { // this might be slow.
-				joinedChannelsCallback(getJoinedChannels());
-			}
-		}
 	} else { // if an entry doesn't exist, add it
 		channelsList[data.channel] = data;
+	}
+
+	// should we test of we're joined?
+	if (channelsJoined.indexOf(data.channel) !== -1) {
+		if (joinedChannelsCallback) { // this might be slow.
+			joinedChannelsCallback(getJoinedChannels());
+		}
 	}
 
 	// if this is the selected chat, then do an update.
 	if (selectedChat === data.channel && selectedChatCallback) {
 		selectedChatCallback(channelsList[data.channel]);
+	}
+}
+
+function updateMessageData(channel,messages) {
+	if (channelMessages[channel]) {
+		channelMessages[channel].push(messages);
+	} else {
+		channelMessages[channel] = [messages];
+	}
+
+	// console.log('recieved update', channel, messages,channelMessages[channel], selectedChat === channel);
+
+	if (selectedChat === channel && channelMessagesCallback) { // this only needs to run if this is selected.
+		channelMessagesCallback(channelMessages[channel]);
 	}
 }
 
@@ -717,7 +733,7 @@ function getJoinedChannels() {
 
 function joinChannel(name){
 	if (channelsJoined.indexOf(name) !== -1) {
-		console.log('youre already in here',channelsJoined,name);
+		// console.log('youre already in here',channelsJoined,name);
 		return;
 	}
 
@@ -726,7 +742,7 @@ function joinChannel(name){
 
 function createPrivateMessage(name) {
 	if (channelsJoined.indexOf(name) !== -1) {
-		console.log('youre already in here',channelsJoined,name);
+		// console.log('youre already in here',channelsJoined,name);
 		return;
 	}
 
@@ -751,7 +767,7 @@ function leaveChannel(name) {
 		return;
 	}
 	channelsJoined.splice(index,1); // find joined channel and remove it.
-	if (joinedChannelsCallback) {
+	if (joinedChannelsCallback) { // HACK: This needs to run here bcause updateChannelData wont catch it.
 		joinedChannelsCallback(getJoinedChannels());
 	}
 
@@ -787,19 +803,20 @@ function sendMessage(channel,message) {
 	}
 
 	let channelData = getChannelData(channel);
-	if (channelData && channelData.messages) {
-		channelData.messages.push(data);
-	} else {
-		channelData = {
-			channel: channel,
-			messages: [data]
-		}
-	}
+	// if (channelData && channelData.messages) {
+	// 	channelData.messages.push(data);
+	// } else {
+	// 	channelData = {
+	// 		channel: channel,
+	// 		messages: [data]
+	// 	}
+	// }
 	channelData.timestamp = Date.now();
 	channelData.lastMessage = message;
 	channelData.lastUser = userData.name;
 
 	updateChannelData(channelData); 
+	updateMessageData(channel,data);
 }
 
 function privateMessage(character,message){
@@ -819,31 +836,33 @@ function privateMessage(character,message){
 	}
 
 	let channelData = getChannelData(character);
-	if (!channelData) {
-		console.log('we need to create a pm!');
-		channelData = {
-			channel:data.character,
-			type: 3,
-			name: data.character,
-			friend: friendsList.indexOf(data.character) !== -1 ? true : false,
-			bookmark: bookmarksList.indexOf(data.character) !== -1 ? true : false,
-			messages: [data]
-		}
-		// channelsList[channelData.channel] = channelData; // updateChannelData does this already.
-	} else if (channelData.messages) {
-		channelData.messages.push(data);
-	} else {
-		channelData = {
-			channel: character,
-			messages: [data]
-		}
-	}
+
+	// if (!channelData) {(this should never happen!)
+	// 	console.log('we need to create a pm!');
+	// 	channelData = {
+	// 		channel:data.character,
+	// 		type: 3,
+	// 		name: data.character,
+	// 		friend: friendsList.indexOf(data.character) !== -1 ? true : false,
+	// 		bookmark: bookmarksList.indexOf(data.character) !== -1 ? true : false,
+	// 	}
+	// 	// channelsList[channelData.channel] = channelData; // updateChannelData does this already.
+	// } 
+
+	// else if (channelData.messages) { // rewrite to use channelMessages
+	// 	channelData.messages.push(data);
+	// } else {
+	// 	channelData = {
+	// 		channel: character,
+	// 		messages: [data]
+	// 	}
+	// }
 
 	channelData.timestamp = Date.now();
 	channelData.lastMessage = message;
 	channelData.lastUser = userData.name;
-
 	updateChannelData(channelData); 
+	updateMessageData(character,data);
 
 	// // if we're not in this, join (this should never happen!)
 	// channelsJoined.push(channelData.channel); // we need to check if this exists.
@@ -864,8 +883,8 @@ export {
 	login,logout,
 	loadCookie,gotLoginPromise,createSocket,
 	lostConnectionAlert,gainedConnectionAlert,
-	getChannels,getChannelData,joinChannel,createPrivateMessage,leaveChannel,
+	getChannels,getChannelData,joinChannel,createPrivateMessage,leaveChannel,getChannelMessages,
 	getFriends,
 	sendMessage,privateMessage,sendTyping,
-	setChannelsCallback,setJoinedChannelsCallback,setSelectedChatCallback,setSelectedChat,setFriendsCallback,setCreateToastCallback 
+	setChannelsCallback,setJoinedChannelsCallback,setSelectedChatCallback,setSelectedChat,setFriendsCallback,setCreateToastCallback,setChannelMessagesCallback
 };

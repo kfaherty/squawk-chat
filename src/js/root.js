@@ -7,7 +7,11 @@ import RoomList from './roomlist';
 import Chat from './chat';
 import Search from './search';
 
-import { logout,gotLoginPromise,setChannelsCallback,setJoinedChannelsCallback,setFriendsCallback,getChannels,getChannelData,joinChannel,setSelectedChatCallback,setSelectedChat,getFriends,lostConnectionAlert,gainedConnectionAlert,setCreateToastCallback } from './api2';
+import { logout,gotLoginPromise,lostConnectionAlert,gainedConnectionAlert,
+	setChannelsCallback,setJoinedChannelsCallback,setFriendsCallback,setSelectedChatCallback,setSelectedChat,setCreateToastCallback,setChannelMessagesCallback,
+	getChannels,getChannelData,joinChannel,getChannelMessages,
+	getFriends
+} from './api2';
 
 style({ // toasts style overrides.
   	width: "320px",
@@ -45,7 +49,8 @@ class Root extends Component {
 
 	    	selectedChat: null,
 	    	chatData: undefined,
-	    	
+	    	chatMessages: undefined,
+
 	    	username: null,
 	    	connected: true,
 	    	loggedin: false,
@@ -89,11 +94,16 @@ class Root extends Component {
 	    setSelectedChatCallback((data) => {
 	    	// console.log('chat update',data);
 	    	this.setState({chatData:data});
-	    })
+	    });
 	    // melba toasts
 	    setCreateToastCallback((props) => {
 	    	this.createToast(props);
-	    })
+	    });
+	    // channel messages
+	    setChannelMessagesCallback((data) => {
+	    	console.log('updating messages',data.length);
+	    	this.setState({chatMessages: data});
+	    });
 	}
 	createToast(props) {
 		toast(<NotificationTemplate {...props} />);
@@ -130,7 +140,8 @@ class Root extends Component {
     		joinChannel(value);
     		this.setState({
     			selectedChat:value,
-    			chatData: getChannelData(value) // load initial data.
+    			chatData: getChannelData(value), // load initial data.
+    			chatMessages: getChannelMessages(value)
     		});
     	}
     }
@@ -178,7 +189,6 @@ class Root extends Component {
     }
 
 	render() {
-		const chat = this.state.chatData; //getSelectedChat();
 		return (
 			<div className="app-wrapper">
 				<Authorize visible={this.state.loggedin} />
@@ -261,7 +271,8 @@ class Root extends Component {
 
 					{/* CHAT */}
 					<Chat 
-						chat={chat}
+						chat={this.state.chatData}
+						messages={this.state.chatMessages}
 						selectedChat={this.state.selectedChat} 
 						reportSelectedChat={this.reportSelectedChat}
 						clearSelectedChat={()=>this.clearSelectedChat()}

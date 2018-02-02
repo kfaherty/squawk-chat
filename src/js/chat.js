@@ -91,6 +91,8 @@ class Chat extends Component {
 	    		sendTyping('typing',this.props.selectedChat); // send tpn typing
 
 	    		let thisPM = this.props.selectedChat;
+
+	    		clearTimeout(this.timeout);
 	    		this.timeout = setTimeout(() => {
 		    		sendTyping('paused',thisPM); // send tpn paused
 	    			this.paused = true;
@@ -160,7 +162,8 @@ class Chat extends Component {
     }
 
    	render() {
-   		const chat = this.props.chat || {messages: []};
+   		const chat = this.props.chat || [];
+   		const messages = this.props.messages || [];
 		return (
 			<div className="chat-window">
 				<div className={"no-chat " + ( this.props.selectedChat ? "hidden" : "" )}>
@@ -199,7 +202,7 @@ class Chat extends Component {
 						</div>
 
 						<div className="messages-contain" onScroll={this.handleScroll}>
-							{chat.messages && chat.messages.map((obj) => {
+							{messages && messages.map((obj) => {
 								// TODO filter out ignored users
 
 								return (
