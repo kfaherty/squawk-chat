@@ -10,6 +10,27 @@ import ChatMessage from './chatmessage';
 import UserList from './userlist';
 import UserProfile from './userprofile';
 
+class TypingIndicator extends Component {
+	render(){
+		return (
+			<div className={"typing-indicator " + 
+			    (() => {
+			        switch (this.props.typing) {
+			        	case "typing": return 'visible';
+			        	case "paused": return 'paused';
+			        	case "clear":  return '';
+			        	default:      return '';
+			        }
+			    })()
+			}>
+				<div className="dot-one"></div>
+				<div className="dot-two"></div>
+				<div className="dot-three"></div>
+			</div>
+		);
+	}
+}
+
 class Chat extends Component {
 	constructor(props) {
     	super(props);
@@ -164,6 +185,7 @@ class Chat extends Component {
    	render() {
    		const chat = this.props.chat || [];
    		const messages = this.props.messages || [];
+   		const users = this.props.users || [];
 		return (
 			<div className="chat-window">
 				<div className={"no-chat " + ( this.props.selectedChat ? "hidden" : "" )}>
@@ -175,7 +197,6 @@ class Chat extends Component {
 						<div className="chat-header">
 							<div className="chat-header-wrap">
 								<div className="chat-title">{chat.channel}</div>
-								
 								{(() => {
 							        switch (chat.type) {
 							        	case 0: return <div className="chat-subtitle"><ParsedText text={chat.description} /></div>;
@@ -213,20 +234,8 @@ class Chat extends Component {
 								)
 							})}
 
-					    	<div className={"typing-indicator " + 
-					    	    (() => {
-							        switch (chat.typing) {
-							        	case "typing": return 'visible';
-							        	case "paused": return 'paused';
-							        	case "clear":  return '';
-							        	default:      return '';
-							        }
-							    })()
-					    	}>
-					    		<div className="dot-one"></div>
-					    		<div className="dot-two"></div>
-					    		<div className="dot-three"></div>
-					    	</div>
+					    	<TypingIndicator typing={chat.typing} />
+
 					    	<div className="input-padding"></div>
 					    	<div className='marker-bottom' ref={(el) => { this.messagesEnd = el; }}></div>
 						</div>
@@ -251,10 +260,17 @@ class Chat extends Component {
 						</div>
 					</div>
 					{(chat.type === 3) && (
-						<UserProfile userListOpen={this.props.userListOpen} />
+						<UserProfile 
+							userListOpen={this.props.userListOpen} 
+							profile={[]} // TODO
+						/>
 					)}
 					{(chat.type !== 3) && (
-						<UserList users={chat.users} userListOpen={this.props.userListOpen} usernameClicked={this.usernameClicked} />
+						<UserList 
+							users={users} 
+							userListOpen={this.props.userListOpen} 
+							usernameClicked={this.usernameClicked} 
+						/>
 					)}
 				</div>
 				

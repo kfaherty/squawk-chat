@@ -118,11 +118,15 @@ listenToData(); // create listeners.
 // data sources
 var channelsList = {}; // hashmap of rooms
 var channelMessages = {}; // this is a hashmap of room messages
+var channelUsers = {}; // this a hashmap of room users
 var channelsJoined = []; // this is just going to be a standard array of names.
 // var usersCache = []; // LIS data.
 var bookmarksList = []; // we're not going to know who is a bookmark and who is a friend unless we use the data from login.
 var friendsList = [];
 var socketListeners = []; // listeners hashmap
+
+// id sequences
+var messageSeq = 0;
 
 function createSocket(name) {
 	return new Promise(function(resolve,reject) {
@@ -259,8 +263,6 @@ function addListenerForSocketMessage(eventcode,callback){
 	// 	}
 	// });
 }
-
-var messageSeq = 0;
 
 function listenToData() {
 	gotLoginPromise().then(()=>{ 			// wait for login: 
@@ -410,7 +412,7 @@ function listenToData() {
 				channelData.lastMessage = data.message;
 				channelData.lastUser = data.character;
 				updateChannelData(channelData); 
-				updateMessageData(dataChannel,data);
+				updateChannelMessages(dataChannel,data);
 
 				// TODO: potentially join this channel if we're not in it.
 			};
@@ -462,7 +464,7 @@ function listenToData() {
 				}
 
 				updateChannelData(channelData); 
-				updateMessageData(data.character,messageData);
+				updateChannelMessages(data.character,messageData);
 			};
 		});
 		addListenerForSocketMessage('TPN',(data)=>{
@@ -521,13 +523,18 @@ function listenToData() {
 				// maybe we can just use a system message.
 				// if (bookmarksList.indexOf(data.character.identity) !== -1) {
 				// 	toastCallback({
-				// 		header: data.character.identity + " is offline", // NOTE: make sure this works..
+				// 		header: data.character.identity + " is offline", //
 				// 		// text:
 				// 	})
 				// }
 
-				// two: leave a channel if this is us and we're in it.
-				if (data.character.identity === userData.name) {
+				// two: population
+				let channelData = getChannelData(data.channel);
+				channelData.population = channelData.population--;
+				updateChannelData(channelData); 
+
+				// three: leave a channel if this is us and we're in it.
+				if (data.character === userData.name) {
 					let index = channelsJoined.indexOf(data.channel);
 					if (index !== -1) {
 						console.log('you left a channel',channelsJoined,index);
@@ -537,33 +544,14 @@ function listenToData() {
 							joinedChannelsCallback(getJoinedChannels());
 						}
 					}
-				}
-
-				// three: update channel data if it's a room we're in - userlist & population
-
-				let channelData = getChannelData(data.channel);
-				data.users = [data.character];
-				if (!channelData) {
-					// erm.
-					console.log('user left a channel i dont know about.',channelData,data);
-					return;
-				}
-				if (channelData.users) {
-					// console.log(channelData.users);
-					
-					// TODO: check if this exists.
-					let index = channelData.users.indexOf(data.character);
-					if (index !== -1) { // check if this exists yet.
-						channelData.users.splice(index,1);	// not a function
+				} else { // if this isn't us we should update the userlist- if it is us, we don't care anymore.
+					// four: userlist
+					let users = channelUsers[data.channel]; // FIXME undefined
+					let index = users.indexOf(data.character);
+					if (index !== -1) {
+						users.splice(index,1); // find joined channel and remove it.
+						updateChannelUsers(data.channel,users);
 					}
-					data.users=channelData.users;
-				}
-
-				delete data.character;
-				updateChannelData(data); 
-
-				if (channelsCallback) {
-					channelsCallback(channelsList);
 				}
 			}
 		});
@@ -572,7 +560,7 @@ function listenToData() {
 			if (data && data.character) {
 				// one: create a toast if this is a friend or bookmark
 				// do we care if they join? Maybe just use a system message.
-				// if (bookmarksList.indexOf(data.character.identity) !== -1) { // NOTE: make sure this works..
+				// if (bookmarksList.indexOf(data.character.identity) !== -1) {
 				// 	toastCallback({
 				// 		header: data.character.identity + " is online",
 				// 		// text:
@@ -583,49 +571,42 @@ function listenToData() {
 				if (data.character.identity === userData.name) {
 					if (channelsJoined.indexOf(data.channel) === -1) {
 						channelsJoined.push(data.channel); // add this to the list of joined channels. This should allow invites to work.
-						// if (joinedChannelsCallback) { // this'll update the list of joined channels. // this'll happen later.
-						// 	joinedChannelsCallback(getJoinedChannels());
-						// }
 					}
+
 				}
+
+				let users = channelUsers[data.channel];
+				if (users) {
+					users.push(data.character.identity);
+				} else {
+					users = [data.character.identity];
+				}
+				updateChannelUsers(data.channel,users); 	// update users
 
 				// three: update channel data if it's a room we're in - userlist & population
 				let channelData = getChannelData(data.channel);
-				data.users = [data.character];
-
-				if (channelData && channelData.users) {
-					// console.log(channelData.users);
-					if (channelData.users.indexOf(data.character) === -1) { // check if this exists yet.
-						channelData.users.push(data.character);	// not a function
-					}
-					data.users=channelData.users;
-				}
-
+				channelData.population++; // update population
 				delete data.character;
 				updateChannelData(data); 
 
-				if (channelsCallback) {
-					channelsCallback(channelsList);
-				}
+
 			}
-			
 		});
 		addListenerForSocketMessage('COL',(data)=>{ // col.nOthing
-			updateChannelData(data);
+			// updateChannelData(data); // We don't really care about this.
 		});
 		addListenerForSocketMessage('ICH',(data)=>{
+			let userlist = data.users.map((obj) => {
+				return obj.identity;
+			});
+			updateChannelUsers(data.channel,userlist);
+			delete data.users;
+
 			updateChannelData(data);
 		});
 		addListenerForSocketMessage('CDS',(data)=>{
 			updateChannelData(data);
 		});
-	});
-}
-
-function getChannels(){
-	gotLoginPromise().then(()=>{ 			// wait for login: 
-		socket.send( 'CHA' ); // 0
-		socket.send( 'ORS' ); // 1
 	});
 }
 
@@ -647,6 +628,11 @@ function setChannelMessagesCallback(cb) {
 var selectedChatCallback = undefined;
 function setSelectedChatCallback(cb) {
 	selectedChatCallback = cb;
+}
+
+var channelUsersCallback = undefined;
+function setChannelUsersCallback(cb) {
+	channelUsersCallback = cb;
 }
 
 var selectedChat = undefined;
@@ -673,12 +659,28 @@ function setSelectedChat(value) {
 	}
 }
 
+function getChannels(){
+	gotLoginPromise().then(()=>{ 			// wait for login: 
+		socket.send( 'CHA' ); // 0
+		socket.send( 'ORS' ); // 1
+	});
+}
+
 function getChannelData(name){
  	return channelsList[name];
 }
 
 function getChannelMessages(name) {
 	return channelMessages[name];
+}
+
+function getChannelUsers(name) {
+	if (channelUsers[name]) {
+		return channelUsers[name].map((obj) => {
+			return {identity: obj}
+		});	
+	}
+	return [];
 }
 
 function updateChannelData(data) {
@@ -710,7 +712,7 @@ function updateChannelData(data) {
 	}
 }
 
-function updateMessageData(channel,messages) {
+function updateChannelMessages(channel,messages) {
 	if (channelMessages[channel]) {
 		channelMessages[channel].push(messages);
 	} else {
@@ -720,7 +722,21 @@ function updateMessageData(channel,messages) {
 	// console.log('recieved update', channel, messages,channelMessages[channel], selectedChat === channel);
 
 	if (selectedChat === channel && channelMessagesCallback) { // this only needs to run if this is selected.
-		channelMessagesCallback(channelMessages[channel]);
+		channelMessagesCallback(getChannelMessages(channel));
+	}
+}
+
+function updateChannelUsers(channel,users) {
+	if (channelUsers[channel]) {
+		channelUsers[channel] = Object.assign(channelUsers[channel], users);
+	} else {
+		channelUsers[channel] = [users];
+	}
+
+	// console.log('recieved update', channel, messages,channelMessages[channel], selectedChat === channel);
+
+	if (selectedChat === channel && channelUsersCallback) { // this only needs to run if this is selected.
+		channelUsersCallback(getChannelUsers(channel));
 	}
 }
 
@@ -775,6 +791,10 @@ function leaveChannel(name) {
 	if(channelData.type !== 3) { // if type isnt 3
 		socket.send( 'LCH '+JSON.stringify({ "channel": name }) );
 	}
+
+	// clear caches so it doesn't duplicate on rejoin.
+	delete channelMessages[name];
+	delete channelUsers[name];
 }
 
 var friendsCallback = undefined;
@@ -793,7 +813,6 @@ function sendMessage(channel,message) {
 	}
 	socket.send('MSG '+JSON.stringify({ "channel": channel,"message":message }) );
 
-	// manually insert this..
 	let data = {
 		timestamp: Date.now(),
 		key: messageSeq++,
@@ -803,20 +822,13 @@ function sendMessage(channel,message) {
 	}
 
 	let channelData = getChannelData(channel);
-	// if (channelData && channelData.messages) {
-	// 	channelData.messages.push(data);
-	// } else {
-	// 	channelData = {
-	// 		channel: channel,
-	// 		messages: [data]
-	// 	}
-	// }
+
 	channelData.timestamp = Date.now();
 	channelData.lastMessage = message;
 	channelData.lastUser = userData.name;
 
 	updateChannelData(channelData); 
-	updateMessageData(channel,data);
+	updateChannelMessages(channel,data);
 }
 
 function privateMessage(character,message){
@@ -826,7 +838,6 @@ function privateMessage(character,message){
 	}
 	socket.send('PRI '+JSON.stringify({ "recipient": character,"message":message }) );
 
-	// manually insert this..
 	let data = {
 		timestamp: Date.now(),
 		key: messageSeq++,
@@ -837,38 +848,11 @@ function privateMessage(character,message){
 
 	let channelData = getChannelData(character);
 
-	// if (!channelData) {(this should never happen!)
-	// 	console.log('we need to create a pm!');
-	// 	channelData = {
-	// 		channel:data.character,
-	// 		type: 3,
-	// 		name: data.character,
-	// 		friend: friendsList.indexOf(data.character) !== -1 ? true : false,
-	// 		bookmark: bookmarksList.indexOf(data.character) !== -1 ? true : false,
-	// 	}
-	// 	// channelsList[channelData.channel] = channelData; // updateChannelData does this already.
-	// } 
-
-	// else if (channelData.messages) { // rewrite to use channelMessages
-	// 	channelData.messages.push(data);
-	// } else {
-	// 	channelData = {
-	// 		channel: character,
-	// 		messages: [data]
-	// 	}
-	// }
-
 	channelData.timestamp = Date.now();
 	channelData.lastMessage = message;
 	channelData.lastUser = userData.name;
 	updateChannelData(channelData); 
-	updateMessageData(character,data);
-
-	// // if we're not in this, join (this should never happen!)
-	// channelsJoined.push(channelData.channel); // we need to check if this exists.
-	// if (joinedChannelsCallback) { // this'll update the list of joined channels.
-	// 	joinedChannelsCallback(getJoinedChannels());
-	// }
+	updateChannelMessages(character,data);
 }
 
 function sendTyping(type,selectedChat) {
@@ -883,8 +867,8 @@ export {
 	login,logout,
 	loadCookie,gotLoginPromise,createSocket,
 	lostConnectionAlert,gainedConnectionAlert,
-	getChannels,getChannelData,joinChannel,createPrivateMessage,leaveChannel,getChannelMessages,
+	getChannels,getChannelData,joinChannel,createPrivateMessage,leaveChannel,getChannelMessages,getChannelUsers,
 	getFriends,
 	sendMessage,privateMessage,sendTyping,
-	setChannelsCallback,setJoinedChannelsCallback,setSelectedChatCallback,setSelectedChat,setFriendsCallback,setCreateToastCallback,setChannelMessagesCallback
+	setChannelsCallback,setJoinedChannelsCallback,setSelectedChatCallback,setSelectedChat,setFriendsCallback,setCreateToastCallback,setChannelMessagesCallback,setChannelUsersCallback
 };

@@ -7,10 +7,11 @@ import RoomList from './roomlist';
 import Chat from './chat';
 import Search from './search';
 
-import { logout,gotLoginPromise,lostConnectionAlert,gainedConnectionAlert,
-	setChannelsCallback,setJoinedChannelsCallback,setFriendsCallback,setSelectedChatCallback,setSelectedChat,setCreateToastCallback,setChannelMessagesCallback,
-	getChannels,getChannelData,joinChannel,getChannelMessages,
-	getFriends
+import { 
+	logout,gotLoginPromise,lostConnectionAlert,gainedConnectionAlert,
+	getChannels,getChannelData,joinChannel,getChannelMessages,getChannelUsers,
+	getFriends,
+	setChannelsCallback,setJoinedChannelsCallback,setFriendsCallback,setSelectedChatCallback,setSelectedChat,setCreateToastCallback,setChannelMessagesCallback,setChannelUsersCallback
 } from './api2';
 
 style({ // toasts style overrides.
@@ -44,12 +45,14 @@ class NotificationTemplate extends Component {
 class Root extends Component {
 	constructor(props) {
     	super(props);
+
     	this.state = {
 	    	selectedTab: 'messages',
 
 	    	selectedChat: null,
 	    	chatData: undefined,
 	    	chatMessages: undefined,
+	    	chatUsers: undefined,
 
 	    	username: null,
 	    	connected: true,
@@ -63,13 +66,6 @@ class Root extends Component {
 	    	userListOpen: true
 	    };
 		
-		
-	    lostConnectionAlert((err,connected) => {
-	    	console.log('lost connection!');
-	    	this.setState({connected: false});
-	    });
-	    gainedConnectionAlert((err,connected) => this.setState({connected: true}));
-
         this.setSelectedChat = this.setSelectedChat.bind(this);   
         this.reportSelectedChat = this.reportSelectedChat.bind(this);
 	}
@@ -104,11 +100,18 @@ class Root extends Component {
 	    	console.log('updating messages',data.length);
 	    	this.setState({chatMessages: data});
 	    });
+	    //channel users 
+	    setChannelUsersCallback((data => {
+	    	console.log('updating users',data);
+	    	this.setState({chatUsers: data});
+	    }))
 	}
+
 	createToast(props) {
 		toast(<NotificationTemplate {...props} />);
 		// TODO: add this to the list of notifications.
 	}
+
     componentWillMount() {
 	    gotLoginPromise().then((data) => {
 			this.setState({
@@ -116,6 +119,14 @@ class Root extends Component {
 				username: data
 			});
 	    });
+
+	    lostConnectionAlert((err,connected) => {
+	    	this.setState({connected: false});
+	    });
+	    gainedConnectionAlert((err,connected) => {
+	    	this.setState({connected: true})
+	    });
+
 	    this.assignCallbacks();
     }
 
@@ -141,7 +152,8 @@ class Root extends Component {
     		this.setState({
     			selectedChat:value,
     			chatData: getChannelData(value), // load initial data.
-    			chatMessages: getChannelMessages(value)
+    			chatMessages: getChannelMessages(value),
+    			chatUsers: getChannelUsers(value)
     		});
     	}
     }
@@ -273,6 +285,7 @@ class Root extends Component {
 					<Chat 
 						chat={this.state.chatData}
 						messages={this.state.chatMessages}
+						users={this.state.chatUsers}
 						selectedChat={this.state.selectedChat} 
 						reportSelectedChat={this.reportSelectedChat}
 						clearSelectedChat={()=>this.clearSelectedChat()}
