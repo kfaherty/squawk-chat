@@ -505,6 +505,7 @@ function listenToData() {
 			}
 
 			// two: add to users cache if we don't have it already..?
+				// that's going to create a ton of data dude.
 		});
 		addListenerForSocketMessage('FLN',(data)=>{  // global channel leave.
 			// one: create toast if this is friend/bookmark
@@ -516,14 +517,23 @@ function listenToData() {
 			}
 
 			// two: update channel data to leave all channels this character is in (slow, probably..)
-			// does this only run if they're in a channel we're in? 
-			// probably not! :c
+				// does this only run if they're in a channel we're in? 
+					// probably not! :c
+				// this should be fast if you're only in a few rooms.
+			// for (var i = channelUsers.length - 1; i >= 0; i--) { 
+			for (var i in channelUsers){
+				if (channelUsers[i].indexOf(data.character) !== -1) {
+					let index = channelUsers[i].indexOf(data.character);
+					channelUsers[i].splice(index,1); 
+					updateChannelUsers(i,channelUsers[i]);
+				}
+			}
 		});
 		addListenerForSocketMessage('LCH',(data)=>{
 			if (data && data.character) {
 				// one: create a toast if this is a friend or bookmark
-				// do we care if they left the channel? 
-				// maybe we can just use a system message.
+					// do we care if they left the channel? 
+						// maybe we can just use a system message.
 				// if (bookmarksList.indexOf(data.character.identity) !== -1) {
 				// 	toastCallback({
 				// 		header: data.character.identity + " is offline", //
@@ -537,7 +547,7 @@ function listenToData() {
 				updateChannelData(channelData); 
 
 				// three: leave a channel if this is us and we're in it.
-				if (data.character === userData.name) {
+				if (data.character === userData.name) { // NOTE: I dont think this runs..
 					let index = channelsJoined.indexOf(data.channel);
 					if (index !== -1) {
 						console.log('you left a channel',channelsJoined,index);
@@ -552,7 +562,7 @@ function listenToData() {
 					let users = channelUsers[data.channel]; 
 					let index = users.indexOf(data.character);
 					if (index !== -1) {
-						users.splice(index,1); // find joined channel and remove it.
+						users.splice(index,1);
 						updateChannelUsers(data.channel,users);
 					}
 				}

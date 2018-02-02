@@ -214,7 +214,7 @@ class Root extends Component {
 				</div>
 
    				<div className={"potential-problem " + (this.state.connected ? "" : "visible")}>
-					<p>Disconnected from data</p>
+					<p>Disconnected</p>
 				</div>
 
 			    <div className={"top-bar "  + (this.state.loggedin ? "" : "blurred")}>
