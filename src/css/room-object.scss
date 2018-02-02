@@ -19,7 +19,7 @@
 	&.selected {
 		background: #1cd67c;
 		border: 1px solid #1cd67c;
-		box-shadow: 0px 0px 14px #ccc;
+		box-shadow: 0px 4px 14px #ccc;
 		.user-icon-contain {
 			.user-icon {
 				color: #53E09C;
@@ -61,7 +61,7 @@
 		height: 30px;
 		border-radius: 30px;
 		background: black;
-    	box-shadow: 0px 0px 14px rgba(0, 0, 0, .3);
+    	box-shadow: 0px 4px 14px rgba(0, 0, 0, .1);
 	}
 	.user-icon-contain {
 		position: absolute;
@@ -162,7 +162,7 @@
 		position: absolute;
     	top: 16px;
     	left: 40px;
-		box-shadow: 0px 0px 14px #ccc;
+		box-shadow: 0px 4px 14px #ccc;
 		background: white;
 		border: 1px solid #E5EBE9;
 	    border-radius: 12px;

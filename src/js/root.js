@@ -97,12 +97,12 @@ class Root extends Component {
 	    });
 	    // channel messages
 	    setChannelMessagesCallback((data) => {
-	    	console.log('updating messages',data.length);
+	    	// console.log('updating messages',data.length);
 	    	this.setState({chatMessages: data});
 	    });
 	    //channel users 
 	    setChannelUsersCallback((data => {
-	    	console.log('updating users',data);
+	    	// console.log('updating users',data);
 	    	this.setState({chatUsers: data});
 	    }))
 	}

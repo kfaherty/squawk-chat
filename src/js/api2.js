@@ -809,16 +809,35 @@ function setFriendsCallback(cb) {
 }
 
 function getFriends() {
-	let array = friendsList || [];
-	array = array.concat(bookmarksList);
-	array = array.map((obj) => {
-		return { // TODO match this with the 
+	// TODO: we should only return online users.
+
+	let friends = friendsList.map((obj) => {
+		return {
 			channel: obj,
 			name: obj,
+			friend: true,
 			type: 3
 		};
 	});
+	let bookmarks = bookmarksList.map((obj) => {
+		return {
+			channel: obj,
+			name: obj,
+			bookmark: true,
+			type: 3
+		};
+	});
+
+	let array = Object.assign(friends || [], bookmarks || []);
+
+	// array = array.map((obj) => {
+	// 	return { // TODO match this with the usersCache
+	// 		channel: obj,
+	// 		name: obj,
+	// 	};
+	// });
 	// console.log(array);
+	
 	return array;
 }
 

@@ -7,17 +7,17 @@
 	margin: 20px;
 	width: auto;
     width: 60%;
-    padding: 14px 20px 10px 20px;
+    padding: 11px 20px 7px;
 	font-size: 13px;
 	border: 1px solid #E5EBE9;
-   	box-shadow: 0px 0px 17px rgba(0, 0, 0, 0.1); //0px 0px 30px rgba(0, 0, 0, .1);
+   	box-shadow: 0px 4px 12px rgba(0,0,0,.05); //0px 0px 30px rgba(0, 0, 0, .1);
 	white-space: pre-wrap;
 
    	&.mine {
 	    left: calc( 40% - 80px );
    		background: #1cd67c;
 		border: 1px solid #1cd67c;
-		box-shadow: 0px 0px 14px #ccc;
+		box-shadow: 0px 4px 14px #ccc;
 		.user-name,.message,.timestamp {
 			color: #f0fbf3;
 			.action {
@@ -42,7 +42,7 @@
 	}
 	.message {
 		display: inline-block;
-		padding-top: 3px;
+		// padding-top: 3px;
 	    color: #A6B2AD;
 	    line-height: 22px;
 	    width: 100%;
