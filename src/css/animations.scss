@@ -84,3 +84,22 @@
         transform: scaleY(1);
     }
 }
+
+@include keyframes(disconnectedAnim) { 
+    0% { // A 
+        color: #F44336;
+        background: #f7faf9;
+    }
+    49% { // A
+        color: #F44336;
+        background: #f7faf9;   
+    }
+    50% { // B
+        color: #f7faf9;
+        background: #F44336;
+    }
+    100% { // B
+        color: #f7faf9;
+        background: #F44336;
+    }
+}

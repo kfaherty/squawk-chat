@@ -263,11 +263,17 @@ html{
     box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.1);
     font-weight: 400;
     font-size: 20px;
-
+    -webkit-animation: none;
+    animation: none;
 
     &.visible {
         opacity: 1;
         pointer-events: initial;
+        // anim
+        -webkit-animation: disconnectedAnim linear infinite;
+        animation: disconnectedAnim linear infinite;
+        -webkit-animation-duration: 2.5s;
+        animation-duration: 2.5s;
     }
 }
 

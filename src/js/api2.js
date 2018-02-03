@@ -3,6 +3,9 @@ import Cookies from 'universal-cookie';
 const cookies = new Cookies();
 
 const apiurls = loadURLS();
+if (!apiurls.useProd) {
+	console.warn('using dev');
+}
 
 // userData:
 var userData = {

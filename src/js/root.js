@@ -141,7 +141,7 @@ class Root extends Component {
     setSelectedTab(value) {
     	switch(value) {
     		case 'messages':
-    			console.log('get joined channels',getJoinedChannels());
+    			// console.log('get joined channels',getJoinedChannels());
     			this.setState({roomsjoined:getJoinedChannels()});
     			break;
     		case 'channels':
@@ -230,7 +230,7 @@ class Root extends Component {
 				</div>
 
    				<div className={"potential-problem " + (this.state.connected ? "" : "visible")}>
-					<p>Disconnected</p>
+					<p>Connection Lost</p>
 				</div>
 
 			    <div className={"top-bar "  + (this.state.loggedin ? "" : "blurred")}>
