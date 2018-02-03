@@ -664,8 +664,6 @@ function setSelectedChat(value) {
 			} else {
 				document.title = 'SquawkChat';
 			}
-			
-
 		}
 		channelData.unread = 0;
 		updateChannelData(channelData);
@@ -690,6 +688,10 @@ window.addEventListener("focus", function(event) {
 		updateChannelData(channelData);
 	}
 });
+
+function getChannels() {
+	return channelsList;
+}
 
 function getChannelData(name){
  	return channelsList[name];
@@ -922,7 +924,7 @@ export {
 	loadCookie,gotLoginPromise,createSocket,
 	lostConnectionAlert,gainedConnectionAlert,
 	getChannelData,joinChannel,createPrivateMessage,leaveChannel,getChannelMessages,getChannelUsers,
-	// getFriends,getChannels
+	getFriends,getChannels,getJoinedChannels,
 	sendMessage,privateMessage,sendTyping,
 	setChannelsCallback,setJoinedChannelsCallback,setSelectedChatCallback,setSelectedChat,setFriendsCallback,setCreateToastCallback,setChannelMessagesCallback,setChannelUsersCallback
 };

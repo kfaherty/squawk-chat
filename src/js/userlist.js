@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Avatar } from './common';
 
 class UserList extends Component {
 	constructor(props) {
@@ -69,6 +70,7 @@ class UserList extends Component {
 
 					return (
 						<div className="list-user" key={obj.identity} onClick={() => this.handleClick(obj.identity)}>
+							<Avatar name={obj.identity} type={3} />
 							<div className="status-icon"></div>
 							<div className="rank-icon"></div>
 							<div className="user-name">{obj.identity}</div>

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { ParsedText } from './common';
 import { ToastContainer, toast, style } from 'react-toastify';
-
+import { Avatar,ParsedText } from './common';
 import Authorize from './authorize';
 import RoomList from './roomlist';
 import Chat from './chat';
@@ -9,8 +8,8 @@ import Search from './search';
 
 import { 
 	logout,gotLoginPromise,lostConnectionAlert,gainedConnectionAlert,
-	getChannelData,joinChannel,getChannelMessages,getChannelUsers,
-	// getFriends,getChannels,
+	getChannelData,joinChannel,getChannelMessages,getChannelUsers,createPrivateMessage,
+	getFriends,getChannels,getJoinedChannels,
 	setChannelsCallback,setJoinedChannelsCallback,setFriendsCallback,setSelectedChatCallback,setSelectedChat,setCreateToastCallback,setChannelMessagesCallback,setChannelUsersCallback
 } from './api2';
 
@@ -140,23 +139,31 @@ class Root extends Component {
     }
 
     setSelectedTab(value) {
-    	// switch(value) {
-    	// 	case 'channels':
-    	// 		getChannels();
-    	// 		break;
-    	// 	case 'friends':
-    	// 		getFriends();
-    	// 		break;
-    	// 	default:
-    	// 		break;
-    	// }
+    	switch(value) {
+    		case 'messages':
+    			console.log('get joined channels',getJoinedChannels());
+    			this.setState({roomsjoined:getJoinedChannels()});
+    			break;
+    		case 'channels':
+    			this.setState({roomslist:getChannels()});
+    			break;
+    		case 'friends':
+    			this.setState({friendslist:getFriends()});
+    			break;
+    		default:
+    			break;
+    	}
     	this.setState({selectedTab: value});
     }
 
-    setSelectedChat(value) {
+    setSelectedChat(value,type) {
     	if (value) {
+    		if (type === 3) {
+    			createPrivateMessage(value);
+    		} else {
+    			joinChannel(value);
+    		}
     		setSelectedChat(value); // syncs callback to updates.
-    		joinChannel(value);
     		this.setState({
     			selectedChat:value,
     			chatData: getChannelData(value), // load initial data.
@@ -239,7 +246,7 @@ class Root extends Component {
 			        <div className={"logged-in-user-contain " + (this.state.userListOpen ? "" : "full")} onClick={() => this.toggleUserMenu()}> 
 			            <div className="user-name">{this.state.username}</div>
 			            <div className="arrow"></div>
-			            <div className="avatar"></div>
+						<Avatar name={this.state.username} type={3} />
 			        </div>
 			        <div className={"dropdown " + (this.state.userMenuOpen ? "visible " : "") + (this.state.userListOpen ? "" : "full")}>
 			        	<div className="list-item" onClick={() => this.updateStatus()}><div className="list-icon fi-pencil"></div>Set Status</div>

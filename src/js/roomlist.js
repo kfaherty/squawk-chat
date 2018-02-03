@@ -137,10 +137,10 @@ class RoomList extends Component {
         });
     }
 
-    setSelectedChat(channelName) {
+    setSelectedChat(channelName,type) {
         // console.log(channelid);
         // this goes to root so root can tell chat-window.
-        this.props.setSelectedChat(channelName);
+        this.props.setSelectedChat(channelName,type);
     }
 
     render() {
@@ -171,20 +171,20 @@ class RoomList extends Component {
                 <div className="room-list">
                     {rooms.map((obj) => {
                         obj.selected = ( obj.name === this.props.selectedChat ? 'selected' : '' );
-                        if (this.props.label === 'channels'){
-                            return (
-                                <RoomShortObject 
-                                    key={obj.name}
-                                    user={obj}
-                                    setSelectedChat={() => this.setSelectedChat(obj.name)}
-                                />
-                            );
-                        } else {
+                        if (this.props.label === 'messages'){
                             return (
                                 <RoomObject 
                                     key={obj.name}
                                     user={obj}
-                                    setSelectedChat={() => this.setSelectedChat(obj.name)}
+                                    setSelectedChat={() => this.setSelectedChat(obj.name,obj.type)}
+                                />
+                            );
+                        } else {
+                            return (
+                                <RoomShortObject 
+                                    key={obj.name}
+                                    user={obj}
+                                    setSelectedChat={() => this.setSelectedChat(obj.name,obj.type)}
                                 />
                             );
                         }

@@ -1,6 +1,39 @@
 import React, { Component } from 'react';
 import parser, { Tag } from 'bbcode-to-react';
 
+class Avatar extends Component {
+	render() {
+		let iconurl = '';
+		
+		switch(this.props.type) {
+			case 0:
+				iconurl = ''; // Default public image
+				break;
+			case 1:
+				iconurl = ''; // Default private image
+				break;
+			case 2:
+				iconurl = ''; // Default private invite only image
+				break;
+			case 3:
+				if (this.props.name) {
+					iconurl = 'https://static.f-list.net/images/avatar/'+encodeURI(this.props.name).toLowerCase()+'.png'; // private pm image				break;
+				}
+				break;
+			default:
+				// console.trace('invalid type',this.props);
+				break;
+		}
+	
+		const avatarStyle = {
+			background: 'url(' + iconurl + ') no-repeat 50% 50% / cover',
+		};
+		return (
+			<div className="avatar-contain" style={avatarStyle}></div>
+		)
+	}
+}
+
 class RelativeTime extends Component {
 	constructor(props) {
 		super(props)
@@ -175,9 +208,7 @@ class urlTag extends Tag {
   	toReact() {
   		const url = this.params.url || this.getContent(true);
   		const body = this.getContent(true) || this.params.url;
-    	return (
-      		<a target="_blank" href={url}>{body}</a>
-    	);
+    	return (<a target="_blank" href={url}>{body}</a>);
   	}
 }
 class supTag extends Tag {
@@ -195,16 +226,34 @@ class meTag extends Tag {
     	return (<span className="action">{this.getContent(true)}</span>);
   	}
 }
+class iconTag extends Tag {
+	toReact() {
+    	return (
+    		<a target="_blank" href={'https://www.f-list.net/c/' + this.getContent(true)}>
+	    		<img className="icon" src={'https://static.f-list.net/images/avatar/' + this.getContent(true) + '.png'} alt={this.getContent(true)} />
+	    	</a>
+	    );
+  	}
+}
+class eiconTag extends Tag {
+	toReact() {
+    	return (<img className="ecion" src={'https://static.f-list.net/images/eicon/' + this.getContent(true) + '.gif'} alt={this.getContent(true)} />);
+  	}
+}
+class userTag extends Tag {
+	toReact() {
+		return (<a target="_blank" href={'https://www.f-list.net/c/' + this.getContent(true)}>{this.getContent(true)}</a>);
+  	}
+}
+
 parser.registerTag('noparse', noparseTag);
 parser.registerTag('url', urlTag);
 parser.registerTag('sup', supTag);
 parser.registerTag('sub', subTag);
-parser.registerTag('averyunlikelytag',meTag)
-// TODO: icon
-
-// TODO: eicon
-
-// TODO: user // can we calculate this?
+parser.registerTag('averyunlikelytag',meTag);
+parser.registerTag('icon',iconTag);
+parser.registerTag('eicon',eiconTag);
+parser.registerTag('user',userTag);
 
 class ParsedText extends Component {
 	render() {
@@ -220,4 +269,4 @@ class ParsedText extends Component {
 	}
 }
 
-export  { RelativeTime,DropdownMenu,StandardInput,ParsedText };
+export  { Avatar,RelativeTime,DropdownMenu,StandardInput,ParsedText };

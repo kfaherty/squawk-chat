@@ -1,40 +1,5 @@
 import React, { Component } from 'react';
-import { RelativeTime,ParsedText } from './common';
-
-class Avatar extends Component {
-	render() {
-		let iconurl = '';
-		
-		if(this.props.icon) { // if there's an icon, always use this.
-			iconurl = this.props.icon; // user icon
-		} else { // if not, render a default one.
-			switch(this.props.type) {
-				case 0:
-					iconurl = ''; // Default public image
-					break;
-				case 1:
-					iconurl = ''; // Default private image
-					break;
-				case 2:
-					iconurl = ''; // Default private invite only image
-					break;
-				case 3:
-					iconurl = ''; // Default private pm image
-					break;
-				default:
-					// console.trace('invalid type',this.props);
-					break;
-			}
-		}
-
-		const avatarStyle = {
-			background: 'url(' + iconurl + ') no-repeat 50% 50% / cover',
-		};
-		return (
-			<div className="avatar-contain" style={avatarStyle}></div>
-		)
-	}
-}
+import { Avatar,RelativeTime,ParsedText } from './common';
 
 class RoomShortObject extends Component {
 	roomObjectClicked() {
@@ -44,7 +9,7 @@ class RoomShortObject extends Component {
 		const user = this.props.user;
 		return (
 			<div className={"room-object short " + (user.selected ? "selected" : "")} onClick={() => this.roomObjectClicked()}>
-				<Avatar icon={user.icon} type={user.type} />
+				<Avatar name={user.name} type={user.type} />
 
 				<div className="details-contain">
 					<div className="user-name">{user.name}</div>
@@ -63,7 +28,7 @@ class RoomObject extends Component {
 		const user = this.props.user;
 		return (
 			<div className={"room-object " + (user.selected ? "selected" : "")} onClick={() => this.roomObjectClicked()}>
-				<Avatar icon={user.icon} type={user.type} />
+				<Avatar name={user.name} type={user.type} />
 
 				<div className={"unread-badge " + (user.unread > 0 ? "" : "hidden")}>{user.unread}</div>
 
