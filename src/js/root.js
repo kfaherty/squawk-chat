@@ -74,17 +74,23 @@ class Root extends Component {
 	    // messages:
 	    setJoinedChannelsCallback((data) => {
 			// console.log('new joined data',data);
-			this.setState({roomsjoined: data});
+			if (this.state.selectedTab === 'messages') {
+				this.setState({roomsjoined: data});
+			}
 	    });
 	    // channels:
 		setChannelsCallback((data) => {
 			// console.log('new channel data',data);
-			this.setState({roomslist: data});
+			if (this.state.selectedTab === 'channels') {
+				this.setState({roomslist: data});
+			}
 		});
 	    // friends:
 	    setFriendsCallback((data) => {
 	    	// console.log('friends data',data);
-			this.setState({friendslist: data});
+			if (this.state.selectedTab === 'friends') {
+				this.setState({friendslist: data});
+			}
 	    });
 	    // sselected chat
 	    setSelectedChatCallback((data) => {
@@ -103,12 +109,15 @@ class Root extends Component {
 	    //channel users 
 	    setChannelUsersCallback((data => {
 	    	// console.log('updating users',data);
-	    	this.setState({chatUsers: data});
+	    	if (this.state.userListOpen) {
+	    		this.setState({chatUsers: data});
+	    	}
 	    }))
 	}
 
 	createToast(props) {
 		toast(<NotificationTemplate {...props} />);
+
 		// TODO: add this to the list of notifications.
 	}
 

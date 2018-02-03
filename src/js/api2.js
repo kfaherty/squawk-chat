@@ -672,6 +672,25 @@ function setSelectedChat(value) {
 	}
 }
 
+window.addEventListener("focus", function(event) {
+	if (selectedChat){ // clear unread if this is actually a room.
+		let channelData = getChannelData(selectedChat);
+		if (channelData.unread){
+			globalUnread = globalUnread - channelData.unread;
+			if (globalUnread < 0) {
+				globalUnread = 0;
+			}
+			if (globalUnread !== 0) {
+				document.title = 'SquawkChat (' + globalUnread + ')';
+			} else {
+				document.title = 'SquawkChat';
+			}
+		}
+		channelData.unread = 0;
+		updateChannelData(channelData);
+	}
+});
+
 function getChannelData(name){
  	return channelsList[name];
 }

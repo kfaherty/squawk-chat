@@ -4,6 +4,154 @@
 		"selected_items":
 		[
 			[
+				"book",
+				"bookmark"
+			],
+			[
+				"chann",
+				"channelUsers"
+			],
+			[
+				"index",
+				"indexOf"
+			],
+			[
+				"user",
+				"userlist"
+			],
+			[
+				"get",
+				"getChannelUsers"
+			],
+			[
+				"update",
+				"updateChannelUsers"
+			],
+			[
+				"channel",
+				"channelData"
+			],
+			[
+				"channels",
+				"channelUsersCallback"
+			],
+			[
+				"chan",
+				"channelMessages"
+			],
+			[
+				"messages",
+				"channelMessages"
+			],
+			[
+				"mes",
+				"chatMessages"
+			],
+			[
+				"mess",
+				"messages"
+			],
+			[
+				"updae",
+				"updateMessageData"
+			],
+			[
+				"char",
+				"character"
+			],
+			[
+				"message",
+				"messages"
+			],
+			[
+				"cha",
+				"character"
+			],
+			[
+				"join",
+				"joinedChannelsCallback"
+			],
+			[
+				"joined",
+				"joinedChannelsCallback"
+			],
+			[
+				"mar",
+				"margin-bottom"
+			],
+			[
+				"this",
+				"thisPM"
+			],
+			[
+				"bor",
+				"border"
+			],
+			[
+				"b",
+				"baseline"
+			],
+			[
+				"bookm",
+				"bookmarks"
+			],
+			[
+				"typ",
+				"type"
+			],
+			[
+				"g",
+				"globalUnread"
+			],
+			[
+				"globa",
+				"globalUnread"
+			],
+			[
+				"tra",
+				"target"
+			],
+			[
+				"upda",
+				"updateChannelData"
+			],
+			[
+				"Chat",
+				"ChatMessage"
+			],
+			[
+				"doc",
+				"docHeight"
+			],
+			[
+				"window",
+				"windowBottom"
+			],
+			[
+				"scro",
+				"scrollToBottom"
+			],
+			[
+				"ch",
+				"channel"
+			],
+			[
+				"socke",
+				"socketListeners"
+			],
+			[
+				"sock",
+				"socketListeners"
+			],
+			[
+				"even",
+				"eventcode"
+			],
+			[
+				"con",
+				"const"
+			],
+			[
 				"min-",
 				"min-height"
 			],
@@ -20,16 +168,8 @@
 				"friendsList"
 			],
 			[
-				"get",
-				"getComponents"
-			],
-			[
 				"padd",
 				"padding-left"
-			],
-			[
-				"mes",
-				"message"
 			],
 			[
 				"res",
@@ -92,10 +232,6 @@
 				"bookmarksList"
 			],
 			[
-				"chann",
-				"channelData"
-			],
-			[
 				"par",
 				"parsedCharacters"
 			],
@@ -104,36 +240,16 @@
 				"usersCache"
 			],
 			[
-				"book",
-				"bookmarksList"
-			],
-			[
 				"fri",
 				"friendsCallback"
-			],
-			[
-				"b",
-				"bookmark"
 			],
 			[
 				"inde",
 				"indexOf"
 			],
 			[
-				"cha",
-				"characters"
-			],
-			[
-				"join",
-				"channelsJoined"
-			],
-			[
 				"jo",
 				"joined"
-			],
-			[
-				"channel",
-				"channelsCallback"
 			],
 			[
 				"messa",
@@ -148,16 +264,8 @@
 				"handleKeyDown"
 			],
 			[
-				"mess",
-				"message"
-			],
-			[
 				"ind",
 				"index"
-			],
-			[
-				"channels",
-				"channelsJoined"
 			],
 			[
 				"selec",
@@ -166,14 +274,6 @@
 			[
 				"id",
 				"identity"
-			],
-			[
-				"user",
-				"users"
-			],
-			[
-				"chan",
-				"channeldata"
 			],
 			[
 				"getC",
@@ -232,10 +332,6 @@
 				"friends"
 			],
 			[
-				"even",
-				"event"
-			],
-			[
 				"cons",
 				"console"
 			],
@@ -292,10 +388,6 @@
 				"handleFieldChange"
 			],
 			[
-				"sock",
-				"socket"
-			],
-			[
 				"socket",
 				"socketurl"
 			],
@@ -330,14 +422,6 @@
 			[
 				"f",
 				"for\tfor (…) {…} (Improved Native For-Loop)"
-			],
-			[
-				"mar",
-				"margin"
-			],
-			[
-				"bor",
-				"border-left"
 			],
 			[
 				"co",
@@ -430,121 +514,68 @@
 			[
 				"has",
 				"hasText"
-			],
-			[
-				"sele",
-				"selectedMessages"
-			],
-			[
-				"animate",
-				"animateTweetName"
-			],
-			[
-				"auth",
-				"authorize"
-			],
-			[
-				"oua",
-				"oauthWindow"
-			],
-			[
-				"sub",
-				"submitStatus"
-			],
-			[
-				"wi",
-				"width"
-			],
-			[
-				"sta",
-				"statuses"
-			],
-			[
-				"sear",
-				"searchResults"
-			],
-			[
-				"sea",
-				"searchResults"
-			],
-			[
-				"se",
-				"searchResults"
-			],
-			[
-				"ma",
-				"margin"
-			],
-			[
-				"Me",
-				"MessageBody"
-			],
-			[
-				"err",
-				"error"
-			],
-			[
-				"r",
-				"return"
-			],
-			[
-				"con",
-				"console"
-			],
-			[
-				"l",
-				"lostConnectionAlert"
-			],
-			[
-				"coo",
-				"cookie"
-			],
-			[
-				"mentions",
-				"mentions_timeline"
-			],
-			[
-				"reque",
-				"request"
-			],
-			[
-				"update",
-				"updatestatus"
-			],
-			[
-				"req",
-				"requestTokenSecret"
 			]
 		]
 	},
 	"buffers":
 	[
 		{
-			"contents": "import loadURLS from './apiurls';\nimport Cookies from 'universal-cookie';\nconst cookies = new Cookies();\n\nconst apiurls = loadURLS();\nconst useProd = false; // TODO c:\n\n// client announce stuff\nconst clientIdentity = {\n\tname: \"SquawkChat\",\n\tversion: \"0.2\"\n}\n\n// userData:\nvar userData = {\n\taccount: '',\n\tbookmarks: [],\n\tcharacterlist: [],\n\tticket: '',\n\tfriends: [],\n\tdefault_character: '',\n\tlogged_in: false\n}\n\n// login\nfunction loadCookie() {\n\treturn new Promise(function(resolve,reject) {\n\t\tlet cookiedata = cookies.getAll();\n\t\t// console.log(cookiedata);\n\t\tif (cookiedata && cookiedata.ticket) {\n\t\t\tuserData = {\n\t\t\t\tlogged_in: true,\n\t\t\t\taccount: cookiedata.account,\n\t\t\t\tticket: cookiedata.ticket,\n\t\t\t\tcharacterlist: cookiedata.characterlist,\n\t\t\t\tbookmarks: cookiedata.bookmarks,\n\t\t\t\tfriends: cookiedata.friends\n\t\t\t};\n\t\t\tconsole.log(userData);\n\t\t\tresolve(userData.characterlist);\n\t\t}\n\t});\n}\n\nfunction login(username,password) {\n\treturn new Promise(function(resolve,reject) {\n\t\tif (!username || !password) {\n\t\t\tconsole.error('missing username,password',username,password);\n\t\t\treturn;\n\t\t}\n\n\t\tvar formData = new FormData();\n\t\tformData.append('account', username);\n\t\tformData.append('password', password);\n\t\tformData.append('no_bookmarks', true);\n\t\t// formData.append('no_friends', true);\n\t\t\n\t\tfetch(apiurls.loginurl,{ \n\t\t\tmethod: 'POST',\n\t\t  \tbody: formData\n\t  \t}).then(response => response.json())\n\t\t.catch(error => console.error('Error:', error))\n\t\t.then(response => {\n\t\t\tconsole.log('Success:', response);\n\t\t\tif (response.error) {\n\t\t\t\treject(response.error);\n\t\t\t\treturn;\n\t\t\t}\n\n\t\t\tuserData.account = username; // cache this too because we need it in IDN\n\t\t\tuserData.ticket = response.ticket;\n\t\t\tuserData.characterlist = response.characters;\n\t\t\tuserData.default_character = response.default_character;\n\t\t\tuserData.logged_in = true;\n\t\t\t// userData.bookmarks = response.bookmarks;\n\t\t\tif (response.friends) {\n\t\t\t\tfriendsList = response.friends.map((obj) => {\n\t\t\t\t\treturn obj.source_name;\n\t\t\t\t});\n\t\t\t}\n\n\t\t\tlet expires = new Date(Date.now() + 60 * 1000 * 30);\n\t\t    cookies.set('account', userData.account, \t\t\t\t{ expires: expires, path: '/' });\n\t\t    cookies.set('ticket', userData.ticket, \t\t\t\t\t{ expires: expires, path: '/' });\n\t\t    cookies.set('characterlist', userData.characterlist, \t{ expires: expires, path: '/' });\n\t\t    cookies.set('friends', friendsList, \t\t\t\t\t{ expires: expires, path: '/' });\n\n\t\t\tresolve(userData.characterlist);\n\t\t});\n\t});\n}\n\nfunction logout() {\n\tconsole.log('logging you out, byeeee');\n\n\t// cookies.clear() // not a function.\n\tcookies.remove('account');\n\tcookies.remove('ticket');\n\tcookies.remove('characterlist');\n\tcookies.remove('friends');\n\n\twindow.location.reload();\n}\n\nvar loginPromiseResolve;\nvar loginPromise = new Promise(function(resolve,reject) {\n \tloginPromiseResolve = resolve;\n});\n\nfunction gotLoginPromise() {\n  \treturn loginPromise;\n}\n\nvar toastCallback = undefined;\nfunction setCreateToastCallback(cb) {\n\ttoastCallback = cb;\n}\n\n// socket\nvar socket;\n\n// data sources\nvar channelsList = {};\nvar channelsJoined = []; // this is just going to be a standard array of names.\nvar usersCache = []; // LIS data.\nvar bookmarksList = []; // we're not going to know who is a bookmark and who is a friend unless we use the data from login.\nvar friendsList = [];\n\nfunction createSocket(name) {\n\treturn new Promise(function(resolve,reject) {\n\t\t// return socket if it already exists first.\n\t\t// if (socket) {\n\t\t// \tconsole.log(socket);\n\t\t// \tresolve();\n\t\t// \treturn;\n\t\t// }\n\n\t\tif (!userData.logged_in) {\n\t\t\treject('not logged in..',userData.logged_in);\n\t\t\treturn;\n\t\t}\n\n\t\tif (!name) {\n\t\t\treject('no character',name);\n\t\t\treturn;\n\t\t}\n\t\tuserData.name = name;\n\n\t\tif (useProd) {\n\t\t\tsocket = new WebSocket(apiurls.prodsocketurl);\n\t\t} else {\n\t\t\tsocket = new WebSocket(apiurls.devsocketurl);\n\t\t}\n\t\tsocket.onopen = function(event) {\n\t\t\tsocket.send( 'IDN '+ JSON.stringify({ \"method\": \"ticket\", \"account\": userData.account, \"ticket\": userData.ticket, \"character\": userData.name, \"cname\": clientIdentity.name, \"cversion\": clientIdentity.version }) );\n\t\t\t// CHA public channels\n\t\t\t// ORS is open private rooms.\n\t\t}\n\n\t\t// Listen for messages\n\t\tsocket.onmessage = function(event) {\n\t\t\tif (!event.data) {\n\t\t\t\treturn;\n\t\t\t}\n\t\t\tlet message = event.data;\n\n\t\t\tlet code = message.substr(0,3);\n\t\t\tlet payload = '';\n\t\t\tif (message.length > 3) {\n\t\t\t    payload = JSON.parse(message.substr(4));\n\t\t\t}\n\t\t\t\t\t\t\n\t\t\tswitch(code) {\n\t\t\t\tcase 'IDN':\n\t\t\t\t\tresolve();\n\t\t\t\t\tloginPromiseResolve(userData.name);\n\t\t\t\t\t// console.log(code,payload);\n\t\t\t\t\tbreak;\n\t\t\t\tcase 'PIN':\n\t\t\t\t\tsocket.send('PIN');\n\t\t\t\t\tbreak;\n\t\t\t\tcase 'ERR':\n\t\t\t\t\tconsole.log(code,payload);\n\t\t\t\t\tif (toastCallback) {\n\t\t\t\t\t\tif (payload.message){\n\t\t\t\t\t\t\ttoastCallback({\n\t\t\t\t\t\t\t\theader: 'Error',\n\t\t\t\t\t\t\t\ttext: payload.message,\n\t\t\t\t\t\t\t\terror: true\n\t\t\t\t\t\t\t});\n\t\t\t\t\t\t} else {\n\t\t\t\t\t\t\ttoastCallback({\n\t\t\t\t\t\t\t\theader: 'Error',\n\t\t\t\t\t\t\t\ttext: JSON.stringify(payload),\n\t\t\t\t\t\t\t\terror: true\n\t\t\t\t\t\t\t});\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t\tif (payload && payload.number === 4) {\n\t\t\t\t\t\treject('invalid token');\n\t\t\t\t\t}\n\t\t\t\t\tbreak;\n\t\t\t\tdefault: \n\t\t\t\t\t// console.log(code,payload); // log spam dot txt\n\t\t\t\t\tbreak;\n\t\t\t}\n\t\t};\n\t\t\n\t\tsocket.onerror = function(event) {\n\t\t\tconsole.log('socket has closed',event);\n\t\t\t// TODO: determine when to reconnect\n\t\t};\n\t\tsocket.onclose = function(event) {\n\t\t\tconsole.log('socket has closed',event);\n\t\t\t// TODO: determine when to reconnect\n\t\t};\n\n\t\tlistenToData(); // create listeners.\n\t});\n}\n\nfunction gainedConnectionAlert(cb) {\n\tgotLoginPromise().then(()=>{\n\t\tsocket.onopen = function(event) {\n\t\t\tconsole.log('okok');\n\t\t\tcb(null,true);\n\t\t}\n\t});\n}\nfunction lostConnectionAlert(cb) {\n\tgotLoginPromise().then(()=>{\n\t\tsocket.onclose = function(event) {\n\t\t\tcb(null,false);\n\t\t}\n\t});\n}\n\nfunction addListenerForSocketMessage(eventcode,callback){ \n\t// FIXME: rewrite this to just use an object lookup. \n\n\t// this should just add a listener when it's run.\n\t// and the msg up there should do the logic on if it needs to be routed.\n\n\t// for var i in listeners['MSG'] do listeners['MSG'].callback() type.\n\n\t// this will get slower each listener you add because each one\n\t// is doing the math to find out if a code is the one we want.\n\n\tif (!eventcode || !callback) return;\n\n\tsocket.addEventListener(\"message\",function(event) { // FIXME this is slow.\n\t\tif (!event.data) {\n\t\t\treturn;\n\t\t}\n\t\tlet code = event.data.substr(0,3);\n\t\tif (code === eventcode) {\n\t\t\tlet payload = '';\n\t\t\tif (event.data.length > 3) {\n\t\t\t    payload = JSON.parse(event.data.substr(4));\n\t\t\t}\n\t\t\tcallback(payload);\n\t\t}\n\t})\n}\n\nvar messageSeq = 0;\n\nfunction listenToData() {\n\tgotLoginPromise().then(()=>{ \t\t\t// wait for login: \n\t\taddListenerForSocketMessage('LIS',(data)=>{  \n\t\t\t// we can just use the api for this. \n\t\t\t// although we wont have gender, then..\n\n\t\t\t// if (data && data.characters) {\n\t\t\t// \tlet parsedCharacters = [];\n\t\t\t// \tfor (var i = data.characters.length - 1; i >= 0; i--) {\n\t\t\t// \t\tparsedCharacters[ data.characters[i][0] ] = {\n\t\t\t// \t\t\tcharacter: data.characters[i][0],\n\t\t\t// \t\t\tgender: data.characters[i][1],\n\t\t\t// \t\t\tstatus: data.characters[i][2],\n\t\t\t// \t\t\tstatusMessage: data.characters[i][3]\n\t\t\t// \t\t}\n\t\t\t// \t}\n\t\t\t// \tusersCache = parsedCharacters\n\t\t\t// }\n\t\t});\n\t\taddListenerForSocketMessage('FRL',(data)=>{  \n\t\t\tif (data && data.characters) {\n\t\t\t\t// cache this\n\t\t\t\tbookmarksList = data.characters;\n\t\t\t\t// if we want to know who is online, we need to correlate this with the users.\n\n\t\t\t\tif(friendsCallback) {\n\t\t\t\t\t// TODO: map friends results onto usersCache.\n\t\t\t\t\t// friendsCallback();\n\t\t\t\t}\n\t\t\t}\n\t\t});\n\t\taddListenerForSocketMessage('CHA',(data)=>{  \n\t\t\tlet defaultTime = Date.now();\n\t\t\tif (data.channels && data.channels.length) {\n\t\t\t\tlet channelData = data.channels.map((obj,index) => {\n\t\t\t\t\treturn {\n\t\t\t\t\t\ttype: 0,\n\t\t\t\t\t\ttimestamp: defaultTime,\n\t\t\t\t\t\tchannel: obj.name,\n\t\t\t\t\t\t...obj\n\t\t\t\t\t}\n\t\t\t\t});\n\t\t\t\tfor (var i = channelData.length - 1; i >= 0; i--) {\n\t\t\t\t\tupdateChannelData(channelData[i]);\n\t\t\t\t}\n\t\t\t\tif (channelsCallback) {\n\t\t\t\t\tchannelsCallback(channelsList);\n\t\t\t\t}\n\t\t\t}\n\t\t});\n\t\taddListenerForSocketMessage('ORS',(data)=>{ \n\t\t\t// console.log('channels',data);\n\t\t\tlet defaultTime = Date.now();\n\t\t\tif (data.channels && data.channels.length) {\n\t\t\t\tlet channelData = data.channels.map((obj,index) => {\n\t\t\t\t\treturn {\n\t\t\t\t\t\ttype: 1,\n\t\t\t\t\t\ttimestamp: defaultTime,\n\t\t\t\t\t\tchannel: obj.name,\n\t\t\t\t\t\t...obj\n\t\t\t\t\t}\n\t\t\t\t});\n\t\t\t\tfor (var i = channelData.length - 1; i >= 0; i--) {\n\t\t\t\t\tupdateChannelData(channelData[i]);\n\t\t\t\t}\n\t\t\t\tif (channelsCallback) {\n\t\t\t\t\tchannelsCallback(channelsList);\n\t\t\t\t}\n\t\t\t}\n\t\t});\n\t\taddListenerForSocketMessage('MSG',(data)=>{\n\t\t\tif (data && data.message) {\n\t\t\t\tlet dataChannel = data.channel;\n\t\t\t\tdelete data.channel;\n\n\t\t\t\tdata.timestamp = Date.now();\n\t\t\t\tdata.key = messageSeq++;\n\n\t\t\t\tlet channelData = getChannelData(dataChannel);\n\t\t\t\tif (channelData && channelData.messages) {\n\t\t\t\t\tchannelData.messages.push(data);\n\t\t\t\t} else {\n\t\t\t\t\tchannelData = {\n\t\t\t\t\t\tchannel:dataChannel,\n\t\t\t\t\t\tmessages: [data]\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t\tchannelData.timestamp = Date.now();\n\t\t\t\tchannelData.lastMessage = data.message;\n\t\t\t\tchannelData.lastUser = data.character;\n\t\t\t\tupdateChannelData(channelData); \n\t\t\t};\n\t\t});\n\t\taddListenerForSocketMessage('PRI',(data)=>{\n\t\t\tif (data && data.message) {\n\t\t\t\t// data.channel = data.character;\n\n\t\t\t\tlet messageData = {\n\t\t\t\t\ttimestamp: Date.now(),\n\t\t\t\t\tkey: messageSeq++,\n\t\t\t\t\tcharacter: data.character,\n\t\t\t\t\tmessage: data.message\n\t\t\t\t}\n\n\t\t\t\t// create toast if this isn't the selected chat.\n\t\t\t\tif (toastCallback && selectedChat !== data.character) {\n\t\t\t\t\ttoastCallback({\n\t\t\t\t\t\theader: 'New message from '+data.character+'!',\n\t\t\t\t\t\ttext: data.message\n\t\t\t\t\t});\n\t\t\t\t}\n\t\t\t\t\n\t\t\t\tlet channelData = getChannelData(data.character);\n\t\t\t\tif (channelData) {\n\t\t\t\t\tchannelData.messages.push(messageData);\n\t\t\t\t} else {\n\t\t\t\t\tchannelData = {\n\t\t\t\t\t\tchannel:data.character,\n\t\t\t\t\t\ttype: 3,\n\t\t\t\t\t\tfriend: friendsList.indexOf(data.character) !== -1 ? true : false,\n\t\t\t\t\t\tbookmark: bookmarksList.indexOf(data.character) !== -1 ? true : false,\n\t\t\t\t\t\ttimestamp: Date.now(),\n\t\t\t\t\t\tname: data.character,\n\t\t\t\t\t\tlastMessage: data.message,\n\t\t\t\t\t\tlastUser: data.character,\n\t\t\t\t\t\tmessages: [messageData]\n\t\t\t\t\t}\n\t\t\t\t\tchannelsList[channelData.channel] = channelData;\n\n\t\t\t\t\t// if (channelsJoined.indexOf(channelData.channel) == -1) { // this is probably redundant..\n\t\t\t\t\t\tchannelsJoined.push(channelData.channel);\n\t\t\t\t\t\tif (joinedChannelsCallback) { // this'll update the list of joined channels.\n\t\t\t\t\t\t\tjoinedChannelsCallback(getJoinedChannels());\n\t\t\t\t\t\t}\n\t\t\t\t\t// }\n\n\t\t\t\t\t// TODO: this might want to return here.\n\t\t\t\t}\n\n\t\t\t\tchannelData.timestamp = Date.now();\n\t\t\t\tchannelData.lastMessage = data.message;\n\t\t\t\tchannelData.lastUser = data.character;\n\t\t\t\tchannelData.typing = 'clear';\n\n\t\t\t\tupdateChannelData(channelData); \n\t\t\t};\n\t\t});\n\t\taddListenerForSocketMessage('TPN',(data)=>{\n\t\t\t// {\"character\":\"Leon Priest\",\"status\":\"clear\"}\n\t\t\tif (data && data.character) {\n\t\t\t\t// data.channel = data.character;\n\t\t\t\t// delete data.character;\n\t\t\t\tlet channelData = {\n\t\t\t\t\tchannel: data.character,\n\t\t\t\t\ttyping: data.status\n\t\t\t\t}\n\t\t\t\t// this can break stuff.\n\t\t\t\tif (getChannelData(data.character)) { // check if this exists..\n\t\t\t\t\tupdateChannelData(channelData); \n\t\t\t\t}\n\t\t\t}\n\t\t});\n\t\taddListenerForSocketMessage('STA',(data)=>{  // status update\n\t\t\tif (bookmarksList.indexOf(data.character) !== -1) {\n\t\t\t\ttoastCallback({\n\t\t\t\t\theader: data.character + \" is \" + data.status,\n\t\t\t\t\ttext: data.statusmsg\n\t\t\t\t});\n\t\t\t}\n\n\t\t\t// NOTE: this should probably cache.\n\t\t});\n\t\taddListenerForSocketMessage('NLN',(data)=>{  // global chat connect.\n\t\t\t// one: create toast if this is friend/bookmark\n\t\t\tif (bookmarksList.indexOf(data.identity) !== -1) {\n\t\t\t\ttoastCallback({\n\t\t\t\t\theader: data.identity + \" is online\",\n\t\t\t\t\t// text:\n\t\t\t\t})\n\t\t\t}\n\n\t\t\t// two: add to users cache if we don't have it already..?\n\t\t});\n\t\taddListenerForSocketMessage('FLN',(data)=>{  // global channel leave.\n\t\t\t// one: create toast if this is friend/bookmark\n\t\t\tif (bookmarksList.indexOf(data.character) !== -1) {\n\t\t\t\ttoastCallback({\n\t\t\t\t\theader: data.character + \" is offline\",\n\t\t\t\t\t// text:\n\t\t\t\t})\n\t\t\t}\n\n\t\t\t// two: update channel data to leave all channels this character is in (slow, probably..)\n\t\t\t// does this only run if they're in a channel we're in? \n\t\t\t// probably not! :c\n\t\t});\n\t\taddListenerForSocketMessage('LCH',(data)=>{\n\t\t\tif (data && data.character) {\n\t\t\t\t// one: create a toast if this is a friend or bookmark\n\t\t\t\t// do we care if they left the channel? \n\t\t\t\t// maybe we can just use a system message.\n\t\t\t\t// if (bookmarksList.indexOf(data.character.identity) !== -1) {\n\t\t\t\t// \ttoastCallback({\n\t\t\t\t// \t\theader: data.character.identity + \" is offline\", // NOTE: make sure this works..\n\t\t\t\t// \t\t// text:\n\t\t\t\t// \t})\n\t\t\t\t// }\n\n\t\t\t\t// two: leave a channel if this is us and we're in it.\n\t\t\t\tif (data.character.identity === userData.name) {\n\t\t\t\t\tlet index = channelsJoined.indexOf(data.channel);\n\t\t\t\t\tif (index !== -1) {\n\t\t\t\t\t\tconsole.log('you left a channel',channelsJoined,index);\n\t\t\t\t\t\tchannelsJoined.splice(index,1); // find joined channel and remove it.\n\t\t\t\t\t\tconsole.log('you left:',channelsJoined);\n\t\t\t\t\t\tif (joinedChannelsCallback) { // this'll update the list of joined channels.\n\t\t\t\t\t\t\tjoinedChannelsCallback(getJoinedChannels());\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t}\n\n\t\t\t\t// three: update channel data if it's a room we're in - userlist & population\n\n\t\t\t\tlet channelData = getChannelData(data.channel);\n\t\t\t\tdata.users = [data.character];\n\t\t\t\tif (!channelData) {\n\t\t\t\t\t// erm.\n\t\t\t\t\tconsole.log('user left a channel i dont know about.',channelData,data);\n\t\t\t\t\treturn;\n\t\t\t\t}\n\t\t\t\tif (channelData.users) {\n\t\t\t\t\t// console.log(channelData.users);\n\t\t\t\t\t\n\t\t\t\t\t// TODO: check if this exists.\n\t\t\t\t\tlet index = channelData.users.indexOf(data.character);\n\t\t\t\t\tif (index !== -1) { // check if this exists yet.\n\t\t\t\t\t\tchannelData.users.splice(index,1);\t// not a function\n\t\t\t\t\t}\n\t\t\t\t\tdata.users=channelData.users;\n\t\t\t\t}\n\n\t\t\t\tdelete data.character;\n\t\t\t\tupdateChannelData(data); \n\n\t\t\t\tif (channelsCallback) {\n\t\t\t\t\tchannelsCallback(channelsList);\n\t\t\t\t}\n\t\t\t}\n\t\t});\n\t\taddListenerForSocketMessage('JCH',(data)=>{\n\t\t\t// console.log('jch',data);\n\t\t\tif (data && data.character) {\n\t\t\t\t// one: create a toast if this is a friend or bookmark\n\t\t\t\t// do we care if they join? Maybe just use a system message.\n\t\t\t\t// if (bookmarksList.indexOf(data.character.identity) !== -1) { // NOTE: make sure this works..\n\t\t\t\t// \ttoastCallback({\n\t\t\t\t// \t\theader: data.character.identity + \" is online\",\n\t\t\t\t// \t\t// text:\n\t\t\t\t// \t})\n\t\t\t\t// }\n\n\t\t\t\t// two: join a channel if this is us and we're not in it yet.\n\t\t\t\tif (data.character.identity === userData.name) {\n\t\t\t\t\tif (channelsJoined.indexOf(data.channel) == -1) {\n\t\t\t\t\t\tchannelsJoined.push(data.channel); // add this to the list of joined channels. This should allow invites to work.\n\t\t\t\t\t\tif (joinedChannelsCallback) { // this'll update the list of joined channels.\n\t\t\t\t\t\t\tjoinedChannelsCallback(getJoinedChannels());\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t}\n\n\t\t\t\t// three: update channel data if it's a room we're in - userlist & population\n\t\t\t\tlet channelData = getChannelData(data.channel);\n\t\t\t\tdata.users = [data.character];\n\n\t\t\t\tif (channelData && channelData.users) {\n\t\t\t\t\t// console.log(channelData.users);\n\t\t\t\t\tif (channelData.users.indexOf(data.character) === -1) { // check if this exists yet.\n\t\t\t\t\t\tchannelData.users.push(data.character);\t// not a function\n\t\t\t\t\t}\n\t\t\t\t\tdata.users=channelData.users;\n\t\t\t\t}\n\n\t\t\t\tdelete data.character;\n\t\t\t\tupdateChannelData(data); \n\n\t\t\t\tif (channelsCallback) {\n\t\t\t\t\tchannelsCallback(channelsList);\n\t\t\t\t}\n\t\t\t}\n\t\t\t\n\t\t});\n\t\taddListenerForSocketMessage('COL',(data)=>{ // col.nOthing\n\t\t\tupdateChannelData(data);\n\t\t});\n\t\taddListenerForSocketMessage('ICH',(data)=>{\n\t\t\tupdateChannelData(data);\n\t\t});\n\t\taddListenerForSocketMessage('CDS',(data)=>{\n\t\t\tupdateChannelData(data);\n\t\t});\n\t});\n}\n\nfunction getChannels(){\n\t// type:\n\t// 0 is public\n\t// 1 is private\n\t// 2 is private invite only\n\t// 3 is private PM\n\n\tsocket.send( 'CHA' ); // 0\n\tsocket.send( 'ORS' ); // 1\n}\n\nvar channelsCallback = undefined;\nfunction setChannelsCallback(cb) {\n\tchannelsCallback = cb;\t\t\n}\n\nvar joinedChannelsCallback = undefined;\nfunction setJoinedChannelsCallback(cb) {\n\tjoinedChannelsCallback = cb;\n}\n\nvar selectedChatCallback = undefined;\nfunction setSelectedChatCallback(cb) {\n\tselectedChatCallback = cb;\n}\n\nvar selectedChat = undefined;\nfunction setSelectedChat(value) {\n\tselectedChat = value;\n}\n\nfunction getChannelData(name){\n \treturn channelsList[name];\n}\n\nfunction updateChannelData(data) {\n\tif (!data || !data.channel) {\n\t\tconsole.log('missing stuff',data)\n\t\treturn;\n\t}\n\n\tif (data.users) {\n\t\tdata.characters = data.users.length;\n\t}\n\n\tif (channelsList[data.channel]) { // if an entry exists, update the fields you have.\n\t\tchannelsList[data.channel] = Object.assign(channelsList[data.channel], data);\n\n\t\t// should we test of we're joined?\n\t\tif (channelsJoined.indexOf(data.channel) !== -1) {\n\t\t\tif (joinedChannelsCallback) { // this might be slow.\n\t\t\t\tjoinedChannelsCallback(getJoinedChannels());\n\t\t\t}\n\t\t}\n\t} else { // if an entry doesn't exist, add it\n\t\tchannelsList[data.channel] = data;\n\t}\n\n\t// if this is the selected chat, then do an update.\n\tif (selectedChat === data.channel && selectedChatCallback) {\n\t\tselectedChatCallback(channelsList[data.channel]);\n\t}\n}\n\nfunction getJoinedChannels() {\n\t// return channelsJoined;\n\treturn channelsJoined.map((obj) => {\n\t\treturn channelsList[obj];\n\t})\n}\n\nfunction joinChannel(name){\n\tif (channelsJoined.indexOf(name) !== -1) {\n\t\tconsole.log('youre already in here',channelsJoined,name);\n\t\treturn;\n\t}\n\n\tsocket.send( 'JCH '+JSON.stringify({ \"channel\": name }) );\n}\n\nfunction createPM(name) {\n\tif (channelsJoined.indexOf(name) !== -1) {\n\t\tconsole.log('youre already in here',channelsJoined,name);\n\t\treturn;\n\t}\n}\n\nfunction leaveChannel(name) {\n\tif (channelsJoined.indexOf(name) === -1) {\n\t\tconsole.log('youre not in here',channelsJoined,name);\n\t\treturn;\n\t}\n\n\tsocket.send( 'LCH '+JSON.stringify({ \"channel\": name }) );\n}\n\nvar friendsCallback = undefined;\nfunction setFriendsCallback(cb) {\n\tfriendsCallback = cb;\n}\n\nfunction getFriends() {\n\treturn friendsList;\n}\n\nfunction sendMessage(channel,message) {\n\tif (!channel || !message) {\n\t\tconsole.error('missing stuff: ',channel,message);\n\t\treturn;\n\t}\n\tsocket.send('MSG '+JSON.stringify({ \"channel\": channel,\"message\":message }) );\n\n\t// manually insert this..\n\tlet data = {\n\t\ttimestamp: Date.now(),\n\t\tkey: messageSeq++,\n\t\tmine: true,\n\t\tmessage: message,\n\t\tcharacter: userData.name\n\t}\n\n\tlet channelData = getChannelData(channel);\n\tif (channelData && channelData.messages) {\n\t\tchannelData.messages.push(data);\n\t} else {\n\t\tchannelData = {\n\t\t\tchannel: channel,\n\t\t\tmessages: [data]\n\t\t}\n\t}\n\tchannelData.timestamp = Date.now();\n\tchannelData.lastMessage = message;\n\tchannelData.lastUser = userData.name;\n\n\tupdateChannelData(channelData); \n}\n\nfunction privateMessage(character,message){\n\tif (!character || !message) {\n\t\tconsole.error('missing stuff: ',character,message);\n\t\treturn;\n\t}\n\tsocket.send('PRI '+JSON.stringify({ \"recipient\": character,\"message\":message }) );\n\n\t// manually insert this..\n\tlet data = {\n\t\ttimestamp: Date.now(),\n\t\tkey: messageSeq++,\n\t\tmine: true,\n\t\tmessage: message,\n\t\tcharacter: userData.name\n\t}\n\n\tlet channelData = getChannelData(character);\n\tif (!channelData) {\n\t\tconsole.log('we need to create a pm!');\n\t\tchannelData = {\n\t\t\tchannel:data.character,\n\t\t\ttype: 3,\n\t\t\ttimestamp: Date.now(),\n\t\t\tname: data.character,\n\t\t\tfriend: friendsList.indexOf(data.character) !== -1 ? true : false,\n\t\t\tbookmark: bookmarksList.indexOf(data.character) !== -1 ? true : false,\n\t\t\tmessages: [data]\n\t\t}\n\t\tchannelsList[channelData.channel] = channelData;\n\n\t\tchannelsJoined.push(channelData.channel);\n\t\tif (joinedChannelsCallback) { // this'll update the list of joined channels.\n\t\t\tjoinedChannelsCallback(getJoinedChannels());\n\t\t}\n\t} else if (channelData.messages) {\n\t\tchannelData.messages.push(data);\n\t} else {\n\t\tchannelData = {\n\t\t\tchannel: character,\n\t\t\tmessages: [data]\n\t\t}\n\t}\n\n\tchannelData.timestamp = Date.now();\n\tchannelData.lastMessage = message;\n\tchannelData.lastUser = userData.name;\n\n\tupdateChannelData(channelData); \n}\n\nexport { login,logout,loadCookie,gotLoginPromise,createSocket,lostConnectionAlert,gainedConnectionAlert,getChannels,getChannelData,joinChannel,getFriends,sendMessage,privateMessage,setChannelsCallback,setJoinedChannelsCallback,setSelectedChatCallback,setSelectedChat,setFriendsCallback,setCreateToastCallback };",
+			"contents": "FdkedpoeGudBQ6",
+			"settings":
+			{
+				"buffer_size": 14,
+				"line_ending": "Windows",
+				"name": "FdkedpoeGudBQ6"
+			}
+		},
+		{
 			"file": "src/js/api2.js",
-			"file_size": 21108,
-			"file_write_time": 131618306867218856,
 			"settings":
 			{
-				"buffer_size": 20402,
+				"buffer_size": 24893,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "src/js/root.js",
+			"file": "src/css/chat-message.scss",
 			"settings":
 			{
-				"buffer_size": 8138,
+				"buffer_size": 1079,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/css/chat.scss",
+			"settings":
+			{
+				"buffer_size": 6398,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "src/js/chat.js",
+			"file": "src/css/room-object.scss",
 			"settings":
 			{
-				"buffer_size": 8890,
+				"buffer_size": 3816,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/css/app.scss",
+			"settings":
+			{
+				"buffer_size": 12303,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/js/apiurls.js",
+			"settings":
+			{
+				"buffer_size": 250,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -620,27 +651,51 @@
 	],
 	"file_history":
 	[
-		"/C/Users/user/Documents/squawk-chat/src/css/chat-window.scss",
-		"/C/Users/user/Documents/squawk-chat/package.json",
+		"/C/Users/user/Documents/squawk-chat/src/css/root.css",
+		"/C/Users/user/Documents/squawk-chat/src/css/chat-message.css",
+		"/C/Users/user/Documents/squawk-chat/src/js/root.js",
+		"/C/Users/user/Documents/squawk-chat/src/js/apiurls.js",
+		"/C/Users/user/Documents/squawk-chat/src/js/userlist.js",
 		"/C/Users/user/Documents/squawk-chat/src/css/app.scss",
-		"/C/Users/user/Documents/squawk-chat/node_modules/react-autosize-textarea/README.md",
-		"/C/Users/user/Documents/squawk-chat/src/js/authorize.js",
 		"/C/Users/user/Documents/squawk-chat/src/css/room-object.scss",
-		"/C/Users/user/Documents/squawk-chat/src/css/mixins.scss",
-		"/C/Users/user/Documents/squawk-chat/src/js/common.js",
-		"/C/Users/user/Documents/squawk-chat/src/css/toasts.scss",
-		"/C/Users/user/Documents/tweets-react/src/js/profile.js",
+		"/C/Users/user/Documents/squawk-chat/src/js/chat.js",
 		"/C/Users/user/Documents/squawk-chat/src/css/chat-message.scss",
-		"/C/Users/user/Documents/squawk-chat/src/css/room-list.scss",
-		"/C/Users/user/Documents/squawk-chat/src/css/auth.scss",
 		"/C/Users/user/Documents/squawk-chat/src/js/roomlist.js",
+		"/C/Users/user/Documents/squawk-chat/src/js/authorize.js",
+		"/C/Users/user/Documents/squawk-chat/src/css/auth.scss",
+		"/C/Users/user/Documents/squawk-chat/src/css/app.css",
+		"/C/Users/user/Documents/squawk-chat/src/css/toasts.css",
+		"/C/Users/user/Documents/squawk-chat/src/css/toasts.scss",
+		"/C/Users/user/Documents/squawk-chat/src/css/user-list.css",
+		"/C/Users/user/Documents/squawk-chat/src/css/user-list.scss",
+		"/C/Users/user/Documents/squawk-chat/src/css/room-list.css",
+		"/C/Users/user/Documents/squawk-chat/src/css/room-list.scss",
+		"/C/Users/user/Documents/squawk-chat/src/css/room-object.css",
+		"/C/Users/user/Documents/squawk-chat/src/css/chat.css",
+		"/C/Users/user/Documents/squawk-chat/src/css/chat.scss",
+		"/C/Users/user/Documents/squawk-chat/src/css/mixins.scss",
+		"/C/Users/user/Documents/squawk-chat/src/js/search.js",
+		"/C/Users/user/Documents/squawk-chat/src/js/common.js",
 		"/C/Users/user/Documents/squawk-chat/src/js/api2.js",
 		"/C/Users/user/Documents/squawk-chat/src/css/root.scss",
-		"/C/Users/user/Documents/squawk-chat/src/js/chat.js",
+		"/C/Users/user/Documents/squawk-chat/src/css/chat-window.scss",
+		"/C/Users/user/Documents/squawk-chat/src/js/roomobject.js",
+		"/C/Users/user/Documents/tweets-react/src/css/foundation-icons.css",
+		"/C/Users/user/Documents/squawk-chat/src/css/foundation-icons.css",
+		"/C/Users/user/Documents/squawk-chat/src/css/reset.css",
+		"/C/Users/user/Documents/tweets-react/src/css/reset.css",
+		"/C/Users/user/Documents/squawk-chat/.gitignore",
+		"/C/Users/user/Documents/squawk-chat/src/css/animations.scss",
+		"/C/Users/user/Documents/squawk-chat/src/css/colors.scss",
+		"/C/Users/user/Documents/squawk-chat/src/js/chatmessage.js",
+		"/C/Users/user/Documents/squawk-chat/src/css/user-profile.scss",
+		"/C/Users/user/Documents/squawk-chat/src/js/userprofile.js",
+		"/C/Users/user/Documents/tweets-react/package.json",
+		"/C/Users/user/Documents/squawk-chat/package.json",
+		"/C/Users/user/Documents/squawk-chat/node_modules/react-autosize-textarea/README.md",
+		"/C/Users/user/Documents/tweets-react/src/js/profile.js",
 		"/C/Users/user/Documents/squawk-chat/src/js/notifications.js",
 		"/C/Users/user/Documents/squawk-chat/src/index.js",
-		"/C/Users/user/Documents/squawk-chat/src/js/search.js",
-		"/C/Users/user/Documents/squawk-chat/src/js/roomobject.js",
 		"/C/Users/user/Documents/squawk-chat/node_modules/bbcode-to-react/lib/index.js",
 		"/C/Users/user/Documents/squawk-chat/node_modules/bbcode-to-react/lib/parser.js",
 		"/C/Users/user/Documents/squawk-chat/README.md",
@@ -648,14 +703,11 @@
 		"/C/Users/user/Documents/tweets-react/public/index.html",
 		"/C/Users/user/Documents/squawk-chat/src/js/lib/xbbcode.js",
 		"/C/Users/user/Documents/tweets-react/src/js/tweet.js",
-		"/C/Users/user/Documents/squawk-chat/src/js/root.js",
-		"/C/Users/user/Documents/squawk-chat/src/js/apiurls.js",
 		"/C/Users/user/Documents/squawk-chat/src/js/channelManager.js",
 		"/C/Users/user/Documents/squawk-chat/src/js/data.txt",
 		"/C/Users/user/Documents/riskbone/front-end/public/js/app/util/connectToBackendFactory.js",
 		"/C/Users/user/Documents/riskbone/front-end/public/js/app/util/connectionManager.js",
 		"/C/Users/user/Documents/riskbone/front-end/public/js/app/util/connections.js",
-		"/C/Users/user/Documents/squawk-chat/src/css/root.css",
 		"/C/Users/user/Documents/squawk-chat/src/js/socketconfig.js",
 		"/C/Users/user/Documents/squawk-chat/src/js/api.js",
 		"/C/Users/user/Documents/squawk-chat/src/js/root.test.js",
@@ -726,32 +778,11 @@
 		"/C/Users/user/Documents/squawk-chat/app/templates/components/messages.hbs",
 		"/C/Users/user/Documents/squawk-chat/app/styles/app.scss",
 		"/C/Users/user/Documents/squawk-chat/app/index.html",
-		"/C/Users/user/Documents/squawk-chat/dist/assets/squawk-chat.css",
-		"/C/Users/user/Documents/squawk-chat/app/routes/user-list.js",
-		"/C/Users/user/Documents/squawk-chat/app/templates/user-list.hbs",
-		"/C/Users/user/Documents/squawk-chat/app/styles/components/geometric-sequence.scss",
-		"/C/Users/user/Documents/riskbone/back-end/prodpg.json",
-		"/C/Users/user/Documents/squawk-chat/app/styles/app.css",
-		"/C/Users/user/Documents/squawk-chat/app/app.js",
-		"/C/Users/user/Documents/squawk-chat/dist/index.html",
-		"/C/Users/user/Documents/squawk-chat/dist/tests/index.html",
-		"/C/Users/user/Documents/squawk-chat/tests/index.html",
-		"/C/Users/user/Documents/squawk-chat/tmp/broccoli_merge_trees-input_base_path-ArQ2LWWq.tmp/0/squawk-chat/index.html",
-		"/C/Users/user/Documents/squawk-chat/tmp/broccoli_merge_trees-input_base_path-PPV0tkAn.tmp/7/index.html",
-		"/C/Users/user/Documents/squawk-chat/tmp/broccoli_merge_trees-input_base_path-R8ZkwsCR.tmp/1/squawk-chat/index.html",
-		"/C/Users/user/Documents/squawk-chat/tmp/broccoli_merge_trees-input_base_path-rXH7DVbR.tmp/0/index.html",
-		"/C/Users/user/Documents/squawk-chat/tmp/broccoli_merge_trees-input_base_path-rXH7DVbR.tmp/5/tests/index.html",
-		"/C/Users/user/Documents/squawk-chat/tmp/broccoli_merge_trees-input_base_path-WHlkonkB.tmp/0/squawk-chat/index.html",
-		"/C/Users/user/Documents/squawk-chat/tmp/broccoli_merge_trees-output_path-4LKtrjSe.tmp/squawk-chat/index.html",
-		"/C/Users/user/Documents/squawk-chat/tmp/broccoli_merge_trees-output_path-DotdTPHQ.tmp/squawk-chat/tests/index.html",
-		"/C/Users/user/Documents/squawk-chat/tmp/broccoli_merge_trees-output_path-JHY7TuaX.tmp/index.html",
-		"/C/Users/user/Documents/squawk-chat/tmp/broccoli_merge_trees-output_path-JHY7TuaX.tmp/tests/index.html",
-		"/C/Users/user/Documents/squawk-chat/tmp/broccoli_merge_trees-output_path-tEqcFlDi.tmp/squawk-chat/index.html",
-		"/C/Users/user/Documents/squawk-chat/tmp/broccoli_merge_trees-output_path-UCLEQ7Af.tmp/index.html"
+		"/C/Users/user/Documents/squawk-chat/dist/assets/squawk-chat.css"
 	],
 	"find":
 	{
-		"height": 23.0
+		"height": 40.0
 	},
 	"find_in_files":
 	{
@@ -766,6 +797,58 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			" 0px 0px 17px rgba(0, 0, 0, 0.1);",
+			"box-shadow: 0px 0px 17px rgba(0, 0, 0, 0.1)",
+			"box-shadow:  0px 0px 17px rgba(0, 0, 0, 0.1)",
+			"box-shadow",
+			"getfriends",
+			"getFriends",
+			"friendsCallback",
+			"promise",
+			"fixme",
+			"getFriends",
+			"getChannels",
+			"friendsCallback",
+			"getFriends",
+			"friendsCallback",
+			"setFriendsCallback",
+			"getChannelMessages",
+			"channelUsersCallback",
+			"getChannelUsers",
+			"cahnnelUsers",
+			"updateMessageData",
+			"usersca",
+			"users",
+			"selectedChatCallback",
+			"setSelectedChatCallback",
+			"unread",
+			"channelData = {",
+			"logo-contain",
+			"font-weight: 600;",
+			"font-weight: 600",
+			"font-weight:  600",
+			"font-weight:600",
+			"font-weight: 600",
+			"font-weight",
+			"flex",
+			"socket.send",
+			"globalUnread",
+			"document.title",
+			"globalUnread",
+			"unread",
+			"animateAction",
+			"STA",
+			"setSelectedChat",
+			"selectedChatCallback",
+			"toastCallback",
+			"channelsList[",
+			"RelativeTime",
+			"MSG",
+			"message",
+			"getFriends",
+			"toast(",
+			"toastCallback",
+			"toast",
 			"NLN",
 			"toastCallback",
 			"toastcall",
@@ -841,50 +924,7 @@
 			"io.to",
 			"join",
 			":400",
-			"socket.handshake.address",
-			"socket.handshake",
-			"socket.handshake.address",
-			"className",
-			"html",
-			"servefile",
-			"media-box",
-			"gray50",
-			"tweet-bod",
-			"verified",
-			"QuotedStatus",
-			"this.state.selectedUser",
-			"-100%",
-			"twitter-app",
-			"verified",
-			"status",
-			"white",
-			"this.props.data",
-			"fetchHomeTimeline",
-			"twitter",
-			"user-ava",
-			"user",
-			"OiginalUser",
-			"relativetime",
-			"status",
-			"status-contain",
-			"tweet-bod",
-			"subwhite",
-			"relativeTime",
-			"tweet-controls",
-			"this.props",
-			"class",
-			"Worker",
-			"drawMessages",
-			"drawDebug",
-			"audio",
-			"a {",
-			"li",
-			"nicescr",
-			"300",
-			"Roboto",
-			"imageChangeHandler",
-			"-",
-			"app"
+			"socket.handshake.address"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -892,6 +932,10 @@
 		"regex": false,
 		"replace_history":
 		[
+			"box-shadow: 0px 4px 12px rgba(0,0,0,.05)",
+			"updateChannelMessages",
+			"font-weight:400",
+			"font-weight: 400",
 			"className",
 			"Squawk Chat",
 			"squawk-chat",
@@ -914,16 +958,44 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 4,
 			"sheets":
 			[
 				{
 					"buffer": 0,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 14,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								14
+							]
+						],
+						"settings":
+						{
+							"auto_name": "FdkedpoeGudBQ6",
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
 					"file": "src/js/api2.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 20402,
+						"buffer_size": 24893,
 						"regions":
 						{
 							"bookmarks":
@@ -933,8 +1005,24 @@
 								"regions":
 								[
 									[
-										17732,
-										17732
+										16044,
+										16044
+									],
+									[
+										22668,
+										22668
+									],
+									[
+										22868,
+										22868
+									],
+									[
+										23048,
+										23048
+									],
+									[
+										24023,
+										24023
 									]
 								],
 								"scope": "bookmarks"
@@ -943,8 +1031,8 @@
 						"selection":
 						[
 							[
-								17617,
-								17617
+								22868,
+								22868
 							]
 						],
 						"settings":
@@ -953,27 +1041,143 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 8343.0,
+						"translation.y": 10861.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 3,
 					"type": "text"
 				},
 				{
-					"buffer": 1,
-					"file": "src/js/root.js",
+					"buffer": 2,
+					"file": "src/css/chat-message.scss",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 8138,
+						"buffer_size": 1079,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								843,
-								843
+								0,
+								746
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/SCSS/SCSS.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "src/css/chat.scss",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 6398,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								594,
+								594
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/SCSS/SCSS.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "src/css/room-object.scss",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3816,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1146,
+								1146
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/SCSS/SCSS.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "src/css/app.scss",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 12303,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								6157,
+								6157
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/SCSS/SCSS.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 2856.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "src/js/apiurls.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 250,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								250,
+								250
 							]
 						],
 						"settings":
@@ -984,36 +1188,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "src/js/chat.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 8890,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								8238,
-								8238
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Babel/JavaScript (Babel).sublime-syntax",
-							"word_wrap": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 2777.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
+					"stack_index": 4,
 					"type": "text"
 				}
 			]
@@ -1066,7 +1241,7 @@
 	"project": "squawkchat.sublime-project",
 	"replace":
 	{
-		"height": 42.0
+		"height": 72.0
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -1075,6 +1250,18 @@
 		"last_filter": "",
 		"selected_items":
 		[
+			[
+				"roomli",
+				"js\\roomlist.js"
+			],
+			[
+				"autho",
+				"js\\authorize.js"
+			],
+			[
+				"user",
+				"js\\userlist.js"
+			],
 			[
 				"co",
 				"js\\common.js"
