@@ -297,7 +297,7 @@ function listenToData() {
 					case 'note':
 						toastCallback({
 							header: 'You recieved a note from '+data.sender,
-							text: '[url=https://www.f-list.net/view_note.php?note_id='+data.id+']Subject: '+data.subject+'[/url]'
+							text: '[url='+ apiurls.noteurl + data.id+']Subject: '+data.subject+'[/url]'
 						});
 						break;
 					case 'grouprequest':

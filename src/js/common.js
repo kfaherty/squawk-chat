@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import parser, { Tag } from 'bbcode-to-react';
+import loadURLS from './apiurls';
+const apiurls = loadURLS();
 
 class Avatar extends Component {
 	render() {
@@ -17,7 +19,7 @@ class Avatar extends Component {
 				break;
 			case 3:
 				if (this.props.name) {
-					iconurl = 'https://static.f-list.net/images/avatar/'+encodeURI(this.props.name).toLowerCase()+'.png'; // private pm image				break;
+					iconurl = apiurls.avatarurl+encodeURI(this.props.name).toLowerCase()+'.png'; // private pm image				break;
 				}
 				break;
 			default:
@@ -229,20 +231,20 @@ class meTag extends Tag {
 class iconTag extends Tag {
 	toReact() {
     	return (
-    		<a target="_blank" href={'https://www.f-list.net/c/' + this.getContent(true)}>
-	    		<img className="icon" src={'https://static.f-list.net/images/avatar/' + this.getContent(true) + '.png'} alt={this.getContent(true)} />
+    		<a target="_blank" href={ apiurls.characterurl + this.getContent(true)}>
+	    		<img className="icon" src={ apiurls.avatarurl + this.getContent(true) + '.png'} alt={this.getContent(true)} />
 	    	</a>
 	    );
   	}
 }
 class eiconTag extends Tag {
 	toReact() {
-    	return (<img className="ecion" src={'https://static.f-list.net/images/eicon/' + this.getContent(true) + '.gif'} alt={this.getContent(true)} />);
+    	return (<img className="ecion" src={ apiurls.eiconurl + this.getContent(true) + '.gif'} alt={this.getContent(true)} />);
   	}
 }
 class userTag extends Tag {
 	toReact() {
-		return (<a target="_blank" href={'https://www.f-list.net/c/' + this.getContent(true)}>{this.getContent(true)}</a>);
+		return (<a target="_blank" href={ apiurls.characterurl + this.getContent(true)}>{this.getContent(true)}</a>);
   	}
 }
 

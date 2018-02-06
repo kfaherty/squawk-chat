@@ -230,7 +230,7 @@ class Root extends Component {
 				</div>
 
    				<div className={"potential-problem " + (this.state.connected ? "" : "visible")}>
-					<p>Connection Lost</p>
+					<p>Connection Terminated</p>
 				</div>
 
 			    <div className={"top-bar "  + (this.state.loggedin ? "" : "blurred")}>

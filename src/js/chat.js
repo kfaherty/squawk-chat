@@ -41,6 +41,7 @@ class Chat extends Component {
 			ignored: this.props.ignored
     	}
 
+		this.inputs = {};
     	this.scrolledBottom = false;
     	this.usernameClicked = this.usernameClicked.bind(this);
 	    this.handleScroll = this.handleScroll.bind(this);
@@ -97,6 +98,8 @@ class Chat extends Component {
 			inputValue: event.target.value
 		});
 
+		this.inputs[this.props.selectedChat] = event.target.value;
+
     	if (this.props.chat.type === 3) { // this only needs to run if this is a private chat.
 	    	if (this.typing && !event.target.value) {
 	    		this.typing = false;
@@ -147,6 +150,8 @@ class Chat extends Component {
   	}
  	onSendMessage(){
  		if (this.state.inputValue) {
+			this.inputs[this.props.selectedChat] = '';
+
  			if (this.props.chat.type === 3) {
  				this.typing = false;
 	    		this.paused = false;
@@ -173,7 +178,8 @@ class Chat extends Component {
     componentWillReceiveProps(nextProps)  {
 		if (nextProps.selectedChat !== this.props.selectedChat) { // if you've changed chats
 	    	this.setState({
-	    		chatMenuOpen: false // reset chat menu.
+	    		chatMenuOpen: false, // reset chat menu.
+	    		inputValue: this.inputs[nextProps.selectedChat] || ''
 	    	});
 
 	    	// if you switched chats, clear the statuses here.
