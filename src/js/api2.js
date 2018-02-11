@@ -177,6 +177,7 @@ function createSocket(name) {
 						
 			switch(code) {
 				case 'IDN':
+					// FIXME: Don't send stuff before recieving the corresponding NLN with the character name or you'll desync
 					resolve();
 					loginPromiseResolve(userData.name);
 					// console.log(code,payload);
@@ -274,21 +275,38 @@ function addListenerForSocketMessage(eventcode,callback){
 
 function listenToData() {
 	gotLoginPromise().then(()=>{ 			// wait for login: 
+		addListenerForSocketMessage('BRO',(data)=>{  
+			if (toastCallback) {
+				toastCallback({
+					header: 'New broadcast from '+data.character+'!',
+					text: data.message,
+					character: data.character
+				});
+			}
+		});
+		addListenerForSocketMessage('CBU',(data)=>{  
+			// TODO: if this is us, create a toast about it.
+			if (toastCallback) {  // TODO: this should be a system message in the channel.
+				toastCallback({
+					header: data.character+' has been banned from ' + data.channel + ' by '+data.operator
+				});
+			}
+		});
+		addListenerForSocketMessage('CKU',(data)=>{  
+			// TODO: if this is us, create a toast about it.
+			if (toastCallback) {  // TODO: this should be a system message in the channel.
+				toastCallback({
+					header: data.character+' has been kicked from ' + data.channel + ' by '+data.operator
+				});
+			}
+		});
 		addListenerForSocketMessage('LIS',(data)=>{  
-			// we can just use the api for this. 
-			// although we wont have gender, then..
-
-			// if (data && data.characters) {
-			// 	let parsedCharacters = [];
-			// 	for (var i = data.characters.length - 1; i >= 0; i--) {
-			// 		parsedCharacters[ data.characters[i][0] ] = {
-			// 			character: data.characters[i][0],
-			// 			gender: data.characters[i][1],
-			// 			status: data.characters[i][2],
-			// 			statusMessage: data.characters[i][3]
-			// 		}
-			// 	}
-			// 	usersCache = parsedCharacters
+			// if (bookmarksList.indexOf(data.character) !== -1) { // we only want to run this if we have friends to compare against.
+			// If we don't have friends yet, then telling would require doing all the cache stuff. :c
+				// if (data && data.characters) {
+				// 	for (var i = data.characters.length - 1; i >= 0; i--) {
+				// 	}
+				// }
 			// }
 		});
 		addListenerForSocketMessage('RTB',(data)=>{  
@@ -922,12 +940,20 @@ function sendTyping(type,selectedChat) {
 	socket.send('TPN '+JSON.stringify({ "character": selectedChat,"status": type }) );
 }
 
+function updateStatus(status,statusmsg) {
+	if (!status || !statusmsg) {
+		console.log('missing stuff',status,statusmsg)
+		return;
+	}
+	socket.send('STA '+JSON.stringify({ "status": status,"statusmsg": statusmsg }) );	
+}
+
 export { 	
 	login,logout,
 	loadCookie,gotLoginPromise,createSocket,
 	lostConnectionAlert,gainedConnectionAlert,
 	getChannelData,joinChannel,createPrivateMessage,leaveChannel,getChannelMessages,getChannelUsers,
 	getFriends,getChannels,getJoinedChannels,
-	sendMessage,privateMessage,sendTyping,
+	sendMessage,privateMessage,sendTyping,updateStatus,
 	setChannelsCallback,setJoinedChannelsCallback,setSelectedChatCallback,setSelectedChat,setFriendsCallback,setCreateToastCallback,setChannelMessagesCallback,setChannelUsersCallback
 };

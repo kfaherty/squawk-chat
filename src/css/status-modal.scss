@@ -1,0 +1,91 @@
+.status-modal {
+    position: absolute;
+    top: 80px;
+    right: 24px;
+    z-index: 99;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    transform-origin: 50% 0%;
+    
+    &.full {
+        right: 140px;
+    }
+    &.visible {
+        opacity: 1;
+        pointer-events: initial;
+    }
+
+    .label {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        box-sizing: border-box;
+        pointer-events: none;
+        div,span {
+            display: inline-block;
+        }
+        .icon {
+            color: #9EA6A2;
+            font-size: 14px;
+            padding-top: 4px;
+        }
+        span {
+            color: #D6DBD9;
+            font-size: 12px;
+            padding-left: 5px;
+            white-space: nowrap;
+        }
+    }
+
+    input {
+        color: #89908C;
+        z-index: 3; 
+        box-sizing: border-box;
+        width: 100%;
+        border: none;
+        font-family: 'Verlag', sans-serif;
+        font-size: 12px;
+        background: transparent;
+        outline: none;
+        padding: 10px 10px 10px 25px;
+    }
+    .status-text {
+        color: #89908C;
+        z-index: 3; 
+        box-sizing: border-box;
+        width: 100%;
+        border: none;
+        font-family: 'Verlag', sans-serif;
+        font-size: 12px;
+        background: transparent;
+        outline: none;
+        padding: 10px 30px 10px 30px;
+        line-height: 24px;
+        text-transform: capitalize;
+    }
+}
+.status-type,.status-input {
+    position: relative;
+    display: inline-block;
+    box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.1);
+    background: #FFF;
+    border: 1px solid #E5EBE9;
+    height: 44px;
+    vertical-align: top;
+    overflow: hidden;
+}
+.status-type{
+    margin-right: 10px;
+    cursor: pointer;
+    
+    .status-badge {
+        top: 14px;
+        left: 10px;
+    }
+    .arrow {
+        position: absolute;
+        right: 8px;
+        top: 19px;
+    }
+}

@@ -5,6 +5,7 @@ import Authorize from './authorize';
 import RoomList from './roomlist';
 import Chat from './chat';
 import Search from './search';
+import StatusModal from './statusmodal';
 
 import { 
 	logout,gotLoginPromise,lostConnectionAlert,gainedConnectionAlert,
@@ -62,9 +63,14 @@ class Root extends Component {
 	    	roomsjoined: [],
 
 	    	userMenuOpen: false,
-	    	userListOpen: true
+	    	userListOpen: true,
+
+	    	showStatusModal: false,
+	    	currentStatus: 'online',
+	    	currentStatusMessage: ''
 	    };
 		
+		this.updateStatus = this.updateStatus.bind(this);
         this.setSelectedChat = this.setSelectedChat.bind(this);   
         this.reportSelectedChat = this.reportSelectedChat.bind(this);
 	}
@@ -117,7 +123,7 @@ class Root extends Component {
 	createToast(props) {
 		toast(<NotificationTemplate {...props} />);
 
-		// TODO: add this to the list of notifications.
+		// TODO: add this to notifications history.
 	}
 
     componentWillMount() {
@@ -200,6 +206,11 @@ class Root extends Component {
 		// TODO
     }
 
+    toggleStatus() {
+    	this.setState({showStatusModal: !this.state.showStatusModal});
+    	this.toggleUserMenu();
+    }
+
     updateStatus() {
     	// TODO
     	// << STA { "status": enum, "statusmsg": string }
@@ -244,15 +255,30 @@ class Root extends Component {
 			        </nav>
 			        
 			        <div className={"logged-in-user-contain " + (this.state.userListOpen ? "" : "full")} onClick={() => this.toggleUserMenu()}> 
-			            <div className="user-name">{this.state.username}</div>
+			        	{!!this.state.username && (<div className="user-header">
+				        	<div className="user-wrap">
+				            	<div className="user-name">{this.state.username}</div>
+				            	<div className="user-status"><span className="status">{this.state.currentStatus}</span>{(this.state.currentStatusMessage?'<span>>: '+this.state.currentStatusMessage+'</span>':'')}</div>
+				            </div>
+				        </div>)}
 			            <div className="arrow"></div>
 						<Avatar name={this.state.username} type={3} />
+						<div className={"status-badge " + this.state.currentStatus}></div>
 			        </div>
 			        <div className={"dropdown " + (this.state.userMenuOpen ? "visible " : "") + (this.state.userListOpen ? "" : "full")}>
-			        	<div className="list-item" onClick={() => this.updateStatus()}><div className="list-icon fi-pencil"></div>Set Status</div>
+			        	<div className="list-item" onClick={() => this.toggleStatus()}><div className="list-icon fi-pencil"></div>Set Status</div>
 			        	<div className="list-item" onClick={() => this.toggleSettings()}><div className="list-icon fi-widget"></div>Settings</div>
 	                    <div className="list-item" onClick={() => this.logout()}><div className="list-icon fi-lock"></div>Logout</div>
 	                </div>
+
+	                <StatusModal
+	                	showStatusModal={this.state.showStatusModal}
+	                	full={this.state.userListOpen}
+	                	updateStatus={this.updateStatus}
+	                	currentStatus={this.state.currentStatus}
+	                	currentStatusMessage={this.state.currentStatusMessage}
+	                	closeModal={() => this.toggleStatus}
+	                />
 
 			        <div className={"controls-contain " + (this.state.userListOpen ? "" : "full")}>
 			            <div className="arrow right" onClick={() => this.toggleUserList()}></div>

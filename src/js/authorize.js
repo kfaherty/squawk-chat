@@ -24,7 +24,6 @@ class Authorize extends Component {
 	    }).catch((error) => console.log(error));
     }
 	handleLoginClick() {
-
 		let validated = true;
 		if (!this.state.username) {
 			validated = false;

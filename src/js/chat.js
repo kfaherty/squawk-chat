@@ -208,7 +208,7 @@ class Chat extends Component {
 							        	case 0: return <div className="chat-subtitle"><ParsedText text={chat.description} /></div>;
 							        	case 1: return <div className="chat-subtitle"><ParsedText text={chat.description} /></div>;
 							        	case 2: return <div className="chat-subtitle"><ParsedText text={chat.description} /></div>;
-							        	case 3: return ''; // TODO: render status and stuff.
+							        	case 3: return <div className="chat-subtitle">{chat.status}{chat.statusmsg ? (": "+<ParsedText text={chat.statusmsg} />) : ""}</div>; // TODO: render status and stuff.
 							        	default: return '';
 							        }
 							    })()}
