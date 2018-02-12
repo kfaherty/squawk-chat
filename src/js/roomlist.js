@@ -157,8 +157,8 @@ class RoomList extends Component {
                 </div>
 
                 <div className="sort" onClick={() => this.toggleSortMenu()}>
-                  <div className="label">Sort: {this.state.sortType}</div>
-                	<div className="arrow"></div>
+                    <div className="label">Sort: {this.state.sortType}</div>
+                    <div className={"arrow " + (this.state.sortMenuOpen ? "flipped" : "")}></div>
                 </div>
                 <div className={"dropdown " + (this.state.sortMenuOpen ? "visible" : "")}>
                     <div className="list-item" onClick={() => this.changeSort('Alphabetical')}><div className="list-icon fi-text-color"></div>Alphabetical</div>

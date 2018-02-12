@@ -74,12 +74,13 @@ html{
     position: relative;
 
     .dropdown {
-        right: 200px;
+        right: 205px;
         top: 48px;
+        transition: transform 0.3s ease;
 
         &.full {
-            // transform: translateX(115px);
-            right: 85px;
+            transform: translateX(115px);
+            // right: 85px;
         }
     }
 }
@@ -153,7 +154,14 @@ html{
      .user-status {
         color: #6A6F6C;
         text-align: right;
+        white-space: nowrap;
+
         @include bbcodeStyles();
+
+        img {
+            height: 13px;
+            width: 13px;
+        }        
     }
     .status {
         text-transform: capitalize;
@@ -256,7 +264,7 @@ html{
     border-top: 2px solid #89908C;
     border-right: 2px solid #89908C;
     transform: translate3d(0,-50%,0) rotate(135deg);
-        
+    transition: transform 0.3s ease;
     &.right {
       top: calc( 50% - 3px );
       left: 8px;
@@ -273,6 +281,10 @@ html{
       transform: translate(-40%,-60%) rotate(45deg);
       width: 200%;
       height: 200%;
+    }
+
+    &.flipped {
+        transform: translate3d(0,0%,0) rotate(315deg);
     }
 }
 

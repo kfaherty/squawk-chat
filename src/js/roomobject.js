@@ -60,7 +60,7 @@ class RoomObject extends Component {
 				    })()}
 					<div className="snippet">
 						{(user.lastUser) && (
-							<span>{user.lastUser}: </span>
+							<span className="user-from">{user.lastUser}: </span>
 						)}
 						{user.lastMessage ? (<ParsedText character={user.lastUser} text={user.lastMessage }/>) :  'No messages to show'}
 					</div>

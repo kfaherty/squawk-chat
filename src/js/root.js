@@ -11,6 +11,7 @@ import {
 	logout,gotLoginPromise,lostConnectionAlert,gainedConnectionAlert,
 	getChannelData,joinChannel,getChannelMessages,getChannelUsers,createPrivateMessage,
 	getFriends,getChannels,getJoinedChannels,
+	updateStatus,
 	setChannelsCallback,setJoinedChannelsCallback,setFriendsCallback,setSelectedChatCallback,setSelectedChat,setCreateToastCallback,setChannelMessagesCallback,setChannelUsersCallback
 } from './api2';
 
@@ -56,7 +57,7 @@ class Root extends Component {
 
 	    	username: null,
 	    	connected: true,
-	    	loggedin: false,
+	    	loggedin: false, // false
 	    	
 	    	friendslist: [],
 	    	roomslist: [],
@@ -207,19 +208,21 @@ class Root extends Component {
     }
 
     toggleStatus() {
-    	this.setState({showStatusModal: !this.state.showStatusModal});
-    	this.toggleUserMenu();
+    	this.setState({showStatusModal: !this.state.showStatusModal,userMenuOpen: false});
+    	// this.toggleUserMenu();
     }
 
-    updateStatus() {
-    	// TODO
-    	// << STA { "status": enum, "statusmsg": string }
-		// Status: Valid values are "online", "looking", "busy", "dnd", "idle", "away", and "crown".
+    updateStatus(status,statusmsg) {
+    	console.log(status,statusmsg);
+    	updateStatus(status,statusmsg);
+    	this.setState({
+    		currentStatus: status,
+    		currentStatusMessage: statusmsg
+    	});
     }
 
     createChannel() {
     	// << CCR { "channel": string }
-
     }
 
     logout() {
@@ -233,7 +236,7 @@ class Root extends Component {
           		
           		<div className="toasts-contain">
           			<ToastContainer 
-          				autoClose={30000} 
+          				autoClose={45000} 
           				newestOnTop={true} 
           				hideProgressBar={true} 
           				closeButton={false} 
@@ -258,15 +261,18 @@ class Root extends Component {
 			        	{!!this.state.username && (<div className="user-header">
 				        	<div className="user-wrap">
 				            	<div className="user-name">{this.state.username}</div>
-				            	<div className="user-status"><span className="status">{this.state.currentStatus}</span>{(this.state.currentStatusMessage?'<span>>: '+this.state.currentStatusMessage+'</span>':'')}</div>
+				            	<div className="user-status">
+				            		<span className="status">{this.state.currentStatus}</span>
+				            		{this.state.currentStatusMessage && (<span>: <ParsedText character={this.state.username} text={this.state.currentStatusMessage} /></span>)}
+				            	</div>
 				            </div>
 				        </div>)}
-			            <div className="arrow"></div>
+			            <div className={"arrow " + (this.state.userMenuOpen ? "flipped" : "")}></div>
 						<Avatar name={this.state.username} type={3} />
 						<div className={"status-badge " + this.state.currentStatus}></div>
 			        </div>
 			        <div className={"dropdown " + (this.state.userMenuOpen ? "visible " : "") + (this.state.userListOpen ? "" : "full")}>
-			        	<div className="list-item" onClick={() => this.toggleStatus()}><div className="list-icon fi-pencil"></div>Set Status</div>
+			        	<div className="list-item" onClick={() => this.toggleStatus()}><div className="list-icon fi-pencil"></div>Status</div>
 			        	<div className="list-item" onClick={() => this.toggleSettings()}><div className="list-icon fi-widget"></div>Settings</div>
 	                    <div className="list-item" onClick={() => this.logout()}><div className="list-icon fi-lock"></div>Logout</div>
 	                </div>
@@ -277,7 +283,7 @@ class Root extends Component {
 	                	updateStatus={this.updateStatus}
 	                	currentStatus={this.state.currentStatus}
 	                	currentStatusMessage={this.state.currentStatusMessage}
-	                	closeModal={() => this.toggleStatus}
+	                	closeModal={() => this.toggleStatus()}
 	                />
 
 			        <div className={"controls-contain " + (this.state.userListOpen ? "" : "full")}>

@@ -126,6 +126,14 @@
     		text-overflow: ellipsis; // we need to do this with js i think
 
 		    @include bbcodeStyles();
+
+		    img {
+	    	    height: 60px;
+	    	    width: 60px;
+		    }
+		    .user-from {
+	    	    vertical-align: top;
+		    }
 		}
 	}	
 	.timestamp {

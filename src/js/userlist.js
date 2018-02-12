@@ -1,14 +1,17 @@
 import React, { Component } from 'react';
-import { Avatar } from './common';
+import { Avatar,StandardInput } from './common';
 
 class UserList extends Component {
 	constructor(props) {
     	super(props);
 
     	this.state= {
-    		sortType: this.props.defaultSort || 'Alphabetical',
-            searchString: ""
+    		sortType: this.props.defaultSort || 'Type',
+            searchString: "",
+            sortMenuOpen: false,
     	}
+
+        this.handleFieldChange = this.handleFieldChange.bind(this);
 	}
 	performFilterSort(array,searchString,sortType,label) {
 	    function alpha(a,b) {
@@ -53,6 +56,20 @@ class UserList extends Component {
 	            return array;
 	    }
 	}
+    toggleSortMenu() {
+        this.setState({sortMenuOpen: !this.state.sortMenuOpen });
+    }
+    handleFieldChange(name,value) {
+        this.setState({
+            searchString:value,
+        });
+	}
+	changeSort(value) {
+        this.toggleSortMenu();
+        this.setState({
+            sortType:value,
+        });
+    }
 	handleClick(name) {
 		if (!name) {
 			console.log('whatd you click?',name);
@@ -64,14 +81,34 @@ class UserList extends Component {
         const users = this.performFilterSort(this.props.users || [],this.state.searchString,this.state.sortType); //this.state.filteredRooms;
 		return (
 			<div className={"chat-user-list-contain " + ( this.props.userListOpen ? "" : "full" )}>
+				<div className="search">
+                    <StandardInput 
+                        iconClass="fi-magnifying-glass"
+                        inputName='Search' 
+                        onChange={this.handleFieldChange}
+                    />
+                </div>
+
+                <div className="sort" onClick={() => this.toggleSortMenu()}>
+                  	<div className="label">Sort: {this.state.sortType}</div>
+                    <div className={"arrow " + (this.state.sortMenuOpen ? "flipped" : "")}></div>
+                </div>
+                <div className={"dropdown " + (this.state.sortMenuOpen ? "visible" : "")}>
+                    <div className="list-item" onClick={() => this.changeSort('Alphabetical')}><div className="list-icon fi-text-color"></div>Alphabetical</div>
+                    <div className="list-item" onClick={() => this.changeSort('Type')}><div className="list-icon fi-filter"></div>Type</div>
+                    <div className="list-item" onClick={() => this.changeSort('Status')}><div className="list-icon fi-arrow-down"></div>Status</div>
+                </div>
+
 				{users && users.map((obj) => {
 					// TODO: gender stuff.
-					// TODO: status icons.
+					// TODO: friend identification
+					// TODO: bookmark identification
 
 					return (
 						<div className="list-user" key={obj.identity} onClick={() => this.handleClick(obj.identity)}>
 							<Avatar name={obj.identity} type={3} />
-							<div className="status-icon"></div>
+							<div className={"status-badge " + obj.status}></div>
+
 							<div className="rank-icon"></div>
 							<div className="user-name">{obj.identity}</div>
 						</div>

@@ -21,6 +21,66 @@
         transform: translate(140px, 0px);
 	}
 	
+	.search {
+		padding-top: 3px;
+		margin: 0px 10px 10px 10px;
+		position: relative;
+		border-bottom: 1px solid #DFE4E2;
+		.label {
+			position: absolute;
+			top: 19px;
+			left: 10px;
+			box-sizing: border-box;
+			pointer-events: none;
+			div,span {
+				display: inline-block;
+			}
+			.icon {
+		        color: #9EA6A2;
+	            font-size: 14px;
+	            padding-top: 4px;
+			}
+			span {
+				color: #D6DBD9;
+				font-size: 12px;
+				padding-left: 5px;
+			}
+		}
+		input {
+			color: #89908C;
+			z-index: 3;	
+			box-sizing: border-box;
+			width: 100%;
+			border: none;
+		    font-family: 'Verlag', sans-serif;
+			font-size: 12px;
+			background: transparent;
+			outline: none;
+			padding: 17px 20px 5px 25px; //10px 20px 10px 37px;
+		}
+	}	
+	.sort {
+		text-align: right;
+		padding: 0px 20px;
+		.label {
+			cursor: pointer;
+			display: inline-block;
+			text-align: right;
+			color: #89908C;
+			padding-right: 10px;
+			font-weight: 600;
+			width: 74px;
+			font-size: 12px;
+		    white-space: nowrap;
+			overflow: hidden;
+    		text-overflow: ellipsis;
+		    height: 13px;
+		    position: relative;
+		    vertical-align: bottom;
+		    // overflow: visible;
+		}	
+	}
+
 	.status-icon {
 	}
 	.list-user {

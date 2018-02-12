@@ -1,7 +1,7 @@
 @import "./mixins.scss";
 
 .chat-message{
-	position: relative;
+	// position: relative;
 	background: white;
 	border-radius: 5px;
 	margin: 10px 20px;
@@ -12,6 +12,7 @@
 	// border: 1px solid #E5EBE9;
    	// box-shadow: 0px 4px 12px rgba(0,0,0,.05); //0px 0px 30px rgba(0, 0, 0, .1);
 	white-space: pre-wrap;
+    margin-left: 50px;
 
    	&.mine {
 	    // left: calc( 40% - 80px );
@@ -36,6 +37,23 @@
 		border: 1px solid #1cd67c;
    	}
 
+   	&.friend {
+
+   	}
+   	&.bookmark {
+
+   	}
+	
+	.avatar-contain {
+		position: absolute;
+		left: 10px;
+		// top: 18px;
+		width: 30px;
+		height: 30px;
+		border-radius: 30px;
+		background: black;
+    	box-shadow: 0px 4px 14px rgba(0, 0, 0, .1);
+	}
 	.user-name{
 		color: #1cd67c;
 		font-weight: 600;

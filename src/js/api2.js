@@ -941,10 +941,10 @@ function sendTyping(type,selectedChat) {
 }
 
 function updateStatus(status,statusmsg) {
-	if (!status || !statusmsg) {
-		console.log('missing stuff',status,statusmsg)
-		return;
-	}
+	// if (!status || !statusmsg) {
+	// 	console.log('missing stuff',status,statusmsg)
+	// 	return;
+	// }
 	socket.send('STA '+JSON.stringify({ "status": status,"statusmsg": statusmsg }) );	
 }
 

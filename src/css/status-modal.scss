@@ -1,16 +1,18 @@
 .status-modal {
     position: absolute;
     top: 80px;
-    right: 24px;
-    z-index: 99;
+    right: 44px;
+    z-index: 97;
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.3s ease,transform 0.3s ease;
     transform-origin: 50% 0%;
-    
+    transform: translateX(-116px);
+
     &.full {
-        right: 140px;
+        transform: translateX(0px);
     }
+
     &.visible {
         opacity: 1;
         pointer-events: initial;
@@ -63,7 +65,30 @@
         padding: 10px 30px 10px 30px;
         line-height: 24px;
         text-transform: capitalize;
+        // text-align: center;
     }
+
+    .dropdown {
+        right: 157px;
+        top: 45px;
+
+        .list-item {
+            position: relative;
+            white-space: nowrap;
+        }
+        .list-icon {
+            position: relative;
+            padding-right: 0px;
+            left: initial;
+            top: initial;
+            margin-right: 4px;
+        }
+        span {
+            vertical-align: text-top;
+            margin-right: 17px;
+        }
+    }
+
 }
 .status-type,.status-input {
     position: relative;
@@ -78,7 +103,7 @@
 .status-type{
     margin-right: 10px;
     cursor: pointer;
-    
+    width: 100px;
     .status-badge {
         top: 14px;
         left: 10px;
