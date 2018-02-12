@@ -1,10 +1,21 @@
 @import "./mixins.scss";
 
+@include keyframes(animateMessage) {  // this doesn't adjust the height.
+    0% { 
+        opacity: 0; 
+        // transform: scale( 0.5, 0.5);
+    }
+    100% { 
+        opacity: 1; 
+        // transform: scale(1,1);
+    }
+}
+
 .chat-message{
-	// position: relative;
+	position: relative;
 	background: white;
 	border-radius: 5px;
-	margin: 10px 20px;
+	margin: 10px 20px 10px 60px;
 	width: auto;
     // width: 60%;
     padding: 11px 20px 7px;
@@ -12,7 +23,10 @@
 	// border: 1px solid #E5EBE9;
    	// box-shadow: 0px 4px 12px rgba(0,0,0,.05); //0px 0px 30px rgba(0, 0, 0, .1);
 	white-space: pre-wrap;
-    margin-left: 50px;
+    -webkit-animation: animateMenu ease;
+    animation: animateMenu ease;
+    -webkit-animation-duration: 300ms;
+    animation-duration: 300ms;
 
    	&.mine {
 	    // left: calc( 40% - 80px );
@@ -46,7 +60,7 @@
 	
 	.avatar-contain {
 		position: absolute;
-		left: 10px;
+		left: -40px;
 		// top: 18px;
 		width: 30px;
 		height: 30px;
@@ -54,6 +68,7 @@
 		background: black;
     	box-shadow: 0px 4px 14px rgba(0, 0, 0, .1);
 	}
+	
 	.user-name{
 		color: #1cd67c;
 		font-weight: 600;

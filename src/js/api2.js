@@ -512,9 +512,10 @@ function listenToData() {
 					header: data.character + " is " + data.status,
 					text: data.statusmsg
 				});
+				// NOTE: this should probably cache.
+				// usersCache[data.character] = {
+				// }
 			}
-
-			// NOTE: this should probably cache.
 		});
 		addListenerForSocketMessage('NLN',(data)=>{  // global chat connect.
 			// one: create toast if this is friend/bookmark
@@ -523,10 +524,10 @@ function listenToData() {
 					header: data.identity + " connected",
 					// text:
 				})
-			}
+				// two: add to users cache if we don't have it already..?
+				// that's going to create a ton of data dude. // this is only friends. c:
 
-			// two: add to users cache if we don't have it already..?
-				// that's going to create a ton of data dude.
+			}
 		});
 		addListenerForSocketMessage('FLN',(data)=>{  // global channel leave.
 			// one: create toast if this is friend/bookmark
@@ -552,15 +553,17 @@ function listenToData() {
 		});
 		addListenerForSocketMessage('LCH',(data)=>{
 			if (data && data.character) {
+		
+				if (bookmarksList.indexOf(data.character.identity) !== -1) {
 				// one: create a toast if this is a friend or bookmark
 					// do we care if they left the channel? 
 						// maybe we can just use a system message.
-				// if (bookmarksList.indexOf(data.character.identity) !== -1) {
 				// 	toastCallback({
 				// 		header: data.character.identity + " is offline", //
 				// 		// text:
 				// 	})
-				// }
+					createSystemMessage(data.channel,data.character.identity + ' has left the channel.');
+				}
 
 				// two: population
 				let channelData = getChannelData(data.channel);
@@ -930,6 +933,25 @@ function privateMessage(character,message){
 	channelData.lastUser = userData.name;
 	updateChannelData(channelData); 
 	updateChannelMessages(character,data);
+}
+
+function createSystemMessage(channel,message) {
+	let data = {
+		timestamp: Date.now(),
+		key: messageSeq++,
+		systemMessage: true,
+		message: message,
+		character: userData.name
+	}
+
+	let channelData = getChannelData(channel);
+
+	channelData.timestamp = Date.now();
+	channelData.lastMessage = message;
+	channelData.lastUser = '';
+
+	updateChannelData(channelData); 
+	updateChannelMessages(channel,data);
 }
 
 function sendTyping(type,selectedChat) {
