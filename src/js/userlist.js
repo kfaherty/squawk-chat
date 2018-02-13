@@ -38,7 +38,7 @@ class UserList extends Component {
             if (!a.favorited && b.favorited) return -1;
             if (a.bookmarked && !b.bookmarked) return 1;
             if (!a.bookmarked && b.bookmarked) return -1;
-            
+
             // looking
             if (a.status === 'looking' && b.status !== 'looking') return -1;
             if (a.status !== 'looking' && b.status === 'looking') return 1;
@@ -58,7 +58,7 @@ class UserList extends Component {
 	        array = Object.values(array);
 	    }
 
-	    if (searchString.length) {
+	    if (searchString.length && array.length) {
 	        array = array.filter((obj)=> {
 	            return obj.identity.search(new RegExp(searchString, "i")) !== -1;
 	        });
