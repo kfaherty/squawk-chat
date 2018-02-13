@@ -124,6 +124,8 @@
 		    white-space: nowrap;
 			overflow: hidden;
     		text-overflow: ellipsis;
+
+		    @include bbcodeStyles();
 		}
 		.snippet {
 			padding-top: 4px;

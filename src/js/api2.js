@@ -346,8 +346,9 @@ function listenToData() {
 				channelData.timestamp = Date.now();
 				updateChannelData(channelData); 
 
-				// NOTE: this should check if you're joined first probably.
-				createSystemMessage(data.character,data.character + ' connected.');
+				if (channelsJoined.indexOf(data.character) !== -1) { //  this should check if you're joined first probably.
+					createSystemMessage(data.character,data.character + ' connected.');
+				}
 			}
 		});
 		addListenerForSocketMessage('FLN',(data)=>{  // global channel leave.
@@ -373,8 +374,9 @@ function listenToData() {
 				channelData.typing = 'clear';
 				updateChannelData(channelData); 
 				
-				// NOTE: this should check if you're joined first probably.
-				createSystemMessage(data.character,data.character + ' disconnected.');
+				if (channelsJoined.indexOf(data.character) !== -1) { //  this should check if you're joined first probably.
+					createSystemMessage(data.character,data.character + ' disconnected.');
+				}
 			}
 
 			// two: update channel data to leave all channels this character is in (slow, probably..)
@@ -383,13 +385,14 @@ function listenToData() {
 						// this should be fast if you're only in a few rooms.
 			for (var i in channelUsers){
 				if (channelUsers[i].indexOf(data.character) !== -1) {
+					// TODO: make sure that we aren't running this on private channels.
 					let index = channelUsers[i].indexOf(data.character);
 					channelUsers[i].splice(index,1); 
 					updateChannelUsers(i,channelUsers[i]);
 
 					// if they're a bookmark.
-					if (bookmarksList.indexOf(data.character) !== -1) {
-						createSystemMessage(data.character,data.character + ' left the channel.');		
+					if (bookmarksList.indexOf(data.character) !== -1) { // and this isn't a private channel.
+						createSystemMessage(i,data.character + ' left the channel.');		
 					}
 				}
 			}
@@ -450,9 +453,8 @@ function listenToData() {
 						timestamp: defaultTime,
 						channel: data.channels[i].name,
 						name: data.channels[i].name,
-						population: Number(data.characters)
+						population: data.channels[i].characters
 					});
-					console.log(data.characters);
 				}
 				if (channelsCallback) {
 					channelsCallback(channelsList);
@@ -468,9 +470,8 @@ function listenToData() {
 						timestamp: defaultTime,
 						channel: data.channels[i].name,
 						name: data.channels[i].title,
-						population: Number(data.characters)
+						population: data.channels[i].characters
 					});
-
 				}
 				if (channelsCallback) {
 					channelsCallback(channelsList);
@@ -634,16 +635,8 @@ function listenToData() {
 				updateChannelData(channelData); 
 
 				// three: leave a channel if this is us and we're in it.
-				if (data.character === userData.name) { // NOTE: I dont think this runs..
-					let index = channelsJoined.indexOf(data.channel);
-					if (index !== -1) {
-						console.log('you left a channel',channelsJoined,index);
-						channelsJoined.splice(index,1); // find joined channel and remove it.
-						console.log('you left:',channelsJoined);
-						if (joinedChannelsCallback) { // this'll update the list of joined channels. // HACK: this needs to run here because we wont know we left otherwise.
-							joinedChannelsCallback(getJoinedChannels());
-						}
-					}
+				if (data.character === userData.name) {  // we've already left by this point.
+					return;
 				} else { // if this isn't us we should update the userlist- if it is us, we don't care anymore.
 					// four: userlist
 					let users = channelUsers[data.channel]; 
