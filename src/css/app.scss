@@ -634,4 +634,8 @@ input,textarea {
         background: $gray;
         border: 1px solid $gray;
     }
+    &.offline {
+        background: $white;
+        border: 1px solid $gray;   
+    }
 }

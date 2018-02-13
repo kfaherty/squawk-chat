@@ -131,6 +131,10 @@
 	    @include bbcodeStyles();
 	}
 
+	.user-status {
+		text-transform: capitalize;
+	}
+
 	.settings-button{
 		position: absolute;
 		top: 0px;

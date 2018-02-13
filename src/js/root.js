@@ -254,7 +254,7 @@ class Root extends Component {
 			            <span onClick={() => this.setSelectedTab('messages')} className={"text-button " + (this.state.selectedTab === 'messages' ? "active" : "")}>Messages</span>
 			            <span onClick={() => this.setSelectedTab('channels')} className={"text-button " + (this.state.selectedTab === 'channels' ? "active" : "")}>Channels</span>
 			            <span onClick={() => this.setSelectedTab('friends')}  className={"text-button " + (this.state.selectedTab === 'friends' ? "active" : "")}>Friends</span>
-			            <span onClick={() => this.setSelectedTab('search')}   className={"text-button " + (this.state.selectedTab === 'search' ? "active" : "")}>Search Users</span>
+			            {/* <span onClick={() => this.setSelectedTab('search')}   className={"text-button " + (this.state.selectedTab === 'search' ? "active" : "")}>Search Users</span> */}
 			        </nav>
 			        
 			        <div className={"logged-in-user-contain " + (this.state.userListOpen ? "" : "full")} onClick={() => this.toggleUserMenu()}> 
@@ -319,7 +319,7 @@ class Root extends Component {
 					<RoomList
 						selectedChat={this.state.selectedChat}
 						rooms={this.state.friendslist}
-						defaultSort={'Alphabetical'}
+						defaultSort={'Status'}
 						label="friends"
 						activeTab={(this.state.selectedTab === 'friends' ? true : false)}
 						setSelectedChat={this.setSelectedChat}

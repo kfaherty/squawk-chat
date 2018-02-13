@@ -34,6 +34,8 @@ function loadCookie() {
 				bookmarks: cookiedata.bookmarks,
 				friends: cookiedata.friends
 			};
+			bookmarksList = cookiedata.bookmarks;
+			friendsList = cookiedata.friends;
 			// console.log(userData);
 			resolve(userData.characterlist);
 		}
@@ -81,7 +83,7 @@ function login(username,password) {
 		    cookies.set('account', userData.account, 				{ expires: expires, path: '/' });
 		    cookies.set('ticket', userData.ticket, 					{ expires: expires, path: '/' });
 		    cookies.set('characterlist', userData.characterlist, 	{ expires: expires, path: '/' });
-		    cookies.set('friends', friendsList, 					{ expires: expires, path: '/' });
+		    cookies.set('friends', friendsList, 					{ path: '/' });
 
 			resolve(userData.characterlist);
 		});
@@ -96,6 +98,7 @@ function logout() {
 	cookies.remove('ticket');
 	cookies.remove('characterlist');
 	cookies.remove('friends');
+	cookies.remove('bookmarks');
 
 	window.location.reload();
 }
@@ -301,13 +304,95 @@ function listenToData() {
 			}
 		});
 		addListenerForSocketMessage('LIS',(data)=>{  
-			// if (bookmarksList.indexOf(data.character) !== -1) { // we only want to run this if we have friends to compare against.
+			// we only want to run this if we have friends to compare against.
 			// If we don't have friends yet, then telling would require doing all the cache stuff. :c
-				// if (data && data.characters) {
-				// 	for (var i = data.characters.length - 1; i >= 0; i--) {
-				// 	}
-				// }
-			// }
+			if (data && data.characters) {
+				for (var i = data.characters.length - 1; i >= 0; i--) {
+					if (bookmarksList.indexOf(data.characters[i][0]) !== -1) {
+						let channelData = {
+							channel: data.characters[i][0],
+							name: data.characters[i][0],
+							type: 3,
+							online:true,
+							gender: data.characters[i][1],
+							status: data.characters[i][2],
+							statusmsg: data.characters[i][3],
+						};
+						updateChannelData(channelData); 
+					}
+				}
+			}
+		});
+		addListenerForSocketMessage('NLN',(data)=>{  // global chat connect.
+			// one: create toast if this is friend/bookmark
+			if (bookmarksList.indexOf(data.identity) !== -1) {
+				toastCallback({
+					header: data.identity + " connected",
+					// text:
+				})
+				// two: add to users cache if we don't have it already..?
+				// that's going to create a ton of data dude. // this is only friends. c:
+				let channelData = getChannelData(data.identity);
+				if (!channelData) {
+					channelData = {
+						name: data.identity,
+						channel: data.identity,
+						type: 3,
+						bookmark: true,
+						status: 'online'
+					}
+				}
+				channelData.online = false;
+				channelData.timestamp = Date.now();
+				updateChannelData(channelData); 
+
+				// NOTE: this should check if you're joined first probably.
+				createSystemMessage(data.character,data.character + ' connected.');
+			}
+		});
+		addListenerForSocketMessage('FLN',(data)=>{  // global channel leave.
+			// one: create toast if this is friend/bookmark
+			if (bookmarksList.indexOf(data.character) !== -1) {
+				toastCallback({
+					header: data.character + " disconnected",
+					// text:
+				});
+				let channelData = getChannelData(data.character);
+				if (!channelData) {
+					return; // if we dont have this and they left, fuck it.
+					// channelData = {
+					// 	name: data.identity,
+					// 	channel: data.identity,
+					// 	type: 3,
+					// 	bookmark: true
+					// }
+				}
+				channelData.online = false;
+				channelData.status = 'offline';
+				channelData.timestamp = Date.now();
+				channelData.typing = 'clear';
+				updateChannelData(channelData); 
+				
+				// NOTE: this should check if you're joined first probably.
+				createSystemMessage(data.character,data.character + ' disconnected.');
+			}
+
+			// two: update channel data to leave all channels this character is in (slow, probably..)
+				// does this only run if they're in a channel we're in? 
+					// probably not! :c
+						// this should be fast if you're only in a few rooms.
+			for (var i in channelUsers){
+				if (channelUsers[i].indexOf(data.character) !== -1) {
+					let index = channelUsers[i].indexOf(data.character);
+					channelUsers[i].splice(index,1); 
+					updateChannelUsers(i,channelUsers[i]);
+
+					// if they're a bookmark.
+					if (bookmarksList.indexOf(data.character) !== -1) {
+						createSystemMessage(data.character,data.character + ' left the channel.');		
+					}
+				}
+			}
 		});
 		addListenerForSocketMessage('RTB',(data)=>{  
 			if (data) {
@@ -348,6 +433,7 @@ function listenToData() {
 		addListenerForSocketMessage('FRL',(data)=>{  
 			if (data && data.characters) {
 				bookmarksList = data.characters; // cache this
+		    	cookies.set('bookmarks', bookmarksList,{ path: '/' });
 
 				// NOTE: if we want to know who is online, we need to correlate this with the users.
 				if(friendsCallback) {
@@ -358,16 +444,15 @@ function listenToData() {
 		addListenerForSocketMessage('CHA',(data)=>{  
 			let defaultTime = Date.now();
 			if (data.channels && data.channels.length) {
-				let channelData = data.channels.map((obj,index) => {
-					return {
+				for (var i = data.channels.length - 1; i >= 0; i--) {
+					updateChannelData({
 						type: 0,
 						timestamp: defaultTime,
-						channel: obj.name,
-						...obj
-					}
-				});
-				for (var i = channelData.length - 1; i >= 0; i--) {
-					updateChannelData(channelData[i]);
+						channel: data.channels[i].name,
+						name: data.channels[i].name,
+						population: Number(data.characters)
+					});
+					console.log(data.characters);
 				}
 				if (channelsCallback) {
 					channelsCallback(channelsList);
@@ -375,28 +460,26 @@ function listenToData() {
 			}
 		});
 		addListenerForSocketMessage('ORS',(data)=>{ 
-			// console.log('channels',data);
 			let defaultTime = Date.now();
 			if (data.channels && data.channels.length) {
-				let channelData = data.channels.map((obj,index) => {
-					return {
+				for (var i = data.channels - 1; i >= 0; i--) {
+					updateChannelData({
 						type: 1,
 						timestamp: defaultTime,
-						channel: obj.name,
-						...obj
-					}
-				});
-				for (var i = channelData.length - 1; i >= 0; i--) {
-					updateChannelData(channelData[i]);
+						channel: data.channels[i].name,
+						name: data.channels[i].title,
+						population: Number(data.characters)
+					});
+
 				}
 				if (channelsCallback) {
 					channelsCallback(channelsList);
 				}
 			}
 		});
-		addListenerForSocketMessage('LRP',(data)=>{
-			// TODO
-		});
+		// addListenerForSocketMessage('LRP',(data)=>{
+		// 	// TODO
+		// });
 		addListenerForSocketMessage('MSG',(data)=>{
 			if (data && data.message) {
 				let dataChannel = data.channel;
@@ -413,6 +496,10 @@ function listenToData() {
 					}
 				}
 
+				if (bookmarksList.indexOf(data.character) !== -1) {// friends/bookmarks
+					data.bookmark = true;
+				}
+				
 				// pings.
 				// const pings = [userData.name]; // TODO: load this from settings.
 				if ((new RegExp(userData.name,'i')).test(data.message)) {
@@ -512,49 +599,25 @@ function listenToData() {
 					header: data.character + " is " + data.status,
 					text: data.statusmsg
 				});
-				// NOTE: this should probably cache.
-				// usersCache[data.character] = {
-				// }
-			}
-		});
-		addListenerForSocketMessage('NLN',(data)=>{  // global chat connect.
-			// one: create toast if this is friend/bookmark
-			if (bookmarksList.indexOf(data.identity) !== -1) {
-				toastCallback({
-					header: data.identity + " connected",
-					// text:
-				})
-				// two: add to users cache if we don't have it already..?
-				// that's going to create a ton of data dude. // this is only friends. c:
-
-			}
-		});
-		addListenerForSocketMessage('FLN',(data)=>{  // global channel leave.
-			// one: create toast if this is friend/bookmark
-			if (bookmarksList.indexOf(data.character) !== -1) {
-				toastCallback({
-					header: data.character + " disconnected",
-					// text:
-				})
-			}
-
-			// two: update channel data to leave all channels this character is in (slow, probably..)
-				// does this only run if they're in a channel we're in? 
-					// probably not! :c
-				// this should be fast if you're only in a few rooms.
-			// for (var i = channelUsers.length - 1; i >= 0; i--) { 
-			for (var i in channelUsers){
-				if (channelUsers[i].indexOf(data.character) !== -1) {
-					let index = channelUsers[i].indexOf(data.character);
-					channelUsers[i].splice(index,1); 
-					updateChannelUsers(i,channelUsers[i]);
+				let channelData = getChannelData(data.character);
+				if (!channelData) {
+					channelData = {
+						name: data.character,
+						channel: data.character,
+						type: 3,
+						bookmark: true,
+					}
 				}
+				channelData.status = data.status;
+				channelData.statusmsg = data.statusmsg;
+				channelData.timestamp = Date.now();
+				updateChannelData(channelData); 
 			}
 		});
 		addListenerForSocketMessage('LCH',(data)=>{
 			if (data && data.character) {
 		
-				if (bookmarksList.indexOf(data.character.identity) !== -1) {
+				if (bookmarksList.indexOf(data.character) !== -1) {
 				// one: create a toast if this is a friend or bookmark
 					// do we care if they left the channel? 
 						// maybe we can just use a system message.
@@ -562,7 +625,7 @@ function listenToData() {
 				// 		header: data.character.identity + " is offline", //
 				// 		// text:
 				// 	})
-					createSystemMessage(data.channel,data.character.identity + ' has left the channel.');
+					createSystemMessage(data.channel,data.character + ' left the channel.');
 				}
 
 				// two: population
@@ -597,19 +660,19 @@ function listenToData() {
 			if (data && data.character) {
 				// one: create a toast if this is a friend or bookmark
 				// do we care if they join? Maybe just use a system message.
-				// if (bookmarksList.indexOf(data.character.identity) !== -1) {
+				if (bookmarksList.indexOf(data.character.identity) !== -1) {
 				// 	toastCallback({
 				// 		header: data.character.identity + " is online",
 				// 		// text:
 				// 	})
-				// }
+					createSystemMessage(data.channel,data.character.identity + ' joined the channel.');
+				}
 
 				// two: join a channel if this is us and we're not in it yet.
 				if (data.character.identity === userData.name) {
 					if (channelsJoined.indexOf(data.channel) === -1) {
 						channelsJoined.push(data.channel); // add this to the list of joined channels. This should allow invites to work.
 					}
-
 				}
 
 				let users = channelUsers[data.channel];
@@ -854,22 +917,22 @@ function setFriendsCallback(cb) {
 }
 
 function getFriends() {
-	// TODO: we should only return online users.
-
 	let friends = friendsList.map((obj) => {
-		return {
+		return channelsList[obj] || {
 			channel: obj,
 			name: obj,
 			friend: true,
-			type: 3
+			type: 3,
+			status: 'offline'
 		};
 	});
 	let bookmarks = bookmarksList.map((obj) => {
-		return {
+		return channelsList[obj] || {
 			channel: obj,
 			name: obj,
 			bookmark: true,
-			type: 3
+			type: 3,
+			status: 'offline'
 		};
 	});
 

@@ -1,6 +1,6 @@
 @import "./mixins.scss";
 
-@include keyframes(animateMessage) {  // this doesn't adjust the height.
+@include keyframes(animateAvatar) {  // this doesn't adjust the height.
     0% { 
         opacity: 0; 
         // transform: scale( 0.5, 0.5);
@@ -11,6 +11,17 @@
     }
 }
 
+@include keyframes(animateMessage) {  // this doesn't adjust the height.
+    0% { 
+        opacity: 0; 
+        transform: scale( 0.5, 0.5);
+    }
+    100% { 
+        opacity: 1; 
+        transform: scale(1,1);
+    }
+}
+
 .chat-message{
 	position: relative;
 	background: white;
@@ -18,15 +29,11 @@
 	margin: 10px 20px 10px 60px;
 	width: auto;
     // width: 60%;
-    padding: 11px 20px 7px;
+    padding: 10px 11px 5px;
 	font-size: 13px;
 	// border: 1px solid #E5EBE9;
    	// box-shadow: 0px 4px 12px rgba(0,0,0,.05); //0px 0px 30px rgba(0, 0, 0, .1);
 	white-space: pre-wrap;
-    -webkit-animation: animateMenu ease;
-    animation: animateMenu ease;
-    -webkit-animation-duration: 300ms;
-    animation-duration: 300ms;
 
    	&.mine {
 	    // left: calc( 40% - 80px );
@@ -52,10 +59,14 @@
    	}
 
    	&.friend {
-
+   		.avatar-contain {
+			border: 2px solid rgba(28, 214, 124, 1);
+   		}
    	}
    	&.bookmark {
-
+   		.avatar-contain {
+			border: 2px solid rgba(28, 214, 124, 1);
+   		}
    	}
 	
 	.avatar-contain {
@@ -67,6 +78,9 @@
 		border-radius: 30px;
 		background: black;
     	box-shadow: 0px 4px 14px rgba(0, 0, 0, .1);
+
+	    animation: animateAvatar ease;
+	    animation-duration: 300ms;
 	}
 	
 	.user-name{
@@ -85,10 +99,17 @@
 	}
 	.timestamp {
 		position: absolute;
-		top: 14px;
-		right: 20px;
+	    top: 10px;
+	    right: 10px;
 		text-align: right;
 		font-size: 13px;
 	    color: #A6B2AD;
 	}
+}
+.system-message {
+    font-size: 13px;
+    margin-left: 60px;
+    color: #89908C;
+    padding: 8px 11px;
+    border-radius: 5px;
 }

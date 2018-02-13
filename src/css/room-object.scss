@@ -47,6 +47,11 @@
 			background: #f0fbf3;
 			color: #1cd67c;
 		}
+		.status-badge.online {
+			transition: none;
+			// background: #f0fbf3;
+		    border: 1px solid #f0fbf3;
+		}
 	}
 
 	&.short {
@@ -108,6 +113,9 @@
 		    white-space: nowrap;
 			overflow: hidden;
     		text-overflow: ellipsis;
+		}
+		.user-status {
+			text-transform: capitalize;
 		}
 		.message-type{
 			padding-top: 9px;

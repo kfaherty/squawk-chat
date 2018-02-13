@@ -51,6 +51,21 @@ class RoomList extends Component {
             if (a.name > b.name) return 1;
             return 0;
         }
+        function status(a,b) {
+            // looking
+            if (a.status === 'looking' && b.status !== 'looking') return -1;
+            if (a.status !== 'looking' && b.status === 'looking') return 1;
+            // online
+            if (a.status === 'online' && b.status !== 'online') return -1;
+            if (a.status !== 'online' && b.status === 'online') return 1;
+            // everything else
+            if (a.status !== 'offline' && b.status === 'offline') return -1;
+            if (a.status === 'offline' && b.status !== 'offline') return 1;
+
+            if (a.name < b.name) return -1;
+            if (a.name > b.name) return 1;
+            return 0;
+        }
         function newest(a,b) {
             if (a.timestamp > b.timestamp) return -1;
             if (a.timestamp < b.timestamp) return 1;
@@ -111,6 +126,8 @@ class RoomList extends Component {
                 return array.sort(population);
             case 'Type':
                 return array.sort(type);
+            case 'Status':
+                return array.sort(status);
             case 'Newest First':
                 return array.sort(newest);
             case 'Oldest First':
@@ -164,6 +181,7 @@ class RoomList extends Component {
                     <div className="list-item" onClick={() => this.changeSort('Alphabetical')}><div className="list-icon fi-text-color"></div>Alphabetical</div>
                     <div className="list-item" onClick={() => this.changeSort('Population')}><div className="list-icon fi-torsos"></div>Population</div>
                     <div className="list-item" onClick={() => this.changeSort('Type')}><div className="list-icon fi-filter"></div>Type</div>
+                    <div className="list-item" onClick={() => this.changeSort('Status')}><div className="list-icon fi-filter"></div>Status</div>
                     <div className="list-item" onClick={() => this.changeSort('Newest First')}><div className="list-icon fi-arrow-up"></div>Newest First</div>
                     <div className="list-item" onClick={() => this.changeSort('Oldest First')}><div className="list-icon fi-arrow-down"></div>Oldest First</div>
                 </div>

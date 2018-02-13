@@ -10,10 +10,30 @@ class RoomShortObject extends Component {
 		return (
 			<div className={"room-object short " + (user.selected ? "selected" : "")} onClick={() => this.roomObjectClicked()}>
 				<Avatar name={user.name} type={user.type} />
+				
+				<div className={"unread-badge " + (user.unread > 0 ? "" : "hidden")}>{user.unread}</div>
+
+				{user.type === 3 && (
+					<div className={"status-badge " + user.status}></div>
+				)}
 
 				<div className="details-contain">
 					<div className="user-name">{user.name}</div>
-					<div className="message-type">Users: {user.characters}</div>
+					{(() => {
+				        switch (user.type) {
+							case 0: return <div className="message-type">Public Channel: {user.population}</div>;
+				        	case 1: return <div className="message-type">Private Channel: {user.population}</div>;
+				        	case 2: return <div className="message-type">Invite Only: {user.population}</div>;
+				        	case 3:
+				        		switch (user.typing) {
+						        	case "typing": return <div className="message-type">{user.channel} is typing..</div>;
+						        	case "paused": return <div className="message-type">{user.channel} has entered text</div>;
+						        	case "clear":  return <div className="message-type"><span className="user-status">{user.status}</span>{user.statusmsg && (<ParsedText character={user.name} text={': '+user.statusmsg}/>)}</div>;
+						        	default:       return <div className="message-type"><span className="user-status">{user.status}</span>{user.statusmsg && (<ParsedText character={user.name} text={': '+user.statusmsg}/>)}</div>;
+						        } 
+				        	default: return '';
+				        }
+				    })()}
 				</div>
 			</div>
 		);
@@ -45,15 +65,15 @@ class RoomObject extends Component {
 					<div className="user-name">{user.channel}</div>
 					{(() => {
 				        switch (user.type) {
-				        	case 0: return <div className="message-type">Public Channel</div>;
-				        	case 1: return <div className="message-type">Private Channel</div>;
-				        	case 2: return <div className="message-type">Invite Only</div>;
+				        	case 0: return <div className="message-type">Public Channel: {user.population}</div>;
+				        	case 1: return <div className="message-type">Private Channel: {user.population}</div>;
+				        	case 2: return <div className="message-type">Invite Only: {user.population}</div>;
 				        	case 3:
 				        		switch (user.typing) {
 						        	case "typing": return <div className="message-type">{user.channel} is typing..</div>;
 						        	case "paused": return <div className="message-type">{user.channel} has entered text</div>;
-						        	case "clear":  return <div className="message-type">{user.status}{user.statusmsg ? (": "+user.statusmsg) : ""}</div>;
-						        	default:       return <div className="message-type">{user.status}{user.statusmsg ? (": "+user.statusmsg) : ""}</div>;
+						        	case "clear":  return <div className="message-type"><span className="user-status">{user.status}</span>{user.statusmsg && (<ParsedText character={user.name} text={': '+user.statusmsg }/>)}</div>;
+						        	default:       return <div className="message-type"><span className="user-status">{user.status}</span>{user.statusmsg && (<ParsedText character={user.name} text={': '+user.statusmsg }/>)}</div>;
 						        } 
 				        	default: return '';
 				        }
