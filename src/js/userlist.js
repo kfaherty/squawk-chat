@@ -22,18 +22,37 @@ class UserList extends Component {
 	  
 	    function type(a,b) { 
 	        // bookmarks/favorites..
-	        if (!a.favorited && b.favorited) return 1;
-	        if (a.favorited && !b.favorited) return -1;
-	        if (!a.bookmarked && b.bookmarked) return 1;
-	        if (a.bookmarked && !b.bookmarked) return -1;
-
-	        // TODO: gender
+   			if (a.favorited && !b.favorited) return 1;
+            if (!a.favorited && b.favorited) return -1;
+            if (a.bookmarked && !b.bookmarked) return 1;
+            if (!a.bookmarked && b.bookmarked) return -1;
 
 	        // alpha 
 	        if (a.identity < b.identity) return -1;
 	        if (a.identity > b.identity) return 1;
 	        return 0;
 	    }
+
+	    function status(a,b) {
+	    	if (a.favorited && !b.favorited) return 1;
+            if (!a.favorited && b.favorited) return -1;
+            if (a.bookmarked && !b.bookmarked) return 1;
+            if (!a.bookmarked && b.bookmarked) return -1;
+            
+            // looking
+            if (a.status === 'looking' && b.status !== 'looking') return -1;
+            if (a.status !== 'looking' && b.status === 'looking') return 1;
+            // online
+            if (a.status === 'online' && b.status !== 'online') return -1;
+            if (a.status !== 'online' && b.status === 'online') return 1;
+            // everything else
+            if (a.status !== 'offline' && b.status === 'offline') return -1;
+            if (a.status === 'offline' && b.status !== 'offline') return 1;
+
+            if (a.name < b.name) return -1;
+            if (a.name > b.name) return 1;
+            return 0;
+        }
 
 	    if (!Array.isArray(array)) {
 	        array = Object.values(array);
@@ -51,6 +70,8 @@ class UserList extends Component {
 	            return array.sort(alpha);
 	        case 'Type':
 	            return array.sort(type);
+	        case 'Status':
+	            return array.sort(status);
 	        default:
 	            console.log('invalid sortType',sortType);
 	            return array;
@@ -96,7 +117,7 @@ class UserList extends Component {
                 <div className={"dropdown " + (this.state.sortMenuOpen ? "visible" : "")}>
                     <div className="list-item" onClick={() => this.changeSort('Alphabetical')}><div className="list-icon fi-text-color"></div>Alphabetical</div>
                     <div className="list-item" onClick={() => this.changeSort('Type')}><div className="list-icon fi-filter"></div>Type</div>
-                    <div className="list-item" onClick={() => this.changeSort('Status')}><div className="list-icon fi-arrow-down"></div>Status</div>
+                    <div className="list-item" onClick={() => this.changeSort('Status')}><div className="list-icon fi-pencil"></div>Status</div>
                 </div>
 
 				{users && users.map((obj) => {

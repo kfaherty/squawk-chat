@@ -37,14 +37,14 @@ class RoomList extends Component {
         }
         function type(a,b) { 
             // bookmarks/favorites..
-            if (!a.favorited && b.favorited) return 1;
-            if (a.favorited && !b.favorited) return -1;
-            if (!a.bookmarked && b.bookmarked) return 1;
-            if (a.bookmarked && !b.bookmarked) return -1;
+            if (a.favorited && !b.favorited) return 1;
+            if (!a.favorited && b.favorited) return -1;
+            if (a.bookmarked && !b.bookmarked) return 1;
+            if (!a.bookmarked && b.bookmarked) return -1;
 
             // channel type
-            if (a.type < b.type) return -1;
-            if (a.type > b.type) return 1;
+            if (a.type > b.type) return -1;
+            if (a.type < b.type) return 1;
 
             // alpha 
             if (a.name < b.name) return -1;
