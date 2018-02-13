@@ -464,7 +464,7 @@ function listenToData() {
 		addListenerForSocketMessage('ORS',(data)=>{ 
 			let defaultTime = Date.now();
 			if (data.channels && data.channels.length) {
-				for (var i = data.channels - 1; i >= 0; i--) {
+				for (var i = data.channels.length - 1; i >= 0; i--) {
 					updateChannelData({
 						type: 1,
 						timestamp: defaultTime,
@@ -738,6 +738,10 @@ function setSelectedChat(value) {
 
 	if (value){ // clear unread if this is actually a room.
 		let channelData = getChannelData(value);
+		if (!channelData) {
+			console.log('you joined a channel I dont know about', selectedChat,channelData);
+			return;
+		}
 		if (channelData.unread){
 			globalUnread = globalUnread - channelData.unread;
 			if (globalUnread < 0) {
