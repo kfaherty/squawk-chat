@@ -113,7 +113,7 @@
     sub {
         bottom: -0.25em;
     }
-    a {
+    a,.session {
         color: #99A09C;
         transition: color 0.3s ease;
         &:hover {
@@ -123,5 +123,8 @@
     .action {
         font-weight: 600;
         // color: #1cd67c;
+    }
+    .session-icon {
+        padding-right: 4px;
     }
 }

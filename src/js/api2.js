@@ -630,9 +630,11 @@ function listenToData() {
 				}
 
 				// two: population
-				let channelData = getChannelData(data.channel);
-				channelData.population = channelData.population--;
-				updateChannelData(channelData); 
+					// we should only do this if we're in this room. Or maybe this doesn't even matter.
+						// fuck it, who cares about channel pops.
+						// let channelData = getChannelData(data.channel);
+						// channelData.population = channelData.population--;
+						// updateChannelData(channelData); 
 
 				// three: leave a channel if this is us and we're in it.
 				if (data.character === userData.name) {  // we've already left by this point.
@@ -668,6 +670,7 @@ function listenToData() {
 					}
 				}
 
+				// userlist
 				let users = channelUsers[data.channel];
 				if (users) {
 					users.push(data.character.identity);
@@ -676,13 +679,14 @@ function listenToData() {
 				}
 				updateChannelUsers(data.channel,users); 	// update users
 
-				// three: update channel data if it's a room we're in - userlist & population
-				let channelData = getChannelData(data.channel);
-				channelData.population++; // update population
-				delete data.character;
-				updateChannelData(data); 
-
-
+				// three: update channel data if it's a room we're in -  & population
+				// user list yes, pop no.
+					// who cares.
+						// let channelData = getChannelData(data.channel);
+						// if (channelData) {
+						// 	channelData.population++; // update population
+						// 	updateChannelData(channelData); 
+						// }
 			}
 		});
 		addListenerForSocketMessage('COL',(data)=>{ // col.nOthing

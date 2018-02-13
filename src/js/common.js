@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import parser, { Tag } from 'bbcode-to-react';
+import { joinChannel } from './api2';
 import loadURLS from './apiurls';
 const apiurls = loadURLS();
 
@@ -185,6 +186,13 @@ class userTag extends Tag {
 		return (<a target="_blank" href={ apiurls.characterurl + this.getContent(true)}>{this.getContent(true)}</a>);
   	}
 }
+class sessionTag extends Tag {
+	toReact() {
+		return (
+			<span className="session" onClick={() => joinChannel(this.getContent(true))}><span className="session-icon fi-lock"></span>{this.params.session}</span>
+		);
+  	}
+}
 
 parser.registerTag('noparse', noparseTag);
 parser.registerTag('url', urlTag);
@@ -194,6 +202,7 @@ parser.registerTag('averyunlikelytag',meTag);
 parser.registerTag('icon',iconTag);
 parser.registerTag('eicon',eiconTag);
 parser.registerTag('user',userTag);
+parser.registerTag('session',sessionTag);
 
 class ParsedText extends Component {
 	render() {
