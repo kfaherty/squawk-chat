@@ -14,6 +14,7 @@ class ChatMessage extends Component {
 		if (message.systemMessage) {
 			return (
 				<div className="system-message">
+					<div className={"system-message-icon " + message.icon}></div>
 					<ParsedText character={''} text={message.message} />
 				</div>
 			);

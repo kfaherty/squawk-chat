@@ -10,7 +10,6 @@
 	opacity: 1;
 	transition: opacity 0.3s ease,transform 0.3s ease;
 	pointer-events: initial;
-	overflow-y: scroll;
 
 	&.hidden {
 		opacity: 0;
@@ -83,38 +82,49 @@
 
 	.status-icon {
 	}
-	.list-user {
-	    border-radius: 5px;
-	    margin: 10px;
-	    background: white;
-	    position: relative;
-	    border: 1px solid #E5EBE9;
-	    cursor: pointer;
+}
+.list-user {
+    border-radius: 5px;
+    margin: 10px;
+    background: white;
+    position: relative;
+    border: 1px solid #E5EBE9;
+    cursor: pointer;
 
-	    .avatar-contain {
-    	    position: absolute;
-			left: 4px;
-			top: 10px;
-		    width: 20px;
-		    height: 20px;
-		    border-radius: 30px;
-		    background: black;
-		    -webkit-box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.1);
-		    box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.1);
-	    }
+    &:first-child {
+    	margin-top: 0px;
+    }
 
-	    .user-name {
-	    	font-size: 13px;
-		    padding-left: 28px;
-		    padding-right: 4px;
-		    line-height: 40px;
-		    font-weight: 600;
-		    font-size: 13px;
-		    color: #6A6F6C;
-		    white-space: nowrap;
-		    overflow: hidden;
-		    -o-text-overflow: ellipsis;
-		    text-overflow: ellipsis;	
-	    }
-	}
+    .avatar-contain {
+	    position: absolute;
+		left: 4px;
+		top: 10px;
+	    width: 20px;
+	    height: 20px;
+	    border-radius: 30px;
+	    background: black;
+	    -webkit-box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.1);
+	    box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.1);
+    }
+
+    .user-name {
+    	font-size: 13px;
+	    padding-left: 28px;
+	    padding-right: 4px;
+	    line-height: 40px;
+	    font-weight: 600;
+	    font-size: 13px;
+	    color: #6A6F6C;
+	    white-space: nowrap;
+	    overflow: hidden;
+	    -o-text-overflow: ellipsis;
+	    text-overflow: ellipsis;	
+    }
+}
+.users-scroll {
+	overflow-y: scroll;
+	width: 100%;
+	top: 10px;
+    position: relative;
+    height: calc( 100% - 82px );
 }

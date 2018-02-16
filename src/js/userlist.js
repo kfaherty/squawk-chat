@@ -120,21 +120,23 @@ class UserList extends Component {
                     <div className="list-item" onClick={() => this.changeSort('Status')}><div className="list-icon fi-pencil"></div>Status</div>
                 </div>
 
-				{users && users.map((obj) => {
-					// TODO: gender stuff.
-					// TODO: friend identification
-					// TODO: bookmark identification
+                <div className="users-scroll">
+					{users && users.map((obj) => {
+						// TODO: gender stuff.
+						// TODO: friend identification
+						// TODO: bookmark identification
 
-					return (
-						<div className="list-user" key={obj.identity} onClick={() => this.handleClick(obj.identity)}>
-							<Avatar name={obj.identity} type={3} />
-							<div className={"status-badge " + obj.status}></div>
+						return (
+							<div className="list-user" key={obj.identity} onClick={() => this.handleClick(obj.identity)}>
+								<Avatar name={obj.identity} type={3} />
+								<div className={"status-badge " + obj.status}></div>
 
-							<div className="rank-icon"></div>
-							<div className="user-name">{obj.identity}</div>
-						</div>
-					)	
-				})}
+								<div className="rank-icon"></div>
+								<div className="user-name">{obj.identity}</div>
+							</div>
+						)	
+					})}
+				</div>
 			</div>
 		)
 	}

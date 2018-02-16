@@ -306,7 +306,7 @@ function listenToData() {
 			// 	});
 			// }
 			if (channelsJoined.indexOf(data.character) !== -1) { //  this should check if you're joined first probably.
-				createSystemMessage(data.character,data.character+' has been banned from ' + data.channel + ' by '+data.operator);
+				createSystemMessage(data.character,data.character+' has been banned from ' + data.channel + ' by '+data.operator,'fi-prohibited');
 			}
 		});
 		addListenerForSocketMessage('CKU',(data)=>{  
@@ -317,7 +317,7 @@ function listenToData() {
 			// 	});
 			// }
 			if (channelsJoined.indexOf(data.character) !== -1) { //  this should check if you're joined first probably.
-				createSystemMessage(data.character,data.character+' has been kicked from ' + data.channel + ' by '+data.operator);
+				createSystemMessage(data.character,data.character+' has been kicked from ' + data.channel + ' by '+data.operator,'fi-prohibited');
 			}
 		});
 		addListenerForSocketMessage('LIS',(data)=>{  
@@ -366,7 +366,7 @@ function listenToData() {
 				updateUserData(userData);
 
 				if (channelsJoined.indexOf(data.character) !== -1) { //  this should check if you're joined first probably.
-					createSystemMessage(data.character,data.character + ' connected.');
+					createSystemMessage(data.character,data.character + ' connected.','fi-check');
 				}
 			}
 		});
@@ -397,7 +397,7 @@ function listenToData() {
 				updateChannelData(channelData); 
 				
 				if (channelsJoined.indexOf(data.character) !== -1) { //  this should check if you're joined first probably.
-					createSystemMessage(data.character,data.character + ' disconnected.');
+					createSystemMessage(data.character,data.character + ' disconnected.','fi-x');
 				}
 			}
 
@@ -414,7 +414,7 @@ function listenToData() {
 
 					// if they're a bookmark.
 					if (bookmarksList.indexOf(data.character) !== -1) { // and this isn't a private channel.
-						createSystemMessage(i,data.character + ' left the channel.');		
+						createSystemMessage(i,data.character + ' left the channel.','fi-minus');		
 					}
 				}
 			}
@@ -648,7 +648,7 @@ function listenToData() {
 				// 		header: data.character.identity + " is offline", //
 				// 		// text:
 				// 	})
-					createSystemMessage(data.channel,data.character + ' left the channel.');
+					createSystemMessage(data.channel,data.character + ' left the channel.','fi-minus');
 				}
 
 				// two: population
@@ -682,7 +682,7 @@ function listenToData() {
 				// 		header: data.character.identity + " is online",
 				// 		// text:
 				// 	})
-					createSystemMessage(data.channel,data.character.identity + ' joined the channel.');
+					createSystemMessage(data.channel,data.character.identity + ' joined the channel.','fi-plus');
 				}
 
 				// two: join a channel if this is us and we're not in it yet.
@@ -1096,11 +1096,12 @@ function privateMessage(character,message){
 	updateChannelMessages(character,data);
 }
 
-function createSystemMessage(channel,message) {
+function createSystemMessage(channel,message,icon) {
 	let data = {
 		timestamp: Date.now(),
 		key: messageSeq++,
 		systemMessage: true,
+		icon: icon || '',
 		message: message,
 		character: userData.name
 	}
