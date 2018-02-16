@@ -10,9 +10,10 @@ import StatusModal from './statusmodal';
 import { 
 	logout,gotLoginPromise,lostConnectionAlert,gainedConnectionAlert,
 	getChannelData,joinChannel,getChannelMessages,getChannelUsers,createPrivateMessage,
-	getFriends,getChannels,getJoinedChannels,
+	fetchChannels,fetchPrivate,
+	getFriends,getChannels,getJoinedChannels,getPrivateChannels,
 	updateStatus,
-	setChannelsCallback,setJoinedChannelsCallback,setFriendsCallback,setSelectedChatCallback,setSelectedChat,setCreateToastCallback,setChannelMessagesCallback,setChannelUsersCallback
+	setChannelsCallback,setJoinedChannelsCallback,setFriendsCallback,setSelectedChatCallback,setSelectedChat,setCreateToastCallback,setChannelMessagesCallback,setChannelUsersCallback,setPrivateChannelsCallback
 } from './api2';
 
 style({ // toasts style overrides.
@@ -61,6 +62,7 @@ class Root extends Component {
 	    	
 	    	friendslist: [],
 	    	roomslist: [],
+	    	privatelist: [],
 	    	roomsjoined: [],
 
 	    	userMenuOpen: false,
@@ -71,6 +73,11 @@ class Root extends Component {
 	    	currentStatusMessage: ''
 	    };
 		
+		// these trigger the inital loads
+	    this.friendsLoaded = false;
+	    this.channelsLoaded = false;
+	    this.privateLoaded = false;
+
 		this.updateStatus = this.updateStatus.bind(this);
         this.setSelectedChat = this.setSelectedChat.bind(this);   
         this.reportSelectedChat = this.reportSelectedChat.bind(this);
@@ -89,6 +96,13 @@ class Root extends Component {
 			// console.log('new channel data',data);
 			if (this.state.selectedTab === 'channels') {
 				this.setState({roomslist: data});
+			}
+		});
+		// private:
+		setPrivateChannelsCallback((data) => {
+			// console.log('new private data',data);
+			if (this.state.selectedTab === 'private') {
+				this.setState({privatelist: data});
 			}
 		});
 	    // friends:
@@ -148,14 +162,28 @@ class Root extends Component {
     setSelectedTab(value) {
     	switch(value) {
     		case 'messages':
-    			// console.log('get joined channels',getJoinedChannels());
     			this.setState({roomsjoined:getJoinedChannels()});
     			break;
     		case 'channels':
-    			this.setState({roomslist:getChannels()});
+    			if (!this.channelsLoaded) {
+					fetchChannels();
+					this.setState({roomslist:getChannels()});
+					this.channelsLoaded = true;
+				}
+    			break;
+    		case 'private':
+    			if (!this.privateLoaded) {
+    				fetchPrivate();
+    				// this might always be empty, but it's okay because the callback should run.
+					this.setState({privatelist:getPrivateChannels()}); 
+					this.privateLoaded = true;
+				}
     			break;
     		case 'friends':
-    			this.setState({friendslist:getFriends()});
+    			if (!this.friendsLoaded) {
+    				this.setState({friendslist:getFriends()});
+    				this.friendsLoaded = true;
+    			}
     			break;
     		default:
     			break;
@@ -236,7 +264,7 @@ class Root extends Component {
           		
           		<div className="toasts-contain">
           			<ToastContainer 
-          				autoClose={45000} 
+          				autoClose={20000} 
           				newestOnTop={true} 
           				hideProgressBar={true} 
           				closeButton={false} 
@@ -253,6 +281,7 @@ class Root extends Component {
 			        <nav className="text-buttons-contain">
 			            <span onClick={() => this.setSelectedTab('messages')} className={"text-button " + (this.state.selectedTab === 'messages' ? "active" : "")}>Messages</span>
 			            <span onClick={() => this.setSelectedTab('channels')} className={"text-button " + (this.state.selectedTab === 'channels' ? "active" : "")}>Channels</span>
+			            <span onClick={() => this.setSelectedTab('private')} className={"text-button " + (this.state.selectedTab === 'private' ? "active" : "")}>Private</span>
 			            <span onClick={() => this.setSelectedTab('friends')}  className={"text-button " + (this.state.selectedTab === 'friends' ? "active" : "")}>Friends</span>
 			            {/* <span onClick={() => this.setSelectedTab('search')}   className={"text-button " + (this.state.selectedTab === 'search' ? "active" : "")}>Search Users</span> */}
 			        </nav>
@@ -310,9 +339,18 @@ class Root extends Component {
 					<RoomList
 						selectedChat={this.state.selectedChat}
 						rooms={this.state.roomslist}
-						defaultSort={'Type'}
+						defaultSort={'Alphabetical'}
 						label="channels"
 						activeTab={(this.state.selectedTab === 'channels' ? true : false)}
+						setSelectedChat={this.setSelectedChat}
+					/>
+					{/* CHANNELS */}
+					<RoomList
+						selectedChat={this.state.selectedChat}
+						rooms={this.state.privatelist}
+						defaultSort={'Population'}
+						label="private channels"
+						activeTab={(this.state.selectedTab === 'private' ? true : false)}
 						setSelectedChat={this.setSelectedChat}
 					/>
 					{/* FRIENDS */}

@@ -126,7 +126,8 @@ var channelsList = {}; // hashmap of rooms
 var channelMessages = {}; // this is a hashmap of room messages
 var channelUsers = {}; // this a hashmap of room users
 var channelsJoined = []; // this is just going to be a standard array of names.
-// var usersCache = []; // LIS data.
+var usersCache = []; // LIS data.
+var privateChannelsList = {};
 var bookmarksList = []; // we're not going to know who is a bookmark and who is a friend unless we use the data from login.
 var friendsList = [];
 var socketListeners = []; // listeners hashmap
@@ -229,10 +230,20 @@ function createSocket(name) {
 			// TODO: determine when to reconnect
 		};
 
-		gotLoginPromise().then(()=>{
-	        socket.send( 'CHA' ); // 0
-        	socket.send( 'ORS' ); // 1
-		});
+
+	
+	});
+}
+
+function fetchChannels() {
+	gotLoginPromise().then(()=>{ // this should lazy load this.
+		socket.send('CHA');
+	});	
+}
+
+function fetchPrivate() {
+	gotLoginPromise().then(()=>{ // this should lazy load this.
+		socket.send('ORS');
 	});
 }
 
@@ -289,18 +300,24 @@ function listenToData() {
 		});
 		addListenerForSocketMessage('CBU',(data)=>{  
 			// TODO: if this is us, create a toast about it.
-			if (toastCallback) {  // TODO: this should be a system message in the channel.
-				toastCallback({
-					header: data.character+' has been banned from ' + data.channel + ' by '+data.operator
-				});
+			// if (toastCallback) {  // TODO: this should be a system message in the channel.
+			// 	toastCallback({
+			// 		header: data.character+' has been banned from ' + data.channel + ' by '+data.operator
+			// 	});
+			// }
+			if (channelsJoined.indexOf(data.character) !== -1) { //  this should check if you're joined first probably.
+				createSystemMessage(data.character,data.character+' has been banned from ' + data.channel + ' by '+data.operator);
 			}
 		});
 		addListenerForSocketMessage('CKU',(data)=>{  
 			// TODO: if this is us, create a toast about it.
-			if (toastCallback) {  // TODO: this should be a system message in the channel.
-				toastCallback({
-					header: data.character+' has been kicked from ' + data.channel + ' by '+data.operator
-				});
+			// if (toastCallback) {  // TODO: this should be a system message in the channel.
+			// 	toastCallback({
+			// 		header: data.character+' has been kicked from ' + data.channel + ' by '+data.operator
+			// 	});
+			// }
+			if (channelsJoined.indexOf(data.character) !== -1) { //  this should check if you're joined first probably.
+				createSystemMessage(data.character,data.character+' has been kicked from ' + data.channel + ' by '+data.operator);
 			}
 		});
 		addListenerForSocketMessage('LIS',(data)=>{  
@@ -318,7 +335,7 @@ function listenToData() {
 							status: data.characters[i][2],
 							statusmsg: data.characters[i][3],
 						};
-						updateChannelData(channelData); 
+						updateChannelData(channelData); // FIXME: this should go to users cache
 					}
 				}
 			}
@@ -330,11 +347,13 @@ function listenToData() {
 					header: data.identity + " connected",
 					// text:
 				})
+
 				// two: add to users cache if we don't have it already..?
-				// that's going to create a ton of data dude. // this is only friends. c:
-				let channelData = getChannelData(data.identity);
-				if (!channelData) {
-					channelData = {
+					// that's going to create a ton of data dude. 
+						// this is only friends. c:
+				let userData = getUserData(data.identity);
+				if (!userData) {
+					userData = {
 						name: data.identity,
 						channel: data.identity,
 						type: 3,
@@ -342,9 +361,9 @@ function listenToData() {
 						status: 'online'
 					}
 				}
-				channelData.online = false;
-				channelData.timestamp = Date.now();
-				updateChannelData(channelData); 
+				userData.online = true;
+				userData.timestamp = Date.now();
+				updateUserData(userData);
 
 				if (channelsJoined.indexOf(data.character) !== -1) { //  this should check if you're joined first probably.
 					createSystemMessage(data.character,data.character + ' connected.');
@@ -359,6 +378,9 @@ function listenToData() {
 					// text:
 				});
 				let channelData = getChannelData(data.character);
+
+				// TODO: check private channels.
+				
 				if (!channelData) {
 					return; // if we dont have this and they left, fuck it.
 					// channelData = {
@@ -465,7 +487,7 @@ function listenToData() {
 			let defaultTime = Date.now();
 			if (data.channels && data.channels.length) {
 				for (var i = data.channels.length - 1; i >= 0; i--) {
-					updateChannelData({
+					updatePrivateChannelData({
 						type: 1,
 						timestamp: defaultTime,
 						channel: data.channels[i].name,
@@ -473,8 +495,8 @@ function listenToData() {
 						population: data.channels[i].characters
 					});
 				}
-				if (channelsCallback) {
-					channelsCallback(channelsList);
+				if (privateChannelsCallback) {
+					privateChannelsCallback(privateChannelsList);
 				}
 			}
 		});
@@ -712,6 +734,11 @@ function setChannelsCallback(cb) {
 	channelsCallback = cb;		
 }
 
+var privateChannelsCallback = undefined;
+function setPrivateChannelsCallback(cb) {
+	privateChannelsCallback = cb;
+}
+
 var joinedChannelsCallback = undefined;
 function setJoinedChannelsCallback(cb) {
 	joinedChannelsCallback = cb;
@@ -781,8 +808,24 @@ function getChannels() {
 	return channelsList;
 }
 
+function getPrivateChannels() {
+	return privateChannelsList;
+}
+
+function getUsers() { // we don't use this.
+	return usersCache; // this probably needs work.
+}
+
 function getChannelData(name){
  	return channelsList[name];
+}
+
+function getPrivateChannelData(name) {
+	return privateChannelsList[name];
+}
+
+function getUserData(name) {
+	return usersCache[name];	
 }
 
 function getChannelMessages(name) {
@@ -824,6 +867,60 @@ function updateChannelData(data) {
 	// if this is the selected chat, then do an update.
 	if (selectedChat === data.channel && selectedChatCallback) {
 		selectedChatCallback(channelsList[data.channel]);
+	}
+}
+
+function updatePrivateChannelData(data) {
+	if (!data || !data.channel) {
+		console.log('missing stuff',data)
+		return;
+	}
+
+	if (data.users) {
+		data.characters = data.users.length;
+	}
+
+	if (privateChannelsList[data.channel]) { // if an entry exists, update the fields you have.
+		privateChannelsList[data.channel] = Object.assign(privateChannelsList[data.channel], data);
+	} else { // if an entry doesn't exist, add it
+		privateChannelsList[data.channel] = data;
+	}
+
+	// should we test if we're joined?
+	if (channelsJoined.indexOf(data.channel) !== -1) {
+		if (joinedChannelsCallback) { // this might be slow.
+			joinedChannelsCallback(getJoinedChannels());
+		}
+	}
+
+	// if this is the selected chat, then do an update.
+	if (selectedChat === data.channel && selectedChatCallback) {
+		selectedChatCallback(privateChannelsList[data.channel]);
+	}
+}
+
+function updateUserData(data) {
+	if (!data || !data.channel) {
+		console.log('missing stuff',data)
+		return;
+	}
+
+	if (usersCache[data.channel]) { // if an entry exists, update the fields you have.
+		usersCache[data.channel] = Object.assign(usersCache[data.channel], data);
+	} else { // if an entry doesn't exist, add it
+		usersCache[data.channel] = data;
+	}
+
+	// should we test if we're joined?
+	if (channelsJoined.indexOf(data.channel) !== -1) {
+		if (joinedChannelsCallback) { // this might be slow.
+			joinedChannelsCallback(getJoinedChannels());
+		}
+	}
+
+	// if this is the selected chat, then do an update.
+	if (selectedChat === data.channel && selectedChatCallback) {
+		selectedChatCallback(usersCache[data.channel]);
 	}
 }
 
@@ -1039,7 +1136,8 @@ export {
 	loadCookie,gotLoginPromise,createSocket,
 	lostConnectionAlert,gainedConnectionAlert,
 	getChannelData,joinChannel,createPrivateMessage,leaveChannel,getChannelMessages,getChannelUsers,
-	getFriends,getChannels,getJoinedChannels,
+	fetchChannels,fetchPrivate,
+	getFriends,getChannels,getJoinedChannels,getPrivateChannels,
 	sendMessage,privateMessage,sendTyping,updateStatus,
-	setChannelsCallback,setJoinedChannelsCallback,setSelectedChatCallback,setSelectedChat,setFriendsCallback,setCreateToastCallback,setChannelMessagesCallback,setChannelUsersCallback
+	setChannelsCallback,setJoinedChannelsCallback,setSelectedChatCallback,setSelectedChat,setFriendsCallback,setCreateToastCallback,setChannelMessagesCallback,setChannelUsersCallback,setPrivateChannelsCallback
 };

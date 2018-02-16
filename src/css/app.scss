@@ -155,7 +155,8 @@ html{
         color: #6A6F6C;
         text-align: right;
         white-space: nowrap;
-
+        font-size: 13px;
+        
         @include bbcodeStyles();
 
         img {
@@ -217,6 +218,7 @@ html{
     right: 0px;
     width: 140px;
     height: 100%;
+    border-left: 1px solid #e5ebe9;
     background: white;
     transition: transform 0.3s ease;
     &.full {

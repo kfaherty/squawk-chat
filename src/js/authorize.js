@@ -91,7 +91,7 @@ class Authorize extends Component {
 		
 		return (
 			<div className={"authorize-contain " + (this.props.visible ? "" : "visible" )}>
-				{/* <div className="authorize-background"></div> */}
+				<div className="authorize-background"></div>
 
 				<div className="version-wrap">version {apiurls.version}</div>
 

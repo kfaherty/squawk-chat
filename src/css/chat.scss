@@ -181,18 +181,16 @@
 	}
 
 	.input-contain {
-		position: absolute;
-		bottom: 0px;
-		left: 0px;
-		// border-top: 1px solid black;
-		margin: 10px 20px 15px;
-		// height: 100px;
-		min-height: 81px;
-		background: white;
-		border-radius: 4px;
-		width: calc( 100% - 47px ); // the 7 here is the scroll bar.
-    	box-shadow: 0px 4px 30px rgba(0, 0, 0, .1);
-		border: 1px solid #E5EBE9;
+	    position: absolute;
+	    bottom: 0px;
+	    left: 0px;
+	    margin: 10px 20px 15px 59px;
+	    min-height: 81px;
+	    background: white;
+	    border-radius: 4px;
+	    width: calc( 100% - 86px);
+	    box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.1);
+	    border: 1px solid #E5EBE9;
 
 		.label {
 			position: absolute;
@@ -301,7 +299,7 @@
 	&.visible {
 		padding: 5px;
 		// border: 1px solid #DFE4E2;
-		margin: 10px 20px;
+		margin: 10px 20px 10px 60px;
 		opacity: 1;
 		height: 25px;
 		transform: scale(1);
@@ -321,7 +319,7 @@
 	&.paused {
 		padding: 5px;
 		// border: 1px solid #DFE4E2;
-		margin: 20px;
+		margin: 10px 20px 10px 60px;
 		opacity: 1;
 		height: 25px;
 		transform: scale(1);

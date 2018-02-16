@@ -43,8 +43,8 @@ class RoomList extends Component {
             if (!a.bookmarked && b.bookmarked) return -1;
 
             // channel type
-            if (a.type > b.type) return -1;
-            if (a.type < b.type) return 1;
+            if (a.type < b.type) return -1;
+            if (a.type > b.type) return 1;
 
             // alpha 
             if (a.name < b.name) return -1;
@@ -194,7 +194,7 @@ class RoomList extends Component {
                                 <RoomObject 
                                     key={obj.name}
                                     user={obj}
-                                    setSelectedChat={() => this.setSelectedChat(obj.name,obj.type)}
+                                    setSelectedChat={() => this.setSelectedChat(obj.channel,obj.type)}
                                 />
                             );
                         } else {
@@ -202,7 +202,7 @@ class RoomList extends Component {
                                 <RoomShortObject 
                                     key={obj.name}
                                     user={obj}
-                                    setSelectedChat={() => this.setSelectedChat(obj.name,obj.type)}
+                                    setSelectedChat={() => this.setSelectedChat(obj.channel,obj.type)}
                                 />
                             );
                         }

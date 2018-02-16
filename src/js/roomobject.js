@@ -14,7 +14,7 @@ class RoomShortObject extends Component {
 				<div className={"unread-badge " + (user.unread > 0 ? "" : "hidden")}>{user.unread}</div>
 
 				{user.type === 3 && (
-					<div className={"status-badge " + user.status}></div>
+					<div className={"status-badge " + (user.status || 'Unknown')}></div>
 				)}
 
 				<div className="details-contain">
@@ -28,8 +28,8 @@ class RoomShortObject extends Component {
 				        		switch (user.typing) {
 						        	case "typing": return <div className="message-type">{user.channel} is typing..</div>;
 						        	case "paused": return <div className="message-type">{user.channel} has entered text</div>;
-						        	case "clear":  return <div className="message-type"><span className="user-status">{user.status}</span>{user.statusmsg && (<ParsedText character={user.name} text={': '+user.statusmsg}/>)}</div>;
-						        	default:       return <div className="message-type"><span className="user-status">{user.status}</span>{user.statusmsg && (<ParsedText character={user.name} text={': '+user.statusmsg}/>)}</div>;
+						        	case "clear":  return <div className="message-type"><span className="user-status">{user.status || 'Unknown'}</span>{user.statusmsg && (<ParsedText character={user.name} text={': '+user.statusmsg}/>)}</div>;
+						        	default:       return <div className="message-type"><span className="user-status">{user.status || 'Unknown'}</span>{user.statusmsg && (<ParsedText character={user.name} text={': '+user.statusmsg}/>)}</div>;
 						        } 
 				        	default: return '';
 				        }
@@ -53,7 +53,7 @@ class RoomObject extends Component {
 				<div className={"unread-badge " + (user.unread > 0 ? "" : "hidden")}>{user.unread}</div>
 
 				{user.type === 3 && (
-					<div className={"status-badge " + user.status}></div>
+					<div className={"status-badge " + (user.status || 'Unknown')}></div>
 				)}
 
 				<div className="user-icon-contain">
@@ -72,8 +72,8 @@ class RoomObject extends Component {
 				        		switch (user.typing) {
 						        	case "typing": return <div className="message-type">{user.channel} is typing..</div>;
 						        	case "paused": return <div className="message-type">{user.channel} has entered text</div>;
-						        	case "clear":  return <div className="message-type"><span className="user-status">{user.status}</span>{user.statusmsg && (<ParsedText character={user.name} text={': '+user.statusmsg }/>)}</div>;
-						        	default:       return <div className="message-type"><span className="user-status">{user.status}</span>{user.statusmsg && (<ParsedText character={user.name} text={': '+user.statusmsg }/>)}</div>;
+						        	case "clear":  return <div className="message-type"><span className="user-status">{user.status || 'Unknown'}</span>{user.statusmsg && (<ParsedText character={user.name} text={': '+user.statusmsg }/>)}</div>;
+						        	default:       return <div className="message-type"><span className="user-status">{user.status || 'Unknown'}</span>{user.statusmsg && (<ParsedText character={user.name} text={': '+user.statusmsg }/>)}</div>;
 						        } 
 				        	default: return '';
 				        }

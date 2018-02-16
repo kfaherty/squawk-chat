@@ -101,27 +101,26 @@ class Chat extends Component {
 		this.inputs[this.props.selectedChat] = event.target.value;
 
     	if (this.props.chat.type === 3) { // this only needs to run if this is a private chat.
-	    	if (this.typing && !event.target.value) {
+	    	if ((this.typing || this.paused) && !event.target.value) {
 	    		this.typing = false;
 	    		this.paused = false;
 	    		clearTimeout(this.timeout);
 	    		
 	    		sendTyping('clear',this.props.selectedChat); // send tpn clear
+	    		return;
 	    	}
-	    	if ((!this.typing || this.paused) && event.target.value){
-	    		this.typing = true;
-	    		this.paused = false;
 
-	    		sendTyping('typing',this.props.selectedChat); // send tpn typing
+    		this.typing = true;
+    		this.paused = false;
 
-	    		let thisPM = this.props.selectedChat;
+    		sendTyping('typing',this.props.selectedChat); // send tpn typing
 
-	    		clearTimeout(this.timeout);
-	    		this.timeout = setTimeout(() => {
-		    		sendTyping('paused',thisPM); // send tpn paused
-	    			this.paused = true;
-				},3000);
-	    	}
+    		let thisPM = this.props.selectedChat;
+    		clearTimeout(this.timeout);
+    		this.timeout = setTimeout(() => {
+	    		sendTyping('paused',thisPM); // send tpn paused
+    			this.paused = true;
+			},3000);
 		}
     }
 	handleKeyDown(event) {
@@ -208,7 +207,7 @@ class Chat extends Component {
 							        	case 0: return <div className="chat-subtitle"><ParsedText text={chat.description} /></div>;
 							        	case 1: return <div className="chat-subtitle"><ParsedText text={chat.description} /></div>;
 							        	case 2: return <div className="chat-subtitle"><ParsedText text={chat.description} /></div>;
-							        	case 3: return <div className="chat-subtitle"><span className="user-status">{chat.status}</span>{chat.statusmsg && (<ParsedText character={chat.name} text={': '+chat.statusmsg}/>)}</div>;
+							        	case 3: return <div className="chat-subtitle"><span className="user-status">{chat.status || 'Unknown'}</span>{chat.statusmsg && (<ParsedText character={chat.name} text={': '+chat.statusmsg}/>)}</div>;
 							        	default: return '';
 							        }
 							    })()}
@@ -236,6 +235,7 @@ class Chat extends Component {
 								  <ChatMessage 
 								    key={obj.key}
 								    data={obj} 
+									usernameClicked={this.usernameClicked} 
 								  />
 								)
 							})}
