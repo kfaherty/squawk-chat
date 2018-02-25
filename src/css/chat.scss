@@ -164,7 +164,7 @@
 	top: 0px;
 	left: 0px;
 	height: 100%;
-	width: calc( 100% - 140px );
+	width: calc( 100% - 185px);
 	transition: width 0.3s ease,opacity 0.3s ease;
 	opacity: 1;
 	pointer-events: initial;
@@ -184,11 +184,11 @@
 	    position: absolute;
 	    bottom: 0px;
 	    left: 0px;
-	    margin: 10px 20px 15px 59px;
+	    margin: 10px 10px 15px 59px;
 	    min-height: 81px;
 	    background: white;
 	    border-radius: 4px;
-	    width: calc( 100% - 86px);
+	    width: calc( 100% - 76px);
 	    box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.1);
 	    border: 1px solid #E5EBE9;
 
@@ -232,6 +232,43 @@
 
 	.dropdown {
 		top: 34px;
+	}
+
+	.scroll-button {
+	    position: absolute;
+	    bottom: 56px;
+	    left: 8px;
+	    width: 30px;
+	    height: 30px;
+	    background: white;
+	    display: flex;
+	    border-radius: 4px;
+	    margin: 10px;
+	    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 30px;
+	    border-width: 1px;
+	    border-style: solid;
+	    border-color: rgb(229, 235, 233);
+	    text-align: center;
+	    transition: border 0.3s ease;
+
+	    &:hover {
+	    	.fi-download {
+	    		color: #6A6F6C;
+	    	}
+	    }
+		&.active {
+	        border: 1px solid #1cd67c;
+		}
+
+	    .fi-download {
+    	    position: relative;
+		    align-self: center;
+		    color: #9EA6A2;
+	        margin: 0 auto;
+	        transition: color 0.3s ease;
+
+	      
+	    }
 	}
 }
 .messages-contain {

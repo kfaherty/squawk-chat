@@ -792,9 +792,9 @@ function getPrivateChannels() {
 	return privateChannelsList;
 }
 
-function getUsers() { // we don't use this.
-	return usersCache; // this probably needs work.
-}
+// function getUsers() { // we don't use this.
+// 	return usersCache; // this probably needs work.
+// }
 
 function getChannelData(name){
  	return channelsList[name];
@@ -952,7 +952,7 @@ function getAnyChannelData(name) {
 }
 
 function updateAnyChannelData(channelData) {
-	if (channelData.type == 3) {
+	if (channelData.type === 3) {
 		updateUserData(channelData);
 	} else if (channelData.type === 0) {
 		updateChannelData(channelData);

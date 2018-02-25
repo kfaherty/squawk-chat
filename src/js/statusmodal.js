@@ -30,6 +30,8 @@ class StatusModal extends Component {
 			case 'Status Message':
 				this.message = value;
 				break;
+			default: 
+				break;
 		}
 	}
 

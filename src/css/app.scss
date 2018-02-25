@@ -74,12 +74,12 @@ html{
     position: relative;
 
     .dropdown {
-        right: 205px;
+        right: 250px;
         top: 48px;
         transition: transform 0.3s ease;
 
         &.full {
-            transform: translateX(115px);
+            transform: translateX(165px);
             // right: 85px;
         }
     }
@@ -110,7 +110,7 @@ html{
   user-select: none;
   position: absolute;
   top: 0px;
-  left: 160px;
+  left: 165px;
   span {
     padding-right: 39px;
     color: #99A09C;
@@ -132,7 +132,7 @@ html{
 .logged-in-user-contain {
     position: absolute;
     top: 0px;
-    right: 160px;
+    right: 205px;
     cursor: pointer;
     transition: transform 0.3s ease;
 
@@ -210,20 +210,20 @@ html{
     }
 
     &.full {
-        transform: translateX(115px);
+        transform: translateX(165px);
     }
 }
 .controls-contain {
     position: absolute;
     top: 0px;
     right: 0px;
-    width: 140px;
+    width: 185px;
     height: 100%;
     border-left: 1px solid #e5ebe9;
     background: white;
     transition: transform 0.3s ease;
     &.full {
-        transform: translateX(115px);
+        transform: translateX(165px);
         // flip arrow
         .arrow.right {
             transform: translate3d(0, -50%, 0) rotate(225deg);

@@ -2,7 +2,7 @@
 .chat-user-list-contain {
 	position: absolute;
 	right: 0px;
-	width: 140px;
+	width: 185px;
 	height: 100%;
 	border-left: 1px solid #E5EBE9;
 	top: 0px;
@@ -17,7 +17,7 @@
 	}
 
 	&.full {
-        transform: translate(140px, 0px);
+        transform: translate(185px, 0px);
 	}
 	
 	.search {

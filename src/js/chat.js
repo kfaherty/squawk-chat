@@ -38,13 +38,13 @@ class Chat extends Component {
     	this.state= {
 			chatMenuOpen: false,
 			favorited: this.props.favorited, // this is going to come from cookie.
-			ignored: this.props.ignored
+			ignored: this.props.ignored,
+			scrolledBottom: false
     	}
 
 		this.inputs = {};
-    	this.scrolledBottom = false;
     	this.usernameClicked = this.usernameClicked.bind(this);
-	    this.handleScroll = this.handleScroll.bind(this);
+	    this.toggleScroll = this.toggleScroll.bind(this);
 	}
 
     clearSelectedChat() {
@@ -76,14 +76,11 @@ class Chat extends Component {
     	this.toggleChatMenu();
     }
 
-    handleScroll() { // detect if should scroll on new message recieve
-        const dom = ReactDOM.findDOMNode(this);
-		if ((dom.scrollTop+dom.clientHeight) >= dom.scrollHeight) {
-	      	this.scrolledBottom = true;
-	      	return;
-		}
-	    this.scrolledBottom = false;
-	}
+    toggleScroll() {
+    	this.setState({scrolledBottom: !this.state.scrolledBottom});
+    	// this.scrollToBottom();
+    }
+
     scrollToBottom(jump){ // scroll
     	// console.log('scrolling bottom.');
     	if (jump) {
@@ -227,7 +224,7 @@ class Chat extends Component {
 							<div onClick={() => this.reportSelectedChat()} className="list-item"><div className="list-icon fi-flag"></div>Report</div>
 						</div>
 
-						<div className="messages-contain" onScroll={this.handleScroll}>
+						<div className="messages-contain"> {/*onScroll={this.handleScroll}> */}
 							{messages && messages.map((obj) => {
 								// TODO filter out ignored users
 
@@ -246,7 +243,7 @@ class Chat extends Component {
 					    	<div className='marker-bottom' ref={(el) => { this.messagesEnd = el; }}></div>
 						</div>
 
-						<div className="scroll-button">
+						<div className={"scroll-button " + (!!this.state.scrolledBottom ? "active" : "")} onClick={this.toggleScroll}>
 							<div className="fi-download" />
 						</div>
 
@@ -294,7 +291,7 @@ class Chat extends Component {
 			return;
 		}
 
-		if (this.scrolledBottom) { // scrolled to bottom already == scroll again.
+		if (!!this.state.scrolledBottom) { // scrolled to bottom already == scroll again.
 			this.scrollToBottom();
 		}
 	}
