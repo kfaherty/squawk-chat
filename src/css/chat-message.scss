@@ -109,4 +109,12 @@
     	left: -30px;
 	    color: #9ea6a2;
     }
+
+    a,.session {
+        color: #99A09C;
+        transition: color 0.3s ease;
+        &:hover {
+            color: #a4b1ad;
+        }
+    }
 }

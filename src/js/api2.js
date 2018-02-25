@@ -306,7 +306,7 @@ function listenToData() {
 			// 	});
 			// }
 			if (channelsJoined.indexOf(data.character) !== -1) { //  this should check if you're joined first probably.
-				createSystemMessage(data.character,data.character+' has been banned from ' + data.channel + ' by '+data.operator,'fi-prohibited');
+				createSystemMessage(data.character,'[user]'+data.character+'/[user] has been banned from ' + data.channel + ' by [user]'+data.operator+'/[user]','fi-prohibited');
 			}
 		});
 		addListenerForSocketMessage('CKU',(data)=>{  
@@ -317,7 +317,7 @@ function listenToData() {
 			// 	});
 			// }
 			if (channelsJoined.indexOf(data.character) !== -1) { //  this should check if you're joined first probably.
-				createSystemMessage(data.character,data.character+' has been kicked from ' + data.channel + ' by '+data.operator,'fi-prohibited');
+				createSystemMessage(data.character,'[user]'+data.character+'/[user] has been kicked from ' + data.channel + ' by [user]'+data.operator+'/[user]','fi-prohibited');
 			}
 		});
 		addListenerForSocketMessage('LIS',(data)=>{  
@@ -370,7 +370,7 @@ function listenToData() {
 				updateUserData(userData);
 
 				if (channelsJoined.indexOf(data.character) !== -1) { //  this should check if you're joined first probably.
-					createSystemMessage(data.character,data.character + ' connected.','fi-check');
+					createSystemMessage(data.character,'[user]'+data.character+'/[user] connected.','fi-check');
 				}
 			}
 		});
@@ -389,7 +389,7 @@ function listenToData() {
 
 					// if they're a bookmark.
 					if (bookmarksList.indexOf(data.character) !== -1) { // and this isn't a private channel.
-						createSystemMessage(i,data.character + ' left the channel.','fi-minus');		
+						createSystemMessage(i,'[user]'+data.character+'/[user] left the channel.','fi-minus');		
 					}
 				}
 			}
@@ -412,7 +412,7 @@ function listenToData() {
 				updateUserData(channelData); 
 				
 				if (channelsJoined.indexOf(data.character) !== -1) { //  this should check if you're joined first probably.
-					createSystemMessage(data.character,data.character + ' disconnected.','fi-x');
+					createSystemMessage(data.character,'[user]'+data.character+'/[user] disconnected.','fi-x');
 				}
 			}
 
@@ -638,7 +638,7 @@ function listenToData() {
 				// 		header: data.character.identity + " is offline", //
 				// 		// text:
 				// 	})
-					createSystemMessage(data.channel,data.character + ' left the channel.','fi-minus');
+					createSystemMessage(data.channel,'[user]'+data.character+'/[user] left the channel.','fi-minus');
 				}
 
 				// two: population
@@ -668,7 +668,7 @@ function listenToData() {
 				// one: create a toast if this is a friend or bookmark
 				// do we care if they join? Maybe just use a system message.
 				if (bookmarksList.indexOf(data.character.identity) !== -1) {
-					createSystemMessage(data.channel,data.character.identity + ' joined the channel.','fi-plus');
+					createSystemMessage(data.channel,'[user]'+data.character.identity+'/[user] joined the channel.','fi-plus');
 				}
 
 				// two: join a channel if this is us and we're not in it yet.
@@ -703,6 +703,12 @@ function listenToData() {
 		addListenerForSocketMessage('CDS',(data)=>{
 			updateChannelData(data); // description changed/ initial description
 		});
+		addListenerForSocketMessage('RLL',(data)=>{
+			if (channelsJoined.indexOf(data.channel) !== -1) { //  this should check if you're joined first probably.
+				createSystemMessage(data.channel,data.message,'fi-die-one');
+			}
+		});
+		 // 
 	});
 }
 
