@@ -107,6 +107,7 @@ html{
 }
 .text-buttons-contain {
   // list-style: none;
+  user-select: none;
   position: absolute;
   top: 0px;
   left: 160px;

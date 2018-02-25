@@ -15,11 +15,6 @@ class RoomList extends Component {
         this.handleFieldChange = this.handleFieldChange.bind(this);     
     }
     performFilterSort(array,searchString,sortType,label) {
-        // if (!array) {
-        //  console.log('missing stuff');
-        //  return;
-        // }
-
         function alpha(a,b) {
             if (a.name < b.name) return -1;
             if (a.name > b.name) return 1;
@@ -37,10 +32,12 @@ class RoomList extends Component {
         }
         function type(a,b) { 
             // bookmarks/favorites..
-            if (a.favorited && !b.favorited) return 1;
-            if (!a.favorited && b.favorited) return -1;
-            if (a.bookmarked && !b.bookmarked) return 1;
-            if (!a.bookmarked && b.bookmarked) return -1;
+            if (a.favorite && !b.favorite) return 1;
+            if (!a.favorite && b.favorite) return -1;
+            if (a.friend && !b.friend) return 1;
+            if (!a.friend && b.friend) return -1;
+            if (a.bookmark && !b.bookmark) return 1;
+            if (!a.bookmark && b.bookmark) return -1;
 
             // channel type
             if (a.type < b.type) return -1;
@@ -86,31 +83,6 @@ class RoomList extends Component {
         if (!Array.isArray(array)) {
             array = Object.values(array);
         }
-
-        switch(label) {
-            // type:
-            // 0 is public
-            // 1 is private
-            // 2 is private invite only
-            // 3 is private PM
-
-            case 'messages':
-                break;
-            case 'channels':
-                array = array.filter((obj)=> {
-                    return obj.type < 2;
-                });
-                break;
-            case 'friends':
-                array = array.filter((obj)=> {
-                    return obj.type === 3;
-                });
-                break;
-            default:
-                // console.log('missing label',array,label);
-                break;
-        }
-
 
         if (searchString.length) {
             array = array.filter((obj)=> {
@@ -162,7 +134,6 @@ class RoomList extends Component {
 
     render() {
         const rooms = this.performFilterSort(this.props.rooms || [],this.state.searchString,this.state.sortType,this.props.label);
-        // console.log(rooms);
         return (
             <div className={"room-list-contain " + this.props.label+" " + (this.props.activeTab ? "visible" : "")}>
                 <div className="search">
@@ -192,7 +163,7 @@ class RoomList extends Component {
                         if (this.props.label === 'messages'){
                             return (
                                 <RoomObject 
-                                    key={obj.name}
+                                    key={obj.channel}
                                     user={obj}
                                     setSelectedChat={() => this.setSelectedChat(obj.channel,obj.type)}
                                 />
@@ -200,7 +171,7 @@ class RoomList extends Component {
                         } else {
                             return (
                                 <RoomShortObject 
-                                    key={obj.name}
+                                    key={obj.channel}
                                     user={obj}
                                     setSelectedChat={() => this.setSelectedChat(obj.channel,obj.type)}
                                 />

@@ -62,7 +62,7 @@ class RoomObject extends Component {
 				</div>
 
 				<div className="details-contain">
-					<div className="user-name">{user.channel}</div>
+					<div className="user-name">{user.name}</div>
 					{(() => {
 				        switch (user.type) {
 				        	case 0: return <div className="message-type">Public Channel: {user.population}</div>;

@@ -9,7 +9,7 @@ import StatusModal from './statusmodal';
 
 import { 
 	logout,gotLoginPromise,lostConnectionAlert,gainedConnectionAlert,
-	getChannelData,joinChannel,getChannelMessages,getChannelUsers,createPrivateMessage,
+	joinChannel,getChannelMessages,getChannelUsers,createPrivateMessage,getAnyChannelData,
 	fetchChannels,fetchPrivate,
 	getFriends,getChannels,getJoinedChannels,getPrivateChannels,
 	updateStatus,
@@ -114,7 +114,7 @@ class Root extends Component {
 	    });
 	    // sselected chat
 	    setSelectedChatCallback((data) => {
-	    	// console.log('chat update',data);
+	    	console.log('chat update',data);
 	    	this.setState({chatData:data});
 	    });
 	    // melba toasts
@@ -167,23 +167,19 @@ class Root extends Component {
     		case 'channels':
     			if (!this.channelsLoaded) {
 					fetchChannels();
-					this.setState({roomslist:getChannels()});
 					this.channelsLoaded = true;
 				}
+				this.setState({roomslist:getChannels()});
     			break;
     		case 'private':
     			if (!this.privateLoaded) {
     				fetchPrivate();
-    				// this might always be empty, but it's okay because the callback should run.
-					this.setState({privatelist:getPrivateChannels()}); 
 					this.privateLoaded = true;
 				}
+				this.setState({privatelist:getPrivateChannels()}); 
     			break;
     		case 'friends':
-    			if (!this.friendsLoaded) {
-    				this.setState({friendslist:getFriends()});
-    				this.friendsLoaded = true;
-    			}
+    			this.setState({friendslist:getFriends()});
     			break;
     		default:
     			break;
@@ -201,9 +197,9 @@ class Root extends Component {
     		setSelectedChat(value); // syncs callback to updates.
     		this.setState({
     			selectedChat:value,
-    			chatData: getChannelData(value), // load initial data.
+    			chatData: getAnyChannelData(value), // load initial data.
     			chatMessages: getChannelMessages(value),
-    			chatUsers: getChannelUsers(value)
+    			chatUsers: getChannelUsers(value) // might be able to optimize this out on pm
     		});
     	}
     }
@@ -283,7 +279,7 @@ class Root extends Component {
 			            <span onClick={() => this.setSelectedTab('channels')} className={"text-button " + (this.state.selectedTab === 'channels' ? "active" : "")}>Channels</span>
 			            <span onClick={() => this.setSelectedTab('private')} className={"text-button " + (this.state.selectedTab === 'private' ? "active" : "")}>Private</span>
 			            <span onClick={() => this.setSelectedTab('friends')}  className={"text-button " + (this.state.selectedTab === 'friends' ? "active" : "")}>Friends</span>
-			            {/* <span onClick={() => this.setSelectedTab('search')}   className={"text-button " + (this.state.selectedTab === 'search' ? "active" : "")}>Search Users</span> */}
+			            { <span onClick={() => this.setSelectedTab('search')}   className={"text-button " + (this.state.selectedTab === 'search' ? "active" : "")}>Search</span> }
 			        </nav>
 			        
 			        <div className={"logged-in-user-contain " + (this.state.userListOpen ? "" : "full")} onClick={() => this.toggleUserMenu()}> 
@@ -344,7 +340,8 @@ class Root extends Component {
 						activeTab={(this.state.selectedTab === 'channels' ? true : false)}
 						setSelectedChat={this.setSelectedChat}
 					/>
-					{/* CHANNELS */}
+
+					{/* PRIVATE */}
 					<RoomList
 						selectedChat={this.state.selectedChat}
 						rooms={this.state.privatelist}
@@ -353,6 +350,7 @@ class Root extends Component {
 						activeTab={(this.state.selectedTab === 'private' ? true : false)}
 						setSelectedChat={this.setSelectedChat}
 					/>
+
 					{/* FRIENDS */}
 					<RoomList
 						selectedChat={this.state.selectedChat}

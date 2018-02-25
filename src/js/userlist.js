@@ -6,7 +6,7 @@ class UserList extends Component {
     	super(props);
 
     	this.state= {
-    		sortType: this.props.defaultSort || 'Type',
+    		sortType: this.props.defaultSort || 'Status',
             searchString: "",
             sortMenuOpen: false,
     	}
@@ -15,30 +15,27 @@ class UserList extends Component {
 	}
 	performFilterSort(array,searchString,sortType,label) {
 	    function alpha(a,b) {
-	        if (a.identity < b.identity) return -1;
-	        if (a.identity > b.identity) return 1;
+	        if (a.name < b.name) return -1;
+	        if (a.name > b.name) return 1;
 	        return 0;
 	    }
 	  
 	    function type(a,b) { 
 	        // bookmarks/favorites..
-   			if (a.favorited && !b.favorited) return 1;
-            if (!a.favorited && b.favorited) return -1;
-            if (a.bookmarked && !b.bookmarked) return 1;
-            if (!a.bookmarked && b.bookmarked) return -1;
+	    	if (a.favorite && !b.favorite) return 1;
+            if (!a.favorite && b.favorite) return -1;
+            if (a.friend && !b.friend) return 1;
+            if (!a.friend && b.friend) return -1;
+            if (a.bookmark && !b.bookmark) return 1;
+            if (!a.bookmark && b.bookmark) return -1;
 
 	        // alpha 
-	        if (a.identity < b.identity) return -1;
-	        if (a.identity > b.identity) return 1;
+	        if (a.name < b.name) return -1;
+	        if (a.name > b.name) return 1;
 	        return 0;
 	    }
 
 	    function status(a,b) {
-	    	if (a.favorited && !b.favorited) return 1;
-            if (!a.favorited && b.favorited) return -1;
-            if (a.bookmarked && !b.bookmarked) return 1;
-            if (!a.bookmarked && b.bookmarked) return -1;
-
             // looking
             if (a.status === 'looking' && b.status !== 'looking') return -1;
             if (a.status !== 'looking' && b.status === 'looking') return 1;
@@ -60,7 +57,7 @@ class UserList extends Component {
 
 	    if (searchString.length && array.length) {
 	        array = array.filter((obj)=> {
-	            return obj.identity.search(new RegExp(searchString, "i")) !== -1;
+	            return obj.name.search(new RegExp(searchString, "i")) !== -1;
 	        });
 	    }
 	    
@@ -122,17 +119,13 @@ class UserList extends Component {
 
                 <div className="users-scroll">
 					{users && users.map((obj) => {
-						// TODO: gender stuff.
-						// TODO: friend identification
-						// TODO: bookmark identification
-
 						return (
-							<div className="list-user" key={obj.identity} onClick={() => this.handleClick(obj.identity)}>
-								<Avatar name={obj.identity} type={3} />
+							<div className="list-user" key={obj.name} onClick={() => this.handleClick(obj.name)}>
+								<Avatar name={obj.name} type={3} />
 								<div className={"status-badge " + obj.status}></div>
 
 								<div className="rank-icon"></div>
-								<div className="user-name">{obj.identity}</div>
+								<div className="user-name">{obj.name}</div>
 							</div>
 						)	
 					})}

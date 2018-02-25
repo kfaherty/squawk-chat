@@ -232,11 +232,11 @@ class Chat extends Component {
 								// TODO filter out ignored users
 
 								return (
-								  <ChatMessage 
-								    key={obj.key}
-								    data={obj} 
-									usernameClicked={this.usernameClicked} 
-								  />
+								  	<ChatMessage 
+								    	key={obj.key}
+								    	data={obj} 
+										usernameClicked={this.usernameClicked} 
+								  	/>
 								)
 							})}
 
@@ -244,6 +244,10 @@ class Chat extends Component {
 
 					    	<div className="input-padding"></div>
 					    	<div className='marker-bottom' ref={(el) => { this.messagesEnd = el; }}></div>
+						</div>
+
+						<div className="scroll-button">
+							<div className="fi-download" />
 						</div>
 
 						<div className="input-contain">

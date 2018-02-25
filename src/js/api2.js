@@ -323,21 +323,25 @@ function listenToData() {
 		addListenerForSocketMessage('LIS',(data)=>{  
 			// we only want to run this if we have friends to compare against.
 			// If we don't have friends yet, then telling would require doing all the cache stuff. :c
+			if (!bookmarksList) {
+				console.log('no bookmarks', bookmarksList);
+				return
+			};
 			if (data && data.characters) {
-				for (var i = data.characters.length - 1; i >= 0; i--) {
-					if (bookmarksList.indexOf(data.characters[i][0]) !== -1) {
-						let channelData = {
-							channel: data.characters[i][0],
-							name: data.characters[i][0],
+				data.characters.forEach(([ name,gender,status,statusmsg ]) => {
+					if (bookmarksList.includes(name) ) {
+						usersCache[name] = {
+							channel: name,
+							name: name,
 							type: 3,
+							bookmark: true,
 							online:true,
-							gender: data.characters[i][1],
-							status: data.characters[i][2],
-							statusmsg: data.characters[i][3],
-						};
-						updateChannelData(channelData); // FIXME: this should go to users cache
+							gender: gender,
+							status: status,
+							statusmsg: statusmsg
+						}
 					}
-				}
+				});
 			}
 		});
 		addListenerForSocketMessage('NLN',(data)=>{  // global chat connect.
@@ -371,36 +375,6 @@ function listenToData() {
 			}
 		});
 		addListenerForSocketMessage('FLN',(data)=>{  // global channel leave.
-			// one: create toast if this is friend/bookmark
-			if (bookmarksList.indexOf(data.character) !== -1) {
-				toastCallback({
-					header: data.character + " disconnected",
-					// text:
-				});
-				let channelData = getChannelData(data.character);
-
-				// TODO: check private channels.
-				
-				if (!channelData) {
-					return; // if we dont have this and they left, fuck it.
-					// channelData = {
-					// 	name: data.identity,
-					// 	channel: data.identity,
-					// 	type: 3,
-					// 	bookmark: true
-					// }
-				}
-				channelData.online = false;
-				channelData.status = 'offline';
-				channelData.timestamp = Date.now();
-				channelData.typing = 'clear';
-				updateChannelData(channelData); 
-				
-				if (channelsJoined.indexOf(data.character) !== -1) { //  this should check if you're joined first probably.
-					createSystemMessage(data.character,data.character + ' disconnected.','fi-x');
-				}
-			}
-
 			// two: update channel data to leave all channels this character is in (slow, probably..)
 				// does this only run if they're in a channel we're in? 
 					// probably not! :c
@@ -409,6 +383,7 @@ function listenToData() {
 				if (channelUsers[i].indexOf(data.character) !== -1) {
 					// TODO: make sure that we aren't running this on private channels.
 					let index = channelUsers[i].indexOf(data.character);
+					// TODO: make sure this index isn't -1 probaly.
 					channelUsers[i].splice(index,1); 
 					updateChannelUsers(i,channelUsers[i]);
 
@@ -418,6 +393,29 @@ function listenToData() {
 					}
 				}
 			}
+
+			// one: create toast if this is friend/bookmark
+			if (bookmarksList.indexOf(data.character) !== -1) {
+				toastCallback({
+					header: data.character + " disconnected",
+					// text:
+				});
+				let channelData = getChannelData(data.character);
+			
+				if (!channelData) {
+					return; // if we dont have this and they left, fuck it.
+				}
+				channelData.online = false;
+				channelData.status = 'offline';
+				channelData.timestamp = Date.now();
+				channelData.typing = 'clear';
+				updateUserData(channelData); 
+				
+				if (channelsJoined.indexOf(data.character) !== -1) { //  this should check if you're joined first probably.
+					createSystemMessage(data.character,data.character + ' disconnected.','fi-x');
+				}
+			}
+
 		});
 		addListenerForSocketMessage('RTB',(data)=>{  
 			if (data) {
@@ -562,7 +560,7 @@ function listenToData() {
 					message: data.message
 				}
 
-				let channelData = getChannelData(data.character);
+				let channelData = getUserData(data.character);
 				if (!channelData) {
 					channelData = {
 						channel:data.character,
@@ -571,7 +569,6 @@ function listenToData() {
 						bookmark: bookmarksList.indexOf(data.character) !== -1 ? true : false,
 						name: data.character,
 						unread: 0,						
-						// messages: [messageData]
 					}
 				}
 
@@ -590,30 +587,23 @@ function listenToData() {
 				
 				channelData.timestamp = Date.now();
 				channelData.lastMessage = data.message;
-				channelData.lastUser = data.character;
 				channelData.typing = 'clear';
 
 				if (channelsJoined.indexOf(channelData.channel) === -1) {
 					channelsJoined.push(channelData.channel);
 				}
 
-				updateChannelData(channelData); 
+				updateUserData(channelData); 
 				updateChannelMessages(data.character,messageData);
 			};
 		});
 		addListenerForSocketMessage('TPN',(data)=>{
 			// {"character":"Leon Priest","status":"clear"}
-			if (data && data.character) {
-				// data.channel = data.character;
-				// delete data.character;
-				let channelData = {
+			if (data && data.character && usersCache[data.character]) {
+				updateUserData({
 					channel: data.character,
 					typing: data.status
-				}
-				// this can break stuff.
-				if (getChannelData(data.character)) { // check if this exists..
-					updateChannelData(channelData); 
-				}
+				}); 
 			}
 		});
 		addListenerForSocketMessage('STA',(data)=>{  // status update
@@ -622,7 +612,7 @@ function listenToData() {
 					header: data.character + " is " + data.status,
 					text: data.statusmsg
 				});
-				let channelData = getChannelData(data.character);
+				let channelData = getUserData(data.character);
 				if (!channelData) {
 					channelData = {
 						name: data.character,
@@ -634,7 +624,7 @@ function listenToData() {
 				channelData.status = data.status;
 				channelData.statusmsg = data.statusmsg;
 				channelData.timestamp = Date.now();
-				updateChannelData(channelData); 
+				updateUserData(channelData); 
 			}
 		});
 		addListenerForSocketMessage('LCH',(data)=>{
@@ -678,10 +668,6 @@ function listenToData() {
 				// one: create a toast if this is a friend or bookmark
 				// do we care if they join? Maybe just use a system message.
 				if (bookmarksList.indexOf(data.character.identity) !== -1) {
-				// 	toastCallback({
-				// 		header: data.character.identity + " is online",
-				// 		// text:
-				// 	})
 					createSystemMessage(data.channel,data.character.identity + ' joined the channel.','fi-plus');
 				}
 
@@ -700,15 +686,6 @@ function listenToData() {
 					users = [data.character.identity];
 				}
 				updateChannelUsers(data.channel,users); 	// update users
-
-				// three: update channel data if it's a room we're in -  & population
-				// user list yes, pop no.
-					// who cares.
-						// let channelData = getChannelData(data.channel);
-						// if (channelData) {
-						// 	channelData.population++; // update population
-						// 	updateChannelData(channelData); 
-						// }
 			}
 		});
 		addListenerForSocketMessage('COL',(data)=>{ // col.nOthing
@@ -724,7 +701,7 @@ function listenToData() {
 			updateChannelData(data);
 		});
 		addListenerForSocketMessage('CDS',(data)=>{
-			updateChannelData(data);
+			updateChannelData(data); // description changed/ initial description
 		});
 	});
 }
@@ -764,7 +741,8 @@ function setSelectedChat(value) {
 	selectedChat = value;
 
 	if (value){ // clear unread if this is actually a room.
-		let channelData = getChannelData(value);
+		let channelData = getAnyChannelData(value);
+
 		if (!channelData) {
 			console.log('you joined a channel I dont know about', selectedChat,channelData);
 			return;
@@ -781,13 +759,14 @@ function setSelectedChat(value) {
 			}
 		}
 		channelData.unread = 0;
-		updateChannelData(channelData);
+		updateAnyChannelData(channelData);
 	}
 }
 
 window.addEventListener("focus", function(event) {
 	if (selectedChat){ // clear unread if this is actually a room.
-		let channelData = getChannelData(selectedChat);
+		let channelData = getAnyChannelData(selectedChat);
+
 		if (channelData.unread){
 			globalUnread = globalUnread - channelData.unread;
 			if (globalUnread < 0) {
@@ -800,7 +779,8 @@ window.addEventListener("focus", function(event) {
 			}
 		}
 		channelData.unread = 0;
-		updateChannelData(channelData);
+
+		updateAnyChannelData(channelData);
 	}
 });
 
@@ -835,7 +815,7 @@ function getChannelMessages(name) {
 function getChannelUsers(name) {
 	if (channelUsers[name]) {
 		return channelUsers[name].map((obj) => { // TODO: use the usersCache to fill this data in.
-			return {identity: obj}
+			return usersCache[obj] || {name: obj}
 		});	
 	}
 	return [];
@@ -919,8 +899,8 @@ function updateUserData(data) {
 	}
 
 	// if this is the selected chat, then do an update.
-	if (selectedChat === data.channel && selectedChatCallback) {
-		selectedChatCallback(usersCache[data.channel]);
+	if (friendsCallback) {
+		friendsCallback(getFriends());
 	}
 }
 
@@ -953,10 +933,9 @@ function updateChannelUsers(channel,users) {
 }
 
 function getJoinedChannels() {
-	// return channelsJoined;
 	return channelsJoined.map((obj) => {
-		return channelsList[obj];
-	})
+		return channelsList[obj] || usersCache[obj] || privateChannelsList[obj];
+	});
 }
 
 function joinChannel(name){
@@ -968,24 +947,42 @@ function joinChannel(name){
 	socket.send( 'JCH '+JSON.stringify({ "channel": name }) );
 }
 
+function getAnyChannelData(name) {
+	return getChannelData(selectedChat) || getPrivateChannelData(selectedChat) || getUserData(selectedChat);
+}
+
+function updateAnyChannelData(channelData) {
+	if (channelData.type == 3) {
+		updateUserData(channelData);
+	} else if (channelData.type === 0) {
+		updateChannelData(channelData);
+	} else {
+		updatePrivateChannelData(channelData);
+	}
+}
+
 function createPrivateMessage(name) {
 	if (channelsJoined.indexOf(name) !== -1) {
 		// console.log('youre already in here',channelsJoined,name);
 		return;
 	}
 
-	let channelData = {
-		channel:name,
-		type: 3,
-		name: name,
-		friend: friendsList.indexOf(name) !== -1 ? true : false,
-		bookmark: bookmarksList.indexOf(name) !== -1 ? true : false,
-		messages: [],
-		timestamp: Date.now()
-	};
-
-	updateChannelData(channelData); // create data
+	if (!usersCache[name]) {
+		console.log('creating data');
+		updateUserData({ // create data
+			channel:name,
+			type: 3,
+			name: name,
+			friend: friendsList.indexOf(name) !== -1 ? true : false,
+			bookmark: bookmarksList.indexOf(name) !== -1 ? true : false,
+			timestamp: Date.now()
+		}); 
+	}
+	
 	channelsJoined.push(name);
+	if (joinedChannelsCallback) {
+		joinedChannelsCallback(getJoinedChannels());
+	}
 }
 
 function leaveChannel(name) {
@@ -1015,36 +1012,7 @@ function setFriendsCallback(cb) {
 }
 
 function getFriends() {
-	let friends = friendsList.map((obj) => {
-		return channelsList[obj] || {
-			channel: obj,
-			name: obj,
-			friend: true,
-			type: 3,
-			status: 'offline'
-		};
-	});
-	let bookmarks = bookmarksList.map((obj) => {
-		return channelsList[obj] || {
-			channel: obj,
-			name: obj,
-			bookmark: true,
-			type: 3,
-			status: 'offline'
-		};
-	});
-
-	let array = Object.assign(friends || [], bookmarks || []);
-
-	// array = array.map((obj) => {
-	// 	return { // TODO match this with the usersCache
-	// 		channel: obj,
-	// 		name: obj,
-	// 	};
-	// });
-	// console.log(array);
-	
-	return array;
+	return Object.values(usersCache);
 }
 
 function sendMessage(channel,message) {
@@ -1087,12 +1055,11 @@ function privateMessage(character,message){
 		character: userData.name
 	}
 
-	let channelData = getChannelData(character);
+	let channelData = getUserData(character);
 
 	channelData.timestamp = Date.now();
 	channelData.lastMessage = message;
-	channelData.lastUser = userData.name;
-	updateChannelData(channelData); 
+	updateUserData(channelData); 
 	updateChannelMessages(character,data);
 }
 
@@ -1106,13 +1073,13 @@ function createSystemMessage(channel,message,icon) {
 		character: userData.name
 	}
 
-	let channelData = getChannelData(channel);
+	let channelData = getAnyChannelData(channel);
 
 	channelData.timestamp = Date.now();
 	channelData.lastMessage = message;
 	channelData.lastUser = '';
 
-	updateChannelData(channelData); 
+	updateAnyChannelData(channelData);
 	updateChannelMessages(channel,data);
 }
 
@@ -1136,7 +1103,7 @@ export {
 	login,logout,
 	loadCookie,gotLoginPromise,createSocket,
 	lostConnectionAlert,gainedConnectionAlert,
-	getChannelData,joinChannel,createPrivateMessage,leaveChannel,getChannelMessages,getChannelUsers,
+	joinChannel,createPrivateMessage,leaveChannel,getChannelMessages,getChannelUsers,getAnyChannelData,
 	fetchChannels,fetchPrivate,
 	getFriends,getChannels,getJoinedChannels,getPrivateChannels,
 	sendMessage,privateMessage,sendTyping,updateStatus,

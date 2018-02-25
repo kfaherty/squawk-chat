@@ -2,11 +2,11 @@
 @import "./colors.scss";
 
 .room-object {
-	width: 300px;
+	width: 100%; // 300px;
 	height: 136px;
 	// border: 1px solid;
+	margin-top: 10px;
 	border-radius: 5px;
-	margin: 20px;
 	background: white;
 	position: relative;
 	border: 1px solid #E5EBE9;

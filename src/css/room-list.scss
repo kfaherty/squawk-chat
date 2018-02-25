@@ -1,5 +1,5 @@
 .room-list-contain {
-	width: 340px;
+	width: 285px; // 340px;
 	height: calc( 100vh - 75px);
 	// border: 1px solid;
 	background: #F7FAF9;
@@ -54,7 +54,7 @@
 	}	
 	.sort {
 		text-align: right;
-		padding: 0px 20px;
+		padding: 0px 10px;
 		.label {
 			cursor: pointer;
 			display: inline-block;
@@ -72,23 +72,18 @@
 }
 
 .room-list {
+	overflow: visible;
     overflow-y: scroll;
     top: 10px;
     position: relative;
     height: calc( 100% - 82px);
+    padding: 0 10px;
 }
+
 .no-rooms {
-	// width: 200px;
- //    height: 50px;
- //    border-radius: 4px;
-    // background: white;
-    // position: absolute;
-    // top: calc( 50% - 50px);
-    // left: calc( 50% - 100px);
     padding-top: 20px;
     text-align: center;
     color: #6A6F6C;
-    // z-index: 97;
     display: -ms-flexbox;
     display: flex;
     vertical-align: center;
@@ -102,14 +97,8 @@
     transition: opacity 0.3s ease;
     pointer-events: initial;
     overflow: visible;
-    // -webkit-box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.1);
-    // box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.1);
 
 	&.hidden {
-	 	// padding: 0px;
-  		// height: 0px;
-		// opacity: 0;
-		// pointer-events: none;
 		display: none;
 	}
 }
