@@ -1,0 +1,77 @@
+// dark theme dot scss
+// yeah this is gonna be lazy af, fuck you
+.app-wrapper{
+	&.dark {
+		.top-bar {
+		    border-bottom: 1px solid #3D444B;
+		    background: #282E33;
+		}
+		.logo-contain{
+			color: #aebdb6;
+		}
+		.controls-contain {
+			border-left: 1px solid #202529;
+		    background: #3b434a;	// white
+		}
+		.room-list-contain {
+		    background: #282E33;
+    		border-right: 1px solid #3D444B;
+		}
+		.room-object {
+    		background: #3b434a;	
+    		border: 1px solid #3b434a;	
+		    box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.2);
+
+    		&.selected {
+			    background: #1cd67c;
+			    border: 1px solid #1cd67c;
+    		}
+    	}
+		.chat-window {
+    		background: #202529; // darker
+    	}
+    	.no-chat {
+    		background: #3b434a;
+    		color: #99A09C;
+    	}
+    	.chat-header {
+		    background: #3b434a;
+		    border-bottom: 1px solid #3D444B;
+    	}
+    	.chat-user-list-contain,.chat-user-profile-contain {
+		    border-left: 1px solid #3D444B;
+    		background: rgb(40, 46, 51);
+		}
+		.input-contain,.list-user,.scroll-button {
+		    border: 1px solid #3D444B;
+		    background: #3b434a;
+		}
+		.status-badge {
+		    box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.2);
+		}
+		.chat-message {
+		    background: #3b434a;	// white
+		}
+		.dropdown {
+		    border: 1px solid #202529;
+		    background: #3b434a;
+
+		   	.list-item {
+		   		border-bottom: 1px solid #202529;
+
+		   		&:last-child {
+		   			border-bottom: none;
+		   		}
+
+		   		&:hover {
+	   			    background: #515e69;
+		   		}
+		   	}
+		}
+		.css-1qtol5d {
+			border: 1px solid #3D444B;
+		    background: #3b434a;
+		   	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.2);
+		}
+	}
+}

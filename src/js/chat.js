@@ -46,7 +46,7 @@ class Chat extends Component {
 		this.inputs = {};
     	this.usernameClicked = this.usernameClicked.bind(this);
 	    this.toggleScroll = this.toggleScroll.bind(this);
-
+	    this.toggleChatMenu = this.toggleChatMenu.bind(this);
 	    this.clearSelectedChat = this.clearSelectedChat.bind(this);
 	    this.openProfile = this.openProfile.bind(this);
 	    this.toggleFavorite = this.toggleFavorite.bind(this);
@@ -221,7 +221,7 @@ class Chat extends Component {
 							        }
 							    })()}
 							</div>
-							<div className="settings-button" onClick={() => this.toggleChatMenu()}>
+							<div className="settings-button" onClick={this.toggleChatMenu}>
 								<div className="fi-widget"></div>
 							</div>
 						</div>

@@ -585,6 +585,9 @@ input,textarea {
         &.hidden {
             display: none;
         }
+        &:last-child {
+            border-bottom: none;
+        }
     }
 
     &.visible{
