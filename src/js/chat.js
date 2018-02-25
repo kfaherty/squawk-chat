@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom'
 
 import Textarea from "react-textarea-autosize";
 
@@ -9,6 +8,8 @@ import { sendMessage,privateMessage,sendTyping,createPrivateMessage,leaveChannel
 import ChatMessage from './chatmessage';
 import UserList from './userlist';
 import UserProfile from './userprofile';
+
+import { getProfileURL } from './apiurls';
 
 class TypingIndicator extends Component {
 	render(){
@@ -39,12 +40,23 @@ class Chat extends Component {
 			chatMenuOpen: false,
 			favorited: this.props.favorited, // this is going to come from cookie.
 			ignored: this.props.ignored,
-			scrolledBottom: false
+			scrolledBottom: true
     	}
 
 		this.inputs = {};
     	this.usernameClicked = this.usernameClicked.bind(this);
 	    this.toggleScroll = this.toggleScroll.bind(this);
+
+	    this.clearSelectedChat = this.clearSelectedChat.bind(this);
+	    this.openProfile = this.openProfile.bind(this);
+	    this.toggleFavorite = this.toggleFavorite.bind(this);
+	    this.toggleIgnore = this.toggleIgnore.bind(this);
+	    this.getLogs = this.getLogs.bind(this);
+	    this.reportSelectedChat = this.reportSelectedChat.bind(this);
+	}
+
+	openProfile(user) {
+		window.open(getProfileURL() + this.props.chat.channel, '_blank'); // TODO:
 	}
 
     clearSelectedChat() {
@@ -215,13 +227,14 @@ class Chat extends Component {
 						</div>
 
 				        <div className={"dropdown " + (this.state.chatMenuOpen ? "visible" : "")}>
-							<div onClick={() => this.clearSelectedChat()} className="list-item"><div className="list-icon fi-trash"></div>{chat.type === 3 ? "Close Chat" : "Leave Channel"}</div>
-							<div onClick={() => this.toggleFavorite()} className={"list-item " + (this.state.favorited ? "hidden" : "")}><div className="list-icon fi-star"></div>Favorite</div>
-							<div onClick={() => this.toggleFavorite()} className={"list-item " + (this.state.favorited ? "" : "hidden")}><div className="list-icon fi-star"></div>Unfavorite</div>
-							{(chat.type === 3) && (<div onClick={() => this.toggleIgnore()} className={"list-item " + (this.state.ignored ? "hidden" : "")}><div className="list-icon fi-plus"></div>Ignore</div>)}
-							{(chat.type === 3) && (<div onClick={() => this.toggleIgnore()} className={"list-item " + (this.state.ignored ? "" : "hidden")}><div className="list-icon fi-minus"></div>Unignore</div>)}
-							<div onClick={() => this.getLogs()} className="list-item"><div className="list-icon fi-page-filled"></div>Get logs</div>								
-							<div onClick={() => this.reportSelectedChat()} className="list-item"><div className="list-icon fi-flag"></div>Report</div>
+							<div onClick={this.clearSelectedChat} className="list-item"><div className="list-icon fi-trash"></div>{chat.type === 3 ? "Close Chat" : "Leave Channel"}</div>
+							{(chat.type === 3) && (<div onClick={this.openProfile} className="list-item"><div className="list-icon fi-magnifying-glass"></div>Show Profile</div>)}
+							<div onClick={this.toggleFavorite} className={"list-item " + (this.state.favorited ? "hidden" : "")}><div className="list-icon fi-star"></div>Favorite</div>
+							<div onClick={this.toggleFavorite} className={"list-item " + (this.state.favorited ? "" : "hidden")}><div className="list-icon fi-star"></div>Unfavorite</div>
+							{(chat.type === 3) && (<div onClick={this.toggleIgnore} className={"list-item " + (this.state.ignored ? "hidden" : "")}><div className="list-icon fi-plus"></div>Ignore</div>)}
+							{(chat.type === 3) && (<div onClick={this.toggleIgnore} className={"list-item " + (this.state.ignored ? "" : "hidden")}><div className="list-icon fi-minus"></div>Unignore</div>)}
+							<div onClick={this.getLogs} className="list-item"><div className="list-icon fi-page-filled"></div>Get logs</div>								
+							<div onClick={this.reportSelectedChat} className="list-item"><div className="list-icon fi-flag"></div>Report</div>
 						</div>
 
 						<div className="messages-contain"> {/*onScroll={this.handleScroll}> */}
