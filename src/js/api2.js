@@ -742,7 +742,7 @@ function setChannelUsersCallback(cb) {
 	channelUsersCallback = cb;
 }
 
-var selectedChat = undefined;
+var selectedChat = undefined; // TODO this should save the chat type, too.
 function setSelectedChat(value) {
 	selectedChat = value;
 
@@ -940,7 +940,7 @@ function updateChannelUsers(channel,users) {
 
 function getJoinedChannels() {
 	return channelsJoined.map((obj) => {
-		return channelsList[obj] || usersCache[obj] || privateChannelsList[obj];
+		return getAnyChannelData(obj);
 	});
 }
 
@@ -1002,7 +1002,7 @@ function leaveChannel(name) {
 		joinedChannelsCallback(getJoinedChannels());
 	}
 
-	let channelData = getChannelData(name); // get type
+	let channelData = getAnyChannelData(name); // get type
 	if(channelData.type !== 3) { // if type isnt 3
 		socket.send( 'LCH '+JSON.stringify({ "channel": name }) );
 	}
@@ -1036,7 +1036,7 @@ function sendMessage(channel,message) {
 		character: userData.name
 	}
 
-	let channelData = getChannelData(channel);
+	let channelData = getAnyChannelData(channel);
 
 	channelData.timestamp = Date.now();
 	channelData.lastMessage = message;

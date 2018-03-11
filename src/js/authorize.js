@@ -4,6 +4,18 @@ import { StandardInput } from './common';
 import loadURLS from './apiurls';
 const apiurls = loadURLS();
 
+class Character extends Component {
+	handleConnectClick () {
+		this.props.handleClick(this.props.obj);
+	}
+	render() {
+		return (
+			<button className="character-option" onClick={this.handleConnectClick} key={this.props.obj}>{this.props.obj}</button>
+		)
+	}
+}
+
+
 class Authorize extends Component {
 	constructor(props) {
     	super(props);
@@ -18,6 +30,7 @@ class Authorize extends Component {
 
 	    this.handleFieldChange = this.handleFieldChange.bind(this);	    
 	    this.handleKeyDown = this.handleKeyDown.bind(this);	    
+	    this.handleLoginClick = this.handleLoginClick.bind(this);
 
 	    loadCookie().then((list) => {
 			this.setState({ list:list, showLogin:false });
@@ -120,16 +133,19 @@ class Authorize extends Component {
 						</div>
 						
 						<div className="login-wrap">
-							<button onClick={() => this.handleLoginClick()}>Login</button>
+							<button onClick={this.handleLoginClick}>Login</button>
 						</div>
 					</div>
 					<div className={"character-select " + (this.state.showLogin? "":"active")}>
 						<div className="subtitle">Select Character </div>
 
 						<div className="select-wrap">
-							{characterlist.map((obj,index) => {
+							{characterlist.map((obj) => {
 								return (
-									<button className="character-option" onClick={() => this.handleConnectClick({obj})} key={index}>{obj}</button>
+									<Character
+										handleClick={this.handleConnectClick}
+										character={obj} 
+									/>
 								)
 							})}
 						</div>

@@ -4,8 +4,100 @@
 		"selected_items":
 		[
 			[
-				"privat",
+				"handl",
+				"handleConnectClick"
+			],
+			[
+				"handle",
+				"handleConnectClick"
+			],
+			[
+				"hand",
+				"handleLoginClick"
+			],
+			[
+				"crea",
+				"createSystemMessage"
+			],
+			[
+				"pad",
+				"padding-top"
+			],
+			[
+				"scrolled",
+				"scrolledBottom"
+			],
+			[
+				"toggle",
+				"toggleScroll"
+			],
+			[
+				"co",
+				"color"
+			],
+			[
+				"mar",
+				"margin"
+			],
+			[
+				"getA",
+				"getAnyChannelData"
+			],
+			[
+				"chann",
+				"channelsJoined"
+			],
+			[
+				"getPr",
+				"getPrivateChannelData"
+			],
+			[
+				"inc",
+				"includes"
+			],
+			[
+				"pri",
 				"privateChannelsList"
+			],
+			[
+				"book",
+				"bookmarksList"
+			],
+			[
+				"cha",
+				"characters"
+			],
+			[
+				"getUs",
+				"getUserData"
+			],
+			[
+				"tex",
+				"text-align"
+			],
+			[
+				"friends",
+				"friendsLoaded"
+			],
+			[
+				"priave",
+				"privateLoaded"
+			],
+			[
+				"fetc",
+				"fetchPrivate"
+			],
+			[
+				"privat",
+				"privateList"
+			],
+			[
+				"typ",
+				"typing"
+			],
+			[
+				"font",
+				"font-size"
 			],
 			[
 				"channel",
@@ -36,20 +128,12 @@
 				"characters"
 			],
 			[
-				"chann",
-				"channelData"
-			],
-			[
 				"con",
 				"console"
 			],
 			[
 				"stat",
 				"statusmsg"
-			],
-			[
-				"book",
-				"bookmark"
 			],
 			[
 				"chan",
@@ -78,10 +162,6 @@
 			[
 				"trans",
 				"transform"
-			],
-			[
-				"mar",
-				"margin-right"
 			],
 			[
 				"curr",
@@ -114,18 +194,6 @@
 			[
 				"cu",
 				"currentStatusMessage"
-			],
-			[
-				"pad",
-				"padding-right"
-			],
-			[
-				"toggle",
-				"toggleStatus"
-			],
-			[
-				"handle",
-				"handleFieldChange"
 			],
 			[
 				"api",
@@ -184,10 +252,6 @@
 				"messages"
 			],
 			[
-				"cha",
-				"character"
-			],
-			[
 				"joined",
 				"joinedChannelsCallback"
 			],
@@ -206,10 +270,6 @@
 			[
 				"bookm",
 				"bookmarks"
-			],
-			[
-				"typ",
-				"type"
 			],
 			[
 				"g",
@@ -308,10 +368,6 @@
 				"className"
 			],
 			[
-				"font",
-				"font-weight"
-			],
-			[
 				"XBB",
 				"XBBCODE"
 			],
@@ -350,10 +406,6 @@
 			[
 				"inpu",
 				"inputValue"
-			],
-			[
-				"handl",
-				"handleKeyDown"
 			],
 			[
 				"ind",
@@ -462,132 +514,26 @@
 			[
 				"usern",
 				"usernamehaserror"
-			],
-			[
-				"val",
-				"validated"
-			],
-			[
-				"hand",
-				"handleFieldChange"
-			],
-			[
-				"socket",
-				"socketurl"
-			],
-			[
-				"select",
-				"selectedChat"
-			],
-			[
-				"C",
-				"ChatMessage"
-			],
-			[
-				"messag",
-				"messages"
-			],
-			[
-				"sor",
-				"sortType"
-			],
-			[
-				"text",
-				"text-transform"
-			],
-			[
-				"t",
-				"top"
-			],
-			[
-				"f",
-				"for\tfor (…) {…} (Improved Native For-Loop)"
-			],
-			[
-				"co",
-				"color"
-			],
-			[
-				"tex",
-				"text-align"
-			],
-			[
-				"wid",
-				"width"
 			]
 		]
 	},
 	"buffers":
 	[
 		{
-			"contents": "FdkedpoeGudBQ6\nTesting stuff. Might disconnect/whatever.",
+			"file": "notes.txt",
 			"settings":
 			{
-				"buffer_size": 56,
+				"buffer_size": 260,
+				"encoding": "UTF-8",
 				"line_ending": "Windows",
 				"name": "FdkedpoeGudBQ6"
 			}
 		},
 		{
-			"file": "src/css/chat.scss",
+			"file": "src/css/user-list.scss",
 			"settings":
 			{
-				"buffer_size": 6546,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "src/js/chat.js",
-			"settings":
-			{
-				"buffer_size": 9814,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "src/js/api2.js",
-			"settings":
-			{
-				"buffer_size": 29335,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "src/js/apiurls.js",
-			"settings":
-			{
-				"buffer_size": 467,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "src/js/roomlist.js",
-			"settings":
-			{
-				"buffer_size": 8155,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "src/js/userlist.js",
-			"settings":
-			{
-				"buffer_size": 4912,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "src/css/chat-message.scss",
-			"settings":
-			{
-				"buffer_size": 1754,
-				"encoding": "UTF-8",
+				"buffer_size": 2535,
 				"line_ending": "Windows"
 			}
 		},
@@ -597,6 +543,103 @@
 			{
 				"buffer_size": 5863,
 				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/js/api2.js",
+			"settings":
+			{
+				"buffer_size": 31674,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/js/apiurls.js",
+			"settings":
+			{
+				"buffer_size": 541,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/js/authorize.js",
+			"settings":
+			{
+				"buffer_size": 4339,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/css/auth.scss",
+			"settings":
+			{
+				"buffer_size": 3941,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/js/chat.js",
+			"settings":
+			{
+				"buffer_size": 10470,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/css/user-profile.scss",
+			"settings":
+			{
+				"buffer_size": 380,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/css/root.scss",
+			"settings":
+			{
+				"buffer_size": 308,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/css/chat.scss",
+			"settings":
+			{
+				"buffer_size": 7216,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/css/darktheme.scss",
+			"settings":
+			{
+				"buffer_size": 1699,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/css/chat-message.scss",
+			"settings":
+			{
+				"buffer_size": 2177,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/css/mixins.scss",
+			"settings":
+			{
+				"buffer_size": 2597,
 				"line_ending": "Windows"
 			}
 		}
@@ -671,38 +714,40 @@
 	],
 	"file_history":
 	[
-		"/C/Users/user/Documents/quickquick/main.lua",
-		"/C/Users/user/Documents/squawk-chat/src/js/root.js",
-		"/C/Users/user/Documents/squawk-chat/src/css/mixins.scss",
-		"/C/Users/user/Documents/squawk-chat/src/css/room-object.scss",
-		"/C/Users/user/Documents/squawk-chat/src/css/chat.scss",
+		"/C/Users/user/Documents/squawk-chat/src/css/user-profile.css",
+		"/C/Users/user/Documents/squawk-chat/src/css/darktheme.scss",
 		"/C/Users/user/Documents/squawk-chat/src/css/app.scss",
 		"/C/Users/user/Documents/squawk-chat/src/js/chat.js",
-		"/C/Users/user/Documents/squawk-chat/src/css/chat-message.scss",
-		"/C/Users/user/Documents/squawk-chat/src/js/roomobject.js",
-		"/C/Users/user/Documents/squawk-chat/src/js/chatmessage.js",
 		"/C/Users/user/Documents/squawk-chat/src/js/apiurls.js",
-		"/C/Users/user/Documents/squawk-chat/src/js/userlist.js",
-		"/C/Users/user/Documents/squawk-chat/src/css/app.css",
-		"/C/Users/user/Documents/squawk-chat/src/js/roomlist.js",
+		"/C/Users/user/Documents/squawk-chat/src/css/chat.scss",
 		"/C/Users/user/Documents/squawk-chat/src/css/user-list.scss",
-		"/C/Users/user/Documents/squawk-chat/src/css/status-modal.scss",
+		"/C/Users/user/Documents/squawk-chat/src/js/root.js",
+		"/C/Users/user/Documents/squawk-chat/src/js/roomlist.js",
 		"/C/Users/user/Documents/squawk-chat/src/js/statusmodal.js",
 		"/C/Users/user/Documents/squawk-chat/src/js/api2.js",
-		"/C/Users/user/Documents/squawk-chat/src/js/authorize.js",
-		"/C/Users/user/Documents/squawk-chat/src/js/common.js",
+		"/C/Users/user/Documents/squawk-chat/src/css/chat-message.scss",
+		"/C/Users/user/Documents/squawk-chat/src/js/userlist.js",
+		"/C/Users/user/Documents/squawk-chat/src/css/room-object.scss",
 		"/C/Users/user/Documents/squawk-chat/src/css/room-list.scss",
+		"/C/Users/user/Documents/squawk-chat/src/js/chatmessage.js",
+		"/C/Users/user/Documents/squawk-chat/src/js/roomobject.js",
+		"/C/Users/user/Documents/squawk-chat/src/css/auth.scss",
+		"/C/Users/user/Documents/squawk-chat/src/css/chat.css",
+		"/C/Users/user/Documents/squawk-chat/src/js/common.js",
+		"/C/Users/user/Documents/squawk-chat/src/js/authorize.js",
+		"/C/Users/user/Documents/quickquick/main.lua",
+		"/C/Users/user/Documents/squawk-chat/src/css/mixins.scss",
+		"/C/Users/user/Documents/squawk-chat/src/css/app.css",
+		"/C/Users/user/Documents/squawk-chat/src/css/status-modal.scss",
 		"/C/Users/user/Documents/squawk-chat/src/css/root.css",
 		"/C/Users/user/Documents/squawk-chat/src/css/root.scss",
 		"/C/Users/user/Documents/squawk-chat/src/css/animations.scss",
 		"/C/Users/user/Documents/squawk-chat/src/css/chat-message.css",
-		"/C/Users/user/Documents/squawk-chat/src/css/auth.scss",
 		"/C/Users/user/Documents/squawk-chat/src/css/toasts.css",
 		"/C/Users/user/Documents/squawk-chat/src/css/toasts.scss",
 		"/C/Users/user/Documents/squawk-chat/src/css/user-list.css",
 		"/C/Users/user/Documents/squawk-chat/src/css/room-list.css",
 		"/C/Users/user/Documents/squawk-chat/src/css/room-object.css",
-		"/C/Users/user/Documents/squawk-chat/src/css/chat.css",
 		"/C/Users/user/Documents/squawk-chat/src/js/search.js",
 		"/C/Users/user/Documents/squawk-chat/src/css/chat-window.scss",
 		"/C/Users/user/Documents/tweets-react/src/css/foundation-icons.css",
@@ -796,9 +841,7 @@
 		"/C/Users/user/Documents/squawk-chat/app/templates/components/user-object.hbs",
 		"/C/Users/user/Documents/squawk-chat/app/routes/messages.js",
 		"/C/Users/user/Documents/squawk-chat/app/router.js",
-		"/C/Users/user/Documents/squawk-chat/app/components/messages.js",
-		"/C/Users/user/Documents/squawk-chat/app/components/user-object.js",
-		"/C/Users/user/Documents/squawk-chat/app/templates/components/messages.hbs"
+		"/C/Users/user/Documents/squawk-chat/app/components/messages.js"
 	],
 	"find":
 	{
@@ -817,6 +860,45 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"joinedchannels",
+			" \n",
+			"=>",
+			"bookmark",
+			"favorite",
+			"getChannelUsers",
+			"userlist",
+			"getChannelData",
+			"if (channelData.type",
+			"if (channel",
+			"getChannelData",
+			"chatData",
+			"friendsC",
+			"selectedchat",
+			"setselec",
+			"include",
+			"channelsJoined(",
+			"channelsJoined",
+			"setSelect",
+			"friendsCallback",
+			"usersCa",
+			"userCa",
+			"getChannels",
+			"getFriends",
+			"fetchChannels",
+			"channelsList",
+			"getChannels",
+			"channelsCallback",
+			"setChannelsCallback",
+			"performFilterSort",
+			"systemMessage",
+			"avatar-contain",
+			"ORS",
+			"socket.send( 'CHA' )",
+			" socket.send( 'CHA' )",
+			"ORS",
+			"offline",
+			"Offline",
+			"getUsers",
 			"bbcodeStyles",
 			"console.log",
 			"populat",
@@ -905,46 +987,7 @@
 			"transform",
 			"translateX",
 			"channelsJoined.map((obj)",
-			"userData.friends",
-			"LIS",
-			"setSelectedChatCallback",
-			"setSelectedChat",
-			"selectedChat",
-			"public",
-			"f-list",
-			"translateX",
-			".bind(this)",
-			"./api",
-			"red",
-			".input-form-contain",
-			"class",
-			"button-scale",
-			"updatesearh",
-			"widget",
-			"tweet-m",
-			"ellip",
-			"232",
-			"\n.label {\n  display: inline;\n  padding: .2em .6em",
-			"label",
-			"RsFedInterview",
-			"interview",
-			"rs-fed-interview",
-			"rs-fed",
-			"Squawk Box",
-			"font-weight: bold;",
-			"tweet-date",
-			"avatar",
-			"blur",
-			"back-button",
-			"tweet-cont",
-			"status",
-			"status/",
-			"status/c",
-			"cookie",
-			"mentionHandler",
-			"extend",
-			"ReactDOM",
-			"recent"
+			"userData.friends"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -952,6 +995,7 @@
 		"regex": false,
 		"replace_history":
 		[
+			"Unknown",
 			"box-shadow: 0px 4px 12px rgba(0,0,0,.05)",
 			"updateChannelMessages",
 			"font-weight:400",
@@ -978,23 +1022,24 @@
 	"groups":
 	[
 		{
-			"selected": 2,
+			"selected": 6,
 			"sheets":
 			[
 				{
 					"buffer": 0,
+					"file": "notes.txt",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 56,
+						"buffer_size": 260,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								14
+								260,
+								260
 							]
 						],
 						"settings":
@@ -1006,234 +1051,40 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 6,
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "src/css/chat.scss",
+					"file": "src/css/user-list.scss",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 6546,
+						"buffer_size": 2535,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								6071,
-								6071
+								311,
+								353
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/SCSS/SCSS.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 3645.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "src/js/chat.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 9814,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1326,
-								1326
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Babel/JavaScript (Babel).sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "src/js/api2.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 29335,
-						"regions":
-						{
-							"bookmarks":
-							{
-								"flags": 144,
-								"icon": "bookmark",
-								"regions":
-								[
-									[
-										10524,
-										10524
-									],
-									[
-										11275,
-										11275
-									]
-								],
-								"scope": "bookmarks"
-							}
-						},
-						"selection":
-						[
-							[
-								8835,
-								8848
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Babel/JavaScript (Babel).sublime-syntax",
+							"syntax": "Packages/SCSS/SCSS.tmLanguage",
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 4280.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 5,
 					"type": "text"
 				},
 				{
-					"buffer": 4,
-					"file": "src/js/apiurls.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 467,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								418,
-								418
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Babel/JavaScript (Babel).sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 7,
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "src/js/roomlist.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 8155,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1445,
-								1445
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Babel/JavaScript (Babel).sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 210.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 4,
-					"type": "text"
-				}
-			]
-		},
-		{
-			"selected": 2,
-			"sheets":
-			[
-				{
-					"buffer": 6,
-					"file": "src/js/userlist.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 4912,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2041,
-								2041
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Babel/JavaScript (Babel).sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 210.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 8,
-					"type": "text"
-				},
-				{
-					"buffer": 7,
-					"file": "src/css/chat-message.scss",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1754,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								961,
-								961
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/SCSS/SCSS.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 6,
-					"type": "text"
-				},
-				{
-					"buffer": 8,
+					"buffer": 2,
 					"file": "src/js/common.js",
 					"semi_transient": false,
 					"settings":
@@ -1254,10 +1105,360 @@
 							"syntax": "Packages/Babel/JavaScript (Babel).sublime-syntax"
 						},
 						"translation.x": 0.0,
+						"translation.y": 2126.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "src/js/api2.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 31674,
+						"regions":
+						{
+							"bookmarks":
+							{
+								"flags": 144,
+								"icon": "bookmark",
+								"regions":
+								[
+									[
+										21149,
+										21149
+									]
+								],
+								"scope": "bookmarks"
+							}
+						},
+						"selection":
+						[
+							[
+								25697,
+								25697
+							]
+						],
+						"settings":
+						{
+							"SL.17.region_keys":
+							[
+								"SL.annotations.Gutter.region.redish markup.deleted.sublime_linter markup.error.sublime_linter.dot",
+								"SL.annotations.Highlights.|region.redish markup.deleted.sublime_linter markup.error.sublime_linter|32",
+								"sublime_linter.protected_regions",
+								"SL.annotations.Highlights.|region.yellowish markup.changed.sublime_linter markup.warning.sublime_linter|32",
+								"SL.annotations.Gutter.region.yellowish markup.changed.sublime_linter markup.warning.sublime_linter.dot"
+							],
+							"syntax": "Packages/Babel/JavaScript (Babel).sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 11890.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "src/js/apiurls.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 541,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								541,
+								541
+							]
+						],
+						"settings":
+						{
+							"SL.18.region_keys":
+							[
+							],
+							"syntax": "Packages/Babel/JavaScript (Babel).sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "src/js/authorize.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4339,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3499,
+								3499
+							]
+						],
+						"settings":
+						{
+							"SL.19.region_keys":
+							[
+							],
+							"SL.27.region_keys":
+							[
+							],
+							"syntax": "Packages/Babel/JavaScript (Babel).sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1218.0,
+						"zoom_level": 1.0
+					},
 					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "src/css/auth.scss",
+					"semi_transient": true,
+					"settings":
+					{
+						"buffer_size": 3941,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								923,
+								923
+							]
+						],
+						"settings":
+						{
+							"SL.28.region_keys":
+							[
+							],
+							"syntax": "Packages/SCSS/SCSS.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 294.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "src/js/chat.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 10470,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								9921,
+								9921
+							]
+						],
+						"settings":
+						{
+							"history_list_is_closing": true,
+							"syntax": "Packages/Babel/JavaScript (Babel).sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 3217.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 13,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "src/css/user-profile.scss",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 380,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								380,
+								380
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/SCSS/SCSS.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "src/css/root.scss",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 308,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								308,
+								308
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/SCSS/SCSS.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 12,
+					"type": "text"
+				},
+				{
+					"buffer": 10,
+					"file": "src/css/chat.scss",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 7216,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3134,
+								3134
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/SCSS/SCSS.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 1932.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 11,
+					"type": "text"
+				},
+				{
+					"buffer": 11,
+					"file": "src/css/darktheme.scss",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1699,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1669,
+								1669
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/SCSS/SCSS.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 252.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 10,
+					"type": "text"
+				},
+				{
+					"buffer": 12,
+					"file": "src/css/chat-message.scss",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2177,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2169,
+								2169
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/SCSS/SCSS.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 1006.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
+					"type": "text"
+				},
+				{
+					"buffer": 13,
+					"file": "src/css/mixins.scss",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2597,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2329,
+								2468
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/SCSS/SCSS.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 712.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 9,
 					"type": "text"
 				}
 			]
@@ -1280,18 +1481,11 @@
 				0,
 				1,
 				1
-			],
-			[
-				1,
-				0,
-				2,
-				1
 			]
 		],
 		"cols":
 		[
 			0.0,
-			0.5,
 			1.0
 		],
 		"rows":
@@ -1301,6 +1495,14 @@
 		]
 	},
 	"menu_visible": true,
+	"output.SublimeLinter":
+	{
+		"height": 0.0
+	},
+	"output.SublimeLinter Messages":
+	{
+		"height": 96.0
+	},
 	"output.exec":
 	{
 		"height": 284.0
