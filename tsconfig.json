@@ -20,8 +20,12 @@
     "allowSyntheticDefaultImports": true,
     "noStrictGenericChecks": true,
     "typeRoots": [
-      "node_modules/@types"
-    ]
+      "node_modules/@types",
+    ],
+    "baseUrl": "./",
+    "paths": {
+      "bbcode-to-react": ["customTypings/bbcode-to-react"]
+    }
   },
   "include": [
     "src"
