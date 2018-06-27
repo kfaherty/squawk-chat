@@ -1,41 +1,6 @@
 import React, { Component } from 'react';
 import parser, { Tag } from 'bbcode-to-react';
 import { joinChannel } from './api2';
-import loadURLS from './apiurls';
-const apiurls = loadURLS();
-
-class Avatar extends Component {
-	render() {
-		let iconurl = '';
-		
-		switch(this.props.type) {
-			case 0:
-				iconurl = ''; // Default public image
-				break;
-			case 1:
-				iconurl = ''; // Default private image
-				break;
-			case 2:
-				iconurl = ''; // Default private invite only image
-				break;
-			case 3:
-				if (this.props.name) {
-					iconurl = apiurls.avatarurl+encodeURI(this.props.name).toLowerCase()+'.png'; // private pm image				break;
-				}
-				break;
-			default:
-				// console.trace('invalid type',this.props);
-				break;
-		}
-	
-		const avatarStyle = {
-			background: 'url(' + iconurl + ') no-repeat 50% 50% / cover',
-		};
-		return (
-			<div className="avatar-contain" style={avatarStyle}></div>
-		)
-	}
-}
 
 class RelativeTime extends Component {
 	constructor(props) {

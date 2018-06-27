@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { ToastContainer, toast, style } from 'react-toastify';
-import { Avatar,ParsedText } from './common';
-import Authorize from './authorize';
+import { Avatar,ParsedText } from '../common';
+import Authorize from './Authorize';
 import RoomList from './roomlist';
 import Chat from './chat';
 import Search from './search';
@@ -14,7 +14,7 @@ import {
 	getFriends,getChannels,getJoinedChannels,getPrivateChannels,
 	updateStatus,
 	setChannelsCallback,setJoinedChannelsCallback,setFriendsCallback,setSelectedChatCallback,setSelectedChat,setCreateToastCallback,setChannelMessagesCallback,setChannelUsersCallback,setPrivateChannelsCallback
-} from './api2';
+} from '../api/api2';
 
 style({ // toasts style overrides.
   	width: "320px",

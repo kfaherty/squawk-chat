@@ -1,10 +1,16 @@
-import React, { Component } from 'react';
+import * as React from 'react';
 import { login,loadCookie,createSocket } from './api2';
 import { StandardInput } from './common';
 import loadURLS from './apiurls';
+
 const apiurls = loadURLS();
 
-class Character extends Component {
+interface ICharacterChooser {
+	obj: ICharacter
+	handleClick: void
+};
+
+class Character extends React.Component<ICharacterChooser, {}> {
 	handleConnectClick () {
 		this.props.handleClick(this.props.obj);
 	}
@@ -15,27 +21,24 @@ class Character extends Component {
 	}
 }
 
+interface IAuthorizeState {
+	username: string;
+	password: string;
+	usernamehaserror: boolean;
+	passwordhaserror: boolean;
+	showLogin: boolean;
+	showError: boolean;
+	submittingLogin: boolean;
+	error: string;
+	list: ICharacter[];
+}
 
-class Authorize extends Component {
-	constructor(props) {
-    	super(props);
-    	this.state = {
-    		username: '',
-    		password: '',
-    		usernamehaserror: false,
-    		passwordhaserror: false,
-    		showLogin: true,
-    		list: []
-    	};
-
-	    this.handleFieldChange = this.handleFieldChange.bind(this);	    
-	    this.handleKeyDown = this.handleKeyDown.bind(this);	    
-	    this.handleLoginClick = this.handleLoginClick.bind(this);
-
+class Authorize extends React.Component<{}, IAuthorizeState> {
+	componentWillReceiveProps() {
 	    loadCookie().then((list) => {
 			this.setState({ list:list, showLogin:false });
 	    }).catch((error) => console.log(error));
-    }
+	}
 	handleLoginClick() {
 		let validated = true;
 		if (!this.state.username) {
@@ -47,19 +50,16 @@ class Authorize extends Component {
 			this.setState({passwordhaserror:true});
 		}	
 
-		if (validated && !this.submittedLogin) {
-			this.submittedLogin = true; // lockout button.
+		if (validated && !this.state.submittingLogin) {
+			this.setState({ submittingLogin: true }); 
 			login(this.state.username,this.state.password).then((list) => {
-				// console.log('list!',list);
-				this.submittedLogin = false;
-				this.setState({ list:list, showLogin:false });
-			}).catch((error) => {
-				this.submittedLogin = false;
-				this.setState({error: error,showError:true});
+				this.setState({ submittingLogin: false, list:list, showLogin:false });
+			}).catch(error => {
+				this.setState({submittingLogin: true, error, showError:true});
 			});
 		}
 	}
-	handleFieldChange(name,value) {
+	handleFieldChange: (name: string): void {
 		switch(name) {
 			case 'Username':
 				this.setState({username:value,usernamehaserror:false,showError: false});
@@ -112,14 +112,13 @@ class Authorize extends Component {
 					<div className="logo-row">
 						<h1>SquawkChat</h1>
 					</div>
-
 					<div className={"login "+ (this.state.showLogin? "active":"")}>
 						<div className={"login-input " + (this.state.usernamehaserror ? "error" : "")}>
 							<StandardInput 
 								inputName='Username' 
 								iconClass="fi-torso" 
 								onChange={this.handleFieldChange} 
-				                onKeyDown={this.handleKeyDown}
+								onKeyDown={this.handleKeyDown}
 							/>
 						</div>
 						<div className={"login-input " + (this.state.passwordhaserror ? "error" : "")}>
@@ -128,7 +127,7 @@ class Authorize extends Component {
 								iconClass="fi-lock" 
 								type='password' 
 								onChange={this.handleFieldChange} 
-				                onKeyDown={this.handleKeyDown}
+								onKeyDown={this.handleKeyDown}
 							/>
 						</div>
 						
