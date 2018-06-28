@@ -1,6 +1,7 @@
-import React, { Component } from 'react';
+import * as React from 'react';
 import { ToastContainer, toast, style } from 'react-toastify';
-import { Avatar,ParsedText } from '../common';
+import Avatar from './Avatar';
+import { ParsedText } from './Tags';
 import Authorize from './Authorize';
 import RoomList from './roomlist';
 import Chat from './chat';
@@ -30,21 +31,29 @@ style({ // toasts style overrides.
   	},
 });
 
-class NotificationTemplate extends Component {
-    render(){
-	    return (
-        	<div className={"toast-item " + (this.props.error ? "error" : "")}>
-        		<div className="content-wrap">
-        			<div className="toast-header">{this.props.header}</div>
-			    	<div className="toast-content"><ParsedText character={this.props.character} text={this.props.text} /></div>
-			    </div>
-			    <button onClick={this.props.closeToast}>Dismiss</button>
-			</div>
-      	);
-    }
+interface INotificationTemplateProps {
+	error: string;
+	header: string;
+	character: string;
+	text: string;
+	closeToast: () => void;
 }
 
-class Root extends Component {
+class NotificationTemplate extends React.Component<INotificationTemplateProps, {}> {
+	render(){
+		return (
+			<div className={"toast-item " + (this.props.error ? "error" : "")}>
+				<div className="content-wrap">
+					<div className="toast-header">{this.props.header}</div>
+					<div className="toast-content"><ParsedText character={this.props.character} text={this.props.text} /></div>
+				</div>
+				<button onClick={this.props.closeToast}>Dismiss</button>
+			</div>
+		);
+	}
+}
+
+class Root extends React.Component {
 	constructor(props) {
     	super(props);
 

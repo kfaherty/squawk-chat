@@ -2,7 +2,7 @@
 import * as React from 'react';
 
 interface IStandardInputProps {
-	type: string;
+	type?: string;
 	iconClass: string;
 	inputName: string;
 	initialValue?: string;

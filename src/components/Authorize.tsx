@@ -1,24 +1,28 @@
 import * as React from 'react';
-import { login,loadCookie,createSocket } from './api2';
-import { StandardInput } from './common';
-import loadURLS from './apiurls';
 
-const apiurls = loadURLS();
+import { login,loadCookie,createSocket } from '../api/api2';
+import StandardInput from './StandardInput';
+
+import { version } from '../config/api-urls';
 
 interface ICharacterChooser {
-	obj: ICharacter
-	handleClick: void
+	character: string;
+	handleClick: (obj: string) => void;
 };
 
 class Character extends React.Component<ICharacterChooser, {}> {
-	handleConnectClick () {
-		this.props.handleClick(this.props.obj);
+	handleConnectClick (): void {
+		this.props.handleClick(this.props.character);
 	}
 	render() {
 		return (
-			<button className="character-option" onClick={this.handleConnectClick} key={this.props.obj}>{this.props.obj}</button>
+			<button className="character-option" onClick={this.handleConnectClick} key={this.props.character}>{this.props.character}</button>
 		)
 	}
+}
+
+interface IAuthorizeProps {
+	visible: boolean;
 }
 
 interface IAuthorizeState {
@@ -30,16 +34,16 @@ interface IAuthorizeState {
 	showError: boolean;
 	submittingLogin: boolean;
 	error: string;
-	list: ICharacter[];
+	list: string[];
 }
 
-class Authorize extends React.Component<{}, IAuthorizeState> {
+class Authorize extends React.Component<IAuthorizeProps, IAuthorizeState> {
 	componentWillReceiveProps() {
 	    loadCookie().then((list) => {
 			this.setState({ list:list, showLogin:false });
 	    }).catch((error) => console.log(error));
 	}
-	handleLoginClick() {
+	handleLoginClick(): void {
 		let validated = true;
 		if (!this.state.username) {
 			validated = false;
@@ -59,19 +63,19 @@ class Authorize extends React.Component<{}, IAuthorizeState> {
 			});
 		}
 	}
-	handleFieldChange: (name: string): void {
+	handleFieldChange(name: string, value: string): void {
 		switch(name) {
 			case 'Username':
-				this.setState({username:value,usernamehaserror:false,showError: false});
+				this.setState({ username: value, usernamehaserror:false, showError: false});
 				break;
 			case 'Password':
-				this.setState({password:value,passwordhaserror:false,showError: false});
+				this.setState({ password: value, passwordhaserror:false, showError: false});
 				break
 			default:
 				break;
 		};
 	}
-	handleConnectClick(option) {
+	handleConnectClick(option: any) { // TODO: fix this.
 		if (option.obj) {
 			createSocket(option.obj)
 			.catch((error) => {
@@ -83,20 +87,19 @@ class Authorize extends React.Component<{}, IAuthorizeState> {
 			console.error('cant parse character..',option);
 		}
 	}
-	handleKeyDown(event) {
-  		// console.log(event.key);
-        if (event.key === 'Enter') {
-    		this.handleLoginClick();
-        }
-    }
+	handleKeyDown(event: React.KeyboardEvent<HTMLInputElement>): void {
+		if (event.key === 'Enter') {
+			this.handleLoginClick();
+		}
+	}
 
-    sortCharacters(array) {
-	    function alpha(a,b) {
-    		return a.toLowerCase().localeCompare(b.toLowerCase());
-        }
-    
-        return array.sort(alpha);
-    }
+	sortCharacters(array: string[]) {
+		function alpha(a: string,b: string) {
+			return a.toLowerCase().localeCompare(b.toLowerCase());
+		}
+
+		return array.sort(alpha);
+	}
 
 	render() {
 		const characterlist = this.sortCharacters(this.state.list || []);
@@ -106,7 +109,7 @@ class Authorize extends React.Component<{}, IAuthorizeState> {
 			<div className={"authorize-contain " + (this.props.visible ? "" : "visible" )}>
 				<div className="authorize-background"></div>
 
-				<div className="version-wrap">version {apiurls.version}</div>
+				<div className="version-wrap">version {version}</div>
 
 				<div className="authorize-modal">
 					<div className="logo-row">

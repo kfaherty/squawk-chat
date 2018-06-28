@@ -1,9 +1,9 @@
 {
   "name": "squawkchat",
-  "version": "0.2.0",
+  "version": "2.0.1",
   "main": "index.js",
   "repository": "https://github.com/enemyspeak/squawk-chat",
-  "author": "Kevin Faherty <k@kevinfaherty.comm>",
+  "author": "Hannu <cyberfiberoptics@gmail.com>",
   "license": "MIT",
   "dependencies": {
     "babel-polyfill": "^6.23.0",
