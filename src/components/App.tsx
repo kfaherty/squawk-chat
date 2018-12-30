@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ToastContainer, toast, style } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import Avatar from './Avatar';
 import { ParsedText } from './Tags';
 import Authorize from './Authorize';
@@ -16,20 +16,22 @@ import {
 	updateStatus,
 	setChannelsCallback,setJoinedChannelsCallback,setFriendsCallback,setSelectedChatCallback,setSelectedChat,setCreateToastCallback,setChannelMessagesCallback,setChannelUsersCallback,setPrivateChannelsCallback
 } from '../api/api2';
+import { VALID_USER_STATUS } from 'src/interfaces';
 
-style({ // toasts style overrides.
-  	width: "320px",
-  	colorDefault: "#fff",
-  	colorProgressDefault: "transparent",
-  	mobile: "only screen and (max-width : 480px)",
-  	fontFamily: "'Verlag', sans-serif",
-  	zIndex: 9999,
+// TODO: fix this.
+// css({ // toasts style overrides.
+//   	width: "320px",
+//   	colorDefault: "#fff",
+//   	colorProgressDefault: "transparent",
+//   	mobile: "only screen and (max-width : 480px)",
+//   	fontFamily: "'Verlag', sans-serif",
+//   	zIndex: 9999,
 
-  	TOP_RIGHT: {
-    	top: 	'90px',
-    	right: 	'20px'
-  	},
-});
+//   	TOP_RIGHT: {
+//     	top: 	'90px',
+//     	right: 	'20px'
+//   	},
+// });
 
 interface INotificationTemplateProps {
 	error: string;
@@ -73,7 +75,7 @@ interface IRootState {
 	userListOpen: boolean;
 
 	showStatusModal: boolean;
-	currentStatus: string; // TODO: this should be a type that's like 'online' | 'away' | 'whatever'
+	currentStatus: VALID_USER_STATUS;
 	currentStatusMessage: string;
 
 	friendsLoaded: boolean;
@@ -103,7 +105,7 @@ class Root extends React.Component<{}, IRootState> {
 		userListOpen: true,
 
 		showStatusModal: false,
-		currentStatus: 'online',
+		currentStatus: 'online' as VALID_USER_STATUS,
 		currentStatusMessage: '',
 
 		friendsLoaded:false,

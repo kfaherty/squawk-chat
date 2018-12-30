@@ -6,8 +6,8 @@ interface IStandardInputProps {
 	iconClass: string;
 	inputName: string;
 	initialValue?: string;
-	onKeyDown: React.KeyboardEventHandler<HTMLInputElement>;
-	onChange: (inputName: string, value: string) => void;
+	onKeyDown?: React.KeyboardEventHandler<HTMLInputElement>;
+	onChange?: (inputName: string, value: string) => void;
 }
 
 interface IStandardInputState {

@@ -76,7 +76,7 @@ export class userTag extends Tag {
 export class sessionTag extends Tag {
   toReact() {
     return (
-      <span className="session" onClick={() => joinChannel(this.getContent(true))}><span className="session-icon fi-lock"></span>{this.params.session}</span>
+      <span className="session" /* TODO: onClick={() => joinChannel(this.getContent(true))} */ ><span className="session-icon fi-lock"></span>{this.params.session}</span>
     );
   }
 }
