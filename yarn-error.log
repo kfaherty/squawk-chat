@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/local/Cellar/node/9.11.1/bin/node /usr/local/Cellar/yarn/1.5.1_1/libexec/bin/yarn.js run build
+  /usr/local/Cellar/node/9.11.1/bin/node /usr/local/Cellar/yarn/1.5.1_1/libexec/bin/yarn.js build
 
 PATH: 
   /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
@@ -16,10 +16,10 @@ Platform:
 npm manifest: 
   {
     "name": "squawkchat",
-    "version": "0.2.0",
+    "version": "2.0.1",
     "main": "index.js",
     "repository": "https://github.com/enemyspeak/squawk-chat",
-    "author": "Kevin Faherty <k@kevinfaherty.comm>",
+    "author": "Hannu <cyberfiberoptics@gmail.com>",
     "license": "MIT",
     "dependencies": {
       "babel-polyfill": "^6.23.0",
@@ -35,7 +35,7 @@ npm manifest:
       "react-textarea-autosize": "5.2.1",
       "react-toastify": "^4.1.0",
       "socket.io-client": "latest",
-      "universal-cookie": "2.1.2",
+      "universal-cookie": "^2.2.0",
       "uuid": "^3.0.1"
     },
     "devDependencies": {
@@ -8404,9 +8404,9 @@ Lockfile:
       isnumeric "^0.2.0"
       viewport-dimensions "^0.2.0"
   
-  universal-cookie@2.1.2:
-    version "2.1.2"
-    resolved "https://registry.yarnpkg.com/universal-cookie/-/universal-cookie-2.1.2.tgz#7c0824c0e027f572789538932f066315611c2836"
+  universal-cookie@^2.2.0:
+    version "2.2.0"
+    resolved "https://registry.yarnpkg.com/universal-cookie/-/universal-cookie-2.2.0.tgz#328dc3883cf0ebd5b4904902033ad4dfdb907ed2"
     dependencies:
       cookie "^0.3.1"
       object-assign "^4.1.0"

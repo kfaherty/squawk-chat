@@ -24,6 +24,8 @@ class Avatar extends React.Component<IAvatar> {
 					iconurl = avatarUrl+encodeURI(this.props.name).toLowerCase()+'.png';
 				}
 				break;
+			case 4: 
+				iconurl = ''; // TODO: load a ? avatar here.
 			default:
 				break;
     }

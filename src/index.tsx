@@ -6,7 +6,7 @@ import './css/foundation-icons.css';
 import './css/root.css';
 
 // import registerServiceWorker from './js/registerServiceWorker';
-import Root from './js/App';
+import Root from './components/App';
 
 ReactDOM.render(<Root />, document.getElementById('root'));
 // registerServiceWorker();

@@ -24,7 +24,8 @@
     ],
     "baseUrl": "./",
     "paths": {
-      "bbcode-to-react": ["customTypings/bbcode-to-react"]
+      "bbcode-to-react": ["customTypings/bbcode-to-react"],
+      "universal-cookie": ["customTypings/universal-cookie"]
     }
   },
   "include": [

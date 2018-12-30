@@ -5,9 +5,9 @@ import Textarea from "react-textarea-autosize";
 import { ParsedText } from './common';
 import { sendMessage,privateMessage,sendTyping,createPrivateMessage,leaveChannel } from './api2'
 
-import ChatMessage from './chatmessage';
-import UserList from './userlist';
-import UserProfile from './userprofile';
+import ChatMessage from './ChatMessage';
+import UserList from './UserList';
+import UserProfile from './UserProfile';
 
 import { getProfileURL } from './apiurls';
 

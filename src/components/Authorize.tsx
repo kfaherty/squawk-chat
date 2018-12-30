@@ -58,7 +58,7 @@ class Authorize extends React.Component<IAuthorizeProps, IAuthorizeState> {
 			this.setState({ submittingLogin: true }); 
 			login(this.state.username,this.state.password).then((list) => {
 				this.setState({ submittingLogin: false, list:list, showLogin:false });
-			}).catch(error => {
+			}).catch((error: string) => {
 				this.setState({submittingLogin: true, error, showError:true});
 			});
 		}
@@ -108,9 +108,7 @@ class Authorize extends React.Component<IAuthorizeProps, IAuthorizeState> {
 		return (
 			<div className={"authorize-contain " + (this.props.visible ? "" : "visible" )}>
 				<div className="authorize-background"></div>
-
 				<div className="version-wrap">version {version}</div>
-
 				<div className="authorize-modal">
 					<div className="logo-row">
 						<h1>SquawkChat</h1>

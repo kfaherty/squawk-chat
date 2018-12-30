@@ -1,15 +1,22 @@
 import React, { Component } from 'react';
-import { RelativeTime,ParsedText,Avatar } from './common';
+import RelativeTime from './RelativeTime';
+import { ParsedText } from './Tags';
+import Avatar from './Avatar';
 
-class ChatMessage extends Component {
-	handleClick(name) {
+interface IChatMessage {
+	usernameClicked(name: string): void;
+	data: any; // TODO: fix
+}
+
+class ChatMessage extends Component<IChatMessage> {
+	handleClick(name: string): void {
 		if (!name) {
 			console.log('whatd you click?',name);
 			return;
 		}
 		this.props.usernameClicked(name);
 	}
-   	render() {
+  render() {
 		const message = this.props.data;
 		if (message.systemMessage) {
 			return (

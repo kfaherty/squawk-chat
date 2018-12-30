@@ -3,10 +3,10 @@ import { ToastContainer, toast, style } from 'react-toastify';
 import Avatar from './Avatar';
 import { ParsedText } from './Tags';
 import Authorize from './Authorize';
-import RoomList from './roomlist';
-import Chat from './chat';
-import Search from './search';
-import StatusModal from './statusmodal';
+import RoomList from './RoomList';
+import Chat from './Chat';
+import Search from './Search';
+import StatusModal from './StatusModal';
 
 import { 
 	logout,gotLoginPromise,lostConnectionAlert,gainedConnectionAlert,
@@ -53,54 +53,73 @@ class NotificationTemplate extends React.Component<INotificationTemplateProps, {
 	}
 }
 
-class Root extends React.Component {
-	constructor(props) {
-    	super(props);
+interface IRootState {
+	selectedTab: string;
+	selectedChat: string | null;
+	chatData: undefined;
+	chatMessages: undefined;
+	chatUsers: undefined;
 
-    	this.state = {
-	    	selectedTab: 'messages',
+	username: string | null;
+	connected: boolean;
+	loggedin: boolean;
+	
+	friendslist: any; // TODO: fix type
+	roomslist: any; // TODO: fix type
+	privatelist: any; // TODO: fix type
+	roomsjoined: any; // TODO: fix type
 
-	    	selectedChat: null,
-	    	chatData: undefined,
-	    	chatMessages: undefined,
-	    	chatUsers: undefined,
+	userMenuOpen: boolean;
+	userListOpen: boolean;
 
-	    	username: null,
-	    	connected: true,
-	    	loggedin: false, // false
-	    	
-	    	friendslist: [],
-	    	roomslist: [],
-	    	privatelist: [],
-	    	roomsjoined: [],
+	showStatusModal: boolean;
+	currentStatus: string; // TODO: this should be a type that's like 'online' | 'away' | 'whatever'
+	currentStatusMessage: string;
 
-	    	userMenuOpen: false,
-	    	userListOpen: true,
+	friendsLoaded: boolean;
+	channelsLoaded: boolean;
+	privateLoaded: boolean;
+}
 
-	    	showStatusModal: false,
-	    	currentStatus: 'online',
-	    	currentStatusMessage: ''
-	    };
+class Root extends React.Component<{}, IRootState> {
+	public state = {
+		selectedTab: 'messages',
+
+		selectedChat: null,
+		chatData: undefined,
+		chatMessages: undefined,
+		chatUsers: undefined,
+
+		username: null,
+		connected: true,
+		loggedin: false, // false
 		
-		// these trigger the inital loads
-	    this.friendsLoaded = false;
-	    this.channelsLoaded = false;
-	    this.privateLoaded = false;
+		friendslist: [],
+		roomslist: [],
+		privatelist: [],
+		roomsjoined: [],
 
-		this.updateStatus = this.updateStatus.bind(this);
-        this.setSelectedChat = this.setSelectedChat.bind(this);   
-        this.reportSelectedChat = this.reportSelectedChat.bind(this);
-	}
-    
+		userMenuOpen: false,
+		userListOpen: true,
+
+		showStatusModal: false,
+		currentStatus: 'online',
+		currentStatusMessage: '',
+
+		friendsLoaded:false,
+		channelsLoaded: false,
+		privateLoaded :false,
+	};
+
 	assignCallbacks() {
-	    // messages:
-	    setJoinedChannelsCallback((data) => {
+		// messages:
+		setJoinedChannelsCallback((data) => {
 			// console.log('new joined data',data);
 			if (this.state.selectedTab === 'messages') {
 				this.setState({roomsjoined: data});
 			}
-	    });
-	    // channels:
+		});
+			// channels:
 		setChannelsCallback((data) => {
 			// console.log('new channel data',data);
 			if (this.state.selectedTab === 'channels') {
@@ -114,37 +133,37 @@ class Root extends React.Component {
 				this.setState({privatelist: data});
 			}
 		});
-	    // friends:
-	    setFriendsCallback((data) => {
-	    	// console.log('friends data',data);
+		// friends:
+		setFriendsCallback((data) => {
+			// console.log('friends data',data);
 			if (this.state.selectedTab === 'friends') {
 				this.setState({friendslist: data});
 			}
-	    });
-	    // sselected chat
-	    setSelectedChatCallback((data) => {
-	    	console.log('chat update',data);
-	    	this.setState({chatData:data});
-	    });
-	    // melba toasts
-	    setCreateToastCallback((props) => {
-	    	this.createToast(props);
-	    });
-	    // channel messages
-	    setChannelMessagesCallback((data) => {
-	    	// console.log('updating messages',data.length);
-	    	this.setState({chatMessages: data});
-	    });
-	    //channel users 
-	    setChannelUsersCallback((data => {
-	    	// console.log('updating users',data);
-	    	if (this.state.userListOpen) {
-	    		this.setState({chatUsers: data});
-	    	}
-	    }))
+		});
+		// sselected chat
+		setSelectedChatCallback((data) => {
+			console.log('chat update',data);
+			this.setState({chatData:data});
+		});
+		// melba toasts
+		setCreateToastCallback((props) => {
+			this.createToast(props);
+		});
+		// channel messages
+		setChannelMessagesCallback((data) => {
+			// console.log('updating messages',data.length);
+			this.setState({chatMessages: data});
+		});
+		//channel users 
+		setChannelUsersCallback((data => {
+			// console.log('updating users',data);
+			if (this.state.userListOpen) {
+				this.setState({chatUsers: data});
+			}
+		}))
 	}
 
-	createToast(props) {
+	createToast(props: INotificationTemplateProps) {
 		toast(<NotificationTemplate {...props} />);
 
 		// TODO: add this to notifications history.
@@ -154,36 +173,36 @@ class Root extends React.Component {
 	    gotLoginPromise().then((data) => {
 			this.setState({
 				loggedin: true,
-				username: data
+				username: data // TODO: get type
 			});
 	    });
 
-	    lostConnectionAlert((err,connected) => {
+	    lostConnectionAlert((err, connected) => {
 	    	this.setState({connected: false});
 	    });
-	    gainedConnectionAlert((err,connected) => {
+	    gainedConnectionAlert((err, connected) => {
 	    	this.setState({connected: true})
 	    });
 
 	    this.assignCallbacks();
     }
 
-    setSelectedTab(value) {
+    setSelectedTab(value: string) {
     	switch(value) {
     		case 'messages':
     			this.setState({roomsjoined:getJoinedChannels()});
     			break;
     		case 'channels':
-    			if (!this.channelsLoaded) {
+    			if (!this.state.channelsLoaded) {
 					fetchChannels();
-					this.channelsLoaded = true;
+					this.state.channelsLoaded = true;
 				}
 				this.setState({roomslist:getChannels()});
     			break;
     		case 'private':
-    			if (!this.privateLoaded) {
+    			if (!this.state.privateLoaded) {
     				fetchPrivate();
-					this.privateLoaded = true;
+					this.state.privateLoaded = true;
 				}
 				this.setState({privatelist:getPrivateChannels()}); 
     			break;
@@ -196,7 +215,7 @@ class Root extends React.Component {
     	this.setState({selectedTab: value});
     }
 
-    setSelectedChat(value,type) {
+    setSelectedChat(value: string, type: number) {
     	if (value) {
     		if (type === 3) {
     			createPrivateMessage(value);
@@ -205,7 +224,7 @@ class Root extends React.Component {
     		}
     		setSelectedChat(value); // syncs callback to updates.
     		this.setState({
-    			selectedChat:value,
+    			selectedChat: value,
     			chatData: getAnyChannelData(value), // load initial data.
     			chatMessages: getChannelMessages(value),
     			chatUsers: getChannelUsers(value) // might be able to optimize this out on pm
@@ -246,7 +265,6 @@ class Root extends React.Component {
     }
 
     updateStatus(status,statusmsg) {
-    	console.log(status,statusmsg);
     	updateStatus(status,statusmsg);
     	this.setState({
     		currentStatus: status,
@@ -302,7 +320,10 @@ class Root extends React.Component {
 				            </div>
 				        </div>)}
 			            <div className={"arrow " + (this.state.userMenuOpen ? "flipped" : "")}></div>
-						<Avatar name={this.state.username} type={3} />
+						{this.state.username ? 
+							<Avatar name={this.state.username || ''} type={3} /> :
+							<Avatar name={''} type={4} />
+						}
 						<div className={"status-badge " + this.state.currentStatus}></div>
 			        </div>
 			        <div className={"dropdown " + (this.state.userMenuOpen ? "visible " : "") + (this.state.userListOpen ? "" : "full")}>

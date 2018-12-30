@@ -1,14 +1,23 @@
-import loadURLS from './apiurls';
+
 import Cookies from 'universal-cookie';
 const cookies = new Cookies();
+import { useProd, loginUrl } from '../config/api-urls';
 
-const apiurls = loadURLS();
-if (!apiurls.useProd) {
+if (!useProd) {
 	console.warn('using dev');
 }
 
-// userData:
-var userData = {
+type UserData = {
+	account: string; // TOOD: might be wrong..
+	bookmarks: any; // TODO: FIX TYPE
+	characterlist: any; // TODO: FIX TYPE
+	ticket: string;
+	friends: any; // TODO: FIX TYPE
+	default_character: string;
+	logged_in: boolean;
+}
+
+let userData: UserData = {
 	account: '',
 	bookmarks: [],
 	characterlist: [],
@@ -16,18 +25,37 @@ var userData = {
 	friends: [],
 	default_character: '',
 	logged_in: false
-}
+};
 
-var globalUnread = 0;
+var globalUnread: number = 0;
+
+// data sources
+var channelsList: Set<any> = new Set(); // TOOD: type.
+var channelMessages = {}; // this is a hashmap of room messages
+var channelUsers = {}; // this a hashmap of room users
+var channelsJoined = []; // this is just going to be a standard array of names.
+var usersCache = []; // LIS data.
+var privateChannelsList = {};
+var bookmarksList = []; // we're not going to know who is a bookmark and who is a friend unless we use the data from login.
+var friendsList = [];
+var socketListeners = []; // listeners hashmap
+
+// id sequences
+var messageSeq: number = 0;
+
+var loginPromiseResolve: Promise<void>;
+var loginPromise = new Promise(function(resolve,reject) {
+ 	loginPromiseResolve = resolve;
+});
 
 // login
-function loadCookie() {
+const loadCookie: () => Promise<string[]> = () => {
 	return new Promise(function(resolve,reject) {
 		let cookiedata = cookies.getAll();
-		// console.log(cookiedata);
 		if (cookiedata && cookiedata.ticket) {
 			userData = {
 				logged_in: true,
+				default_character: '', // TODO: update this.
 				account: cookiedata.account,
 				ticket: cookiedata.ticket,
 				characterlist: cookiedata.characterlist,
@@ -36,13 +64,12 @@ function loadCookie() {
 			};
 			bookmarksList = cookiedata.bookmarks;
 			friendsList = cookiedata.friends;
-			// console.log(userData);
 			resolve(userData.characterlist);
 		}
 	});
-}
+};
 
-function login(username,password) {
+const login: (username: string, password: string) => void = (username, password) => {
 	return new Promise(function(resolve,reject) {
 		if (!username || !password) {
 			console.error('missing username,password',username,password);
@@ -52,16 +79,14 @@ function login(username,password) {
 		var formData = new FormData();
 		formData.append('account', username);
 		formData.append('password', password);
-		formData.append('no_bookmarks', true);
-		// formData.append('no_friends', true);
+		formData.append('no_bookmarks', 'true');
 		
-		fetch(apiurls.loginurl,{ 
+		fetch(loginUrl,{ 
 			method: 'POST',
 		  	body: formData
 	  	}).then(response => response.json())
 		.catch(error => console.error('Error:', error))
 		.then(response => {
-			// console.log('Success:', response);
 			if (response.error) {
 				reject(response.error);
 				return;
@@ -72,7 +97,6 @@ function login(username,password) {
 			userData.characterlist = response.characters;
 			userData.default_character = response.default_character;
 			userData.logged_in = true;
-			// userData.bookmarks = response.bookmarks;
 			if (response.friends) {
 				friendsList = response.friends.map((obj) => {
 					return obj.source_name;
@@ -80,10 +104,10 @@ function login(username,password) {
 			}
 
 			let expires = new Date(Date.now() + 60 * 1000 * 30);
-		    cookies.set('account', userData.account, 				{ expires: expires, path: '/' });
-		    cookies.set('ticket', userData.ticket, 					{ expires: expires, path: '/' });
+		    cookies.set('account', userData.account, { expires: expires, path: '/' });
+		    cookies.set('ticket', userData.ticket, { expires: expires, path: '/' });
 		    cookies.set('characterlist', userData.characterlist, 	{ expires: expires, path: '/' });
-		    cookies.set('friends', friendsList, 					{ path: '/' });
+		    cookies.set('friends', friendsList, { path: '/' });
 
 			resolve(userData.characterlist);
 		});
@@ -103,10 +127,6 @@ function logout() {
 	window.location.reload();
 }
 
-var loginPromiseResolve;
-var loginPromise = new Promise(function(resolve,reject) {
- 	loginPromiseResolve = resolve;
-});
 
 function gotLoginPromise() {
   	return loginPromise;
@@ -121,21 +141,7 @@ function setCreateToastCallback(cb) {
 var socket;
 listenToData(); // create listeners.
 
-// data sources
-var channelsList = {}; // hashmap of rooms
-var channelMessages = {}; // this is a hashmap of room messages
-var channelUsers = {}; // this a hashmap of room users
-var channelsJoined = []; // this is just going to be a standard array of names.
-var usersCache = []; // LIS data.
-var privateChannelsList = {};
-var bookmarksList = []; // we're not going to know who is a bookmark and who is a friend unless we use the data from login.
-var friendsList = [];
-var socketListeners = []; // listeners hashmap
-
-// id sequences
-var messageSeq = 0;
-
-function createSocket(name) {
+function createSocket(name: string) {
 	return new Promise(function(resolve,reject) {
 		// return socket if it already exists first.
 		// if (socket) {
