@@ -1,7 +1,7 @@
 
 import React, { Component } from 'react';
 import { StandardInput } from './common';
-import { RoomObject,RoomShortObject } from './roomobject';
+import { RoomObject,RoomShortObject } from './RoomObject';
 
 class RoomList extends Component {
     constructor(props) {

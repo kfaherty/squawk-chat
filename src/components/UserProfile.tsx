@@ -1,6 +1,10 @@
-import React, { Component } from 'react';
+import * as React from 'react';
 
-class UserProfile extends Component {
+interface IUserProfile {
+	userListOpen: boolean;
+}
+
+class UserProfile extends React.Component<IUserProfile> {
 	render() {
 		return (
 			<div className={"chat-user-profile-contain " + ( this.props.userListOpen ? "" : "full" )}>

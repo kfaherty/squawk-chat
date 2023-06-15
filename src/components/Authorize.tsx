@@ -1,42 +1,49 @@
-import React, { Component } from 'react';
-import { login,loadCookie,createSocket } from './api2';
-import { StandardInput } from './common';
-import loadURLS from './apiurls';
-const apiurls = loadURLS();
+import * as React from 'react';
 
-class Character extends Component {
-	handleConnectClick () {
-		this.props.handleClick(this.props.obj);
+import { login,loadCookie,createSocket } from '../api/api2';
+import StandardInput from './StandardInput';
+
+import { version } from '../config/api-urls';
+
+interface ICharacterChooser {
+	character: string;
+	handleClick: (obj: string) => void;
+};
+
+class Character extends React.Component<ICharacterChooser, {}> {
+	handleConnectClick (): void {
+		this.props.handleClick(this.props.character);
 	}
 	render() {
 		return (
-			<button className="character-option" onClick={this.handleConnectClick} key={this.props.obj}>{this.props.obj}</button>
+			<button className="character-option" onClick={this.handleConnectClick} key={this.props.character}>{this.props.character}</button>
 		)
 	}
 }
 
+interface IAuthorizeProps {
+	visible: boolean;
+}
 
-class Authorize extends Component {
-	constructor(props) {
-    	super(props);
-    	this.state = {
-    		username: '',
-    		password: '',
-    		usernamehaserror: false,
-    		passwordhaserror: false,
-    		showLogin: true,
-    		list: []
-    	};
+interface IAuthorizeState {
+	username: string;
+	password: string;
+	usernamehaserror: boolean;
+	passwordhaserror: boolean;
+	showLogin: boolean;
+	showError: boolean;
+	submittingLogin: boolean;
+	error: string;
+	list: string[];
+}
 
-	    this.handleFieldChange = this.handleFieldChange.bind(this);	    
-	    this.handleKeyDown = this.handleKeyDown.bind(this);	    
-	    this.handleLoginClick = this.handleLoginClick.bind(this);
-
+class Authorize extends React.Component<IAuthorizeProps, IAuthorizeState> {
+	componentWillReceiveProps() {
 	    loadCookie().then((list) => {
 			this.setState({ list:list, showLogin:false });
 	    }).catch((error) => console.log(error));
-    }
-	handleLoginClick() {
+	}
+	handleLoginClick(): void {
 		let validated = true;
 		if (!this.state.username) {
 			validated = false;
@@ -47,31 +54,28 @@ class Authorize extends Component {
 			this.setState({passwordhaserror:true});
 		}	
 
-		if (validated && !this.submittedLogin) {
-			this.submittedLogin = true; // lockout button.
+		if (validated && !this.state.submittingLogin) {
+			this.setState({ submittingLogin: true }); 
 			login(this.state.username,this.state.password).then((list) => {
-				// console.log('list!',list);
-				this.submittedLogin = false;
-				this.setState({ list:list, showLogin:false });
-			}).catch((error) => {
-				this.submittedLogin = false;
-				this.setState({error: error,showError:true});
+				this.setState({ submittingLogin: false, list:list, showLogin:false });
+			}).catch((error: string) => {
+				this.setState({submittingLogin: true, error, showError:true});
 			});
 		}
 	}
-	handleFieldChange(name,value) {
+	handleFieldChange(name: string, value: string): void {
 		switch(name) {
 			case 'Username':
-				this.setState({username:value,usernamehaserror:false,showError: false});
+				this.setState({ username: value, usernamehaserror:false, showError: false});
 				break;
 			case 'Password':
-				this.setState({password:value,passwordhaserror:false,showError: false});
+				this.setState({ password: value, passwordhaserror:false, showError: false});
 				break
 			default:
 				break;
 		};
 	}
-	handleConnectClick(option) {
+	handleConnectClick(option: any) { // TODO: fix this.
 		if (option.obj) {
 			createSocket(option.obj)
 			.catch((error) => {
@@ -83,20 +87,19 @@ class Authorize extends Component {
 			console.error('cant parse character..',option);
 		}
 	}
-	handleKeyDown(event) {
-  		// console.log(event.key);
-        if (event.key === 'Enter') {
-    		this.handleLoginClick();
-        }
-    }
+	handleKeyDown(event: React.KeyboardEvent<HTMLInputElement>): void {
+		if (event.key === 'Enter') {
+			this.handleLoginClick();
+		}
+	}
 
-    sortCharacters(array) {
-	    function alpha(a,b) {
-    		return a.toLowerCase().localeCompare(b.toLowerCase());
-        }
-    
-        return array.sort(alpha);
-    }
+	sortCharacters(array: string[]) {
+		function alpha(a: string,b: string) {
+			return a.toLowerCase().localeCompare(b.toLowerCase());
+		}
+
+		return array.sort(alpha);
+	}
 
 	render() {
 		const characterlist = this.sortCharacters(this.state.list || []);
@@ -105,21 +108,18 @@ class Authorize extends Component {
 		return (
 			<div className={"authorize-contain " + (this.props.visible ? "" : "visible" )}>
 				<div className="authorize-background"></div>
-
-				<div className="version-wrap">version {apiurls.version}</div>
-
+				<div className="version-wrap">version {version}</div>
 				<div className="authorize-modal">
 					<div className="logo-row">
 						<h1>SquawkChat</h1>
 					</div>
-
 					<div className={"login "+ (this.state.showLogin? "active":"")}>
 						<div className={"login-input " + (this.state.usernamehaserror ? "error" : "")}>
 							<StandardInput 
 								inputName='Username' 
 								iconClass="fi-torso" 
 								onChange={this.handleFieldChange} 
-				                onKeyDown={this.handleKeyDown}
+								onKeyDown={this.handleKeyDown}
 							/>
 						</div>
 						<div className={"login-input " + (this.state.passwordhaserror ? "error" : "")}>
@@ -128,7 +128,7 @@ class Authorize extends Component {
 								iconClass="fi-lock" 
 								type='password' 
 								onChange={this.handleFieldChange} 
-				                onKeyDown={this.handleKeyDown}
+								onKeyDown={this.handleKeyDown}
 							/>
 						</div>
 						

@@ -1,11 +1,12 @@
-import React, { Component } from 'react';
-import { ToastContainer, toast, style } from 'react-toastify';
-import { Avatar,ParsedText } from './common';
-import Authorize from './authorize';
-import RoomList from './roomlist';
-import Chat from './chat';
-import Search from './search';
-import StatusModal from './statusmodal';
+import * as React from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import Avatar from './Avatar';
+import { ParsedText } from './Tags';
+import Authorize from './Authorize';
+import RoomList from './RoomList';
+import Chat from './Chat';
+import Search from './Search';
+import StatusModal from './StatusModal';
 
 import { 
 	logout,gotLoginPromise,lostConnectionAlert,gainedConnectionAlert,
@@ -14,84 +15,113 @@ import {
 	getFriends,getChannels,getJoinedChannels,getPrivateChannels,
 	updateStatus,
 	setChannelsCallback,setJoinedChannelsCallback,setFriendsCallback,setSelectedChatCallback,setSelectedChat,setCreateToastCallback,setChannelMessagesCallback,setChannelUsersCallback,setPrivateChannelsCallback
-} from './api2';
+} from '../api/api2';
+import { VALID_USER_STATUS } from 'src/interfaces';
 
-style({ // toasts style overrides.
-  	width: "320px",
-  	colorDefault: "#fff",
-  	colorProgressDefault: "transparent",
-  	mobile: "only screen and (max-width : 480px)",
-  	fontFamily: "'Verlag', sans-serif",
-  	zIndex: 9999,
+// TODO: fix this.
+// css({ // toasts style overrides.
+//   	width: "320px",
+//   	colorDefault: "#fff",
+//   	colorProgressDefault: "transparent",
+//   	mobile: "only screen and (max-width : 480px)",
+//   	fontFamily: "'Verlag', sans-serif",
+//   	zIndex: 9999,
 
-  	TOP_RIGHT: {
-    	top: 	'90px',
-    	right: 	'20px'
-  	},
-});
+//   	TOP_RIGHT: {
+//     	top: 	'90px',
+//     	right: 	'20px'
+//   	},
+// });
 
-class NotificationTemplate extends Component {
-    render(){
-	    return (
-        	<div className={"toast-item " + (this.props.error ? "error" : "")}>
-        		<div className="content-wrap">
-        			<div className="toast-header">{this.props.header}</div>
-			    	<div className="toast-content"><ParsedText character={this.props.character} text={this.props.text} /></div>
-			    </div>
-			    <button onClick={this.props.closeToast}>Dismiss</button>
-			</div>
-      	);
-    }
+interface INotificationTemplateProps {
+	error: string;
+	header: string;
+	character: string;
+	text: string;
+	closeToast: () => void;
 }
 
-class Root extends Component {
-	constructor(props) {
-    	super(props);
-
-    	this.state = {
-	    	selectedTab: 'messages',
-
-	    	selectedChat: null,
-	    	chatData: undefined,
-	    	chatMessages: undefined,
-	    	chatUsers: undefined,
-
-	    	username: null,
-	    	connected: true,
-	    	loggedin: false, // false
-	    	
-	    	friendslist: [],
-	    	roomslist: [],
-	    	privatelist: [],
-	    	roomsjoined: [],
-
-	    	userMenuOpen: false,
-	    	userListOpen: true,
-
-	    	showStatusModal: false,
-	    	currentStatus: 'online',
-	    	currentStatusMessage: ''
-	    };
-		
-		// these trigger the inital loads
-	    this.friendsLoaded = false;
-	    this.channelsLoaded = false;
-	    this.privateLoaded = false;
-
-		this.updateStatus = this.updateStatus.bind(this);
-        this.setSelectedChat = this.setSelectedChat.bind(this);   
-        this.reportSelectedChat = this.reportSelectedChat.bind(this);
+class NotificationTemplate extends React.Component<INotificationTemplateProps, {}> {
+	render(){
+		return (
+			<div className={"toast-item " + (this.props.error ? "error" : "")}>
+				<div className="content-wrap">
+					<div className="toast-header">{this.props.header}</div>
+					<div className="toast-content"><ParsedText character={this.props.character} text={this.props.text} /></div>
+				</div>
+				<button onClick={this.props.closeToast}>Dismiss</button>
+			</div>
+		);
 	}
-    
+}
+
+interface IRootState {
+	selectedTab: string;
+	selectedChat: string | null;
+	chatData: undefined;
+	chatMessages: undefined;
+	chatUsers: undefined;
+
+	username: string | null;
+	connected: boolean;
+	loggedin: boolean;
+	
+	friendslist: any; // TODO: fix type
+	roomslist: any; // TODO: fix type
+	privatelist: any; // TODO: fix type
+	roomsjoined: any; // TODO: fix type
+
+	userMenuOpen: boolean;
+	userListOpen: boolean;
+
+	showStatusModal: boolean;
+	currentStatus: VALID_USER_STATUS;
+	currentStatusMessage: string;
+
+	friendsLoaded: boolean;
+	channelsLoaded: boolean;
+	privateLoaded: boolean;
+}
+
+class Root extends React.Component<{}, IRootState> {
+	public state = {
+		selectedTab: 'messages',
+
+		selectedChat: null,
+		chatData: undefined,
+		chatMessages: undefined,
+		chatUsers: undefined,
+
+		username: null,
+		connected: true,
+		loggedin: false, // false
+		
+		friendslist: [],
+		roomslist: [],
+		privatelist: [],
+		roomsjoined: [],
+
+		userMenuOpen: false,
+		userListOpen: true,
+
+		showStatusModal: false,
+		currentStatus: 'online' as VALID_USER_STATUS,
+		currentStatusMessage: '',
+
+		friendsLoaded:false,
+		channelsLoaded: false,
+		privateLoaded :false,
+	};
+
 	assignCallbacks() {
-	    // messages:
-	    setJoinedChannelsCallback((data) => {
+		// messages:
+		setJoinedChannelsCallback((data) => {
 			// console.log('new joined data',data);
 			if (this.state.selectedTab === 'messages') {
 				this.setState({roomsjoined: data});
 			}
-	    });
-	    // channels:
+		});
+			// channels:
 		setChannelsCallback((data) => {
 			// console.log('new channel data',data);
 			if (this.state.selectedTab === 'channels') {
@@ -105,37 +135,37 @@ class Root extends Component {
 				this.setState({privatelist: data});
 			}
 		});
-	    // friends:
-	    setFriendsCallback((data) => {
-	    	// console.log('friends data',data);
+		// friends:
+		setFriendsCallback((data) => {
+			// console.log('friends data',data);
 			if (this.state.selectedTab === 'friends') {
 				this.setState({friendslist: data});
 			}
-	    });
-	    // sselected chat
-	    setSelectedChatCallback((data) => {
-	    	console.log('chat update',data);
-	    	this.setState({chatData:data});
-	    });
-	    // melba toasts
-	    setCreateToastCallback((props) => {
-	    	this.createToast(props);
-	    });
-	    // channel messages
-	    setChannelMessagesCallback((data) => {
-	    	// console.log('updating messages',data.length);
-	    	this.setState({chatMessages: data});
-	    });
-	    //channel users 
-	    setChannelUsersCallback((data => {
-	    	// console.log('updating users',data);
-	    	if (this.state.userListOpen) {
-	    		this.setState({chatUsers: data});
-	    	}
-	    }))
+		});
+		// sselected chat
+		setSelectedChatCallback((data) => {
+			console.log('chat update',data);
+			this.setState({chatData:data});
+		});
+		// melba toasts
+		setCreateToastCallback((props) => {
+			this.createToast(props);
+		});
+		// channel messages
+		setChannelMessagesCallback((data) => {
+			// console.log('updating messages',data.length);
+			this.setState({chatMessages: data});
+		});
+		//channel users 
+		setChannelUsersCallback((data => {
+			// console.log('updating users',data);
+			if (this.state.userListOpen) {
+				this.setState({chatUsers: data});
+			}
+		}))
 	}
 
-	createToast(props) {
+	createToast(props: INotificationTemplateProps) {
 		toast(<NotificationTemplate {...props} />);
 
 		// TODO: add this to notifications history.
@@ -145,36 +175,36 @@ class Root extends Component {
 	    gotLoginPromise().then((data) => {
 			this.setState({
 				loggedin: true,
-				username: data
+				username: data // TODO: get type
 			});
 	    });
 
-	    lostConnectionAlert((err,connected) => {
+	    lostConnectionAlert((err, connected) => {
 	    	this.setState({connected: false});
 	    });
-	    gainedConnectionAlert((err,connected) => {
+	    gainedConnectionAlert((err, connected) => {
 	    	this.setState({connected: true})
 	    });
 
 	    this.assignCallbacks();
     }
 
-    setSelectedTab(value) {
+    setSelectedTab(value: string) {
     	switch(value) {
     		case 'messages':
     			this.setState({roomsjoined:getJoinedChannels()});
     			break;
     		case 'channels':
-    			if (!this.channelsLoaded) {
+    			if (!this.state.channelsLoaded) {
 					fetchChannels();
-					this.channelsLoaded = true;
+					this.state.channelsLoaded = true;
 				}
 				this.setState({roomslist:getChannels()});
     			break;
     		case 'private':
-    			if (!this.privateLoaded) {
+    			if (!this.state.privateLoaded) {
     				fetchPrivate();
-					this.privateLoaded = true;
+					this.state.privateLoaded = true;
 				}
 				this.setState({privatelist:getPrivateChannels()}); 
     			break;
@@ -187,7 +217,7 @@ class Root extends Component {
     	this.setState({selectedTab: value});
     }
 
-    setSelectedChat(value,type) {
+    setSelectedChat(value: string, type: number) {
     	if (value) {
     		if (type === 3) {
     			createPrivateMessage(value);
@@ -196,7 +226,7 @@ class Root extends Component {
     		}
     		setSelectedChat(value); // syncs callback to updates.
     		this.setState({
-    			selectedChat:value,
+    			selectedChat: value,
     			chatData: getAnyChannelData(value), // load initial data.
     			chatMessages: getChannelMessages(value),
     			chatUsers: getChannelUsers(value) // might be able to optimize this out on pm
@@ -237,7 +267,6 @@ class Root extends Component {
     }
 
     updateStatus(status,statusmsg) {
-    	console.log(status,statusmsg);
     	updateStatus(status,statusmsg);
     	this.setState({
     		currentStatus: status,
@@ -293,7 +322,10 @@ class Root extends Component {
 				            </div>
 				        </div>)}
 			            <div className={"arrow " + (this.state.userMenuOpen ? "flipped" : "")}></div>
-						<Avatar name={this.state.username} type={3} />
+						{this.state.username ? 
+							<Avatar name={this.state.username || ''} type={3} /> :
+							<Avatar name={''} type={4} />
+						}
 						<div className={"status-badge " + this.state.currentStatus}></div>
 			        </div>
 			        <div className={"dropdown " + (this.state.userMenuOpen ? "visible " : "") + (this.state.userListOpen ? "" : "full")}>
