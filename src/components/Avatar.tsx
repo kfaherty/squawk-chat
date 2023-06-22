@@ -1,42 +1,36 @@
-import * as React from 'react';
-import { avatarUrl } from '../config/api-urls';
+import * as React from "react";
+import { avatarUrl } from "../config/api-urls";
 
 export interface IAvatar {
-  name: string;
+  name: string | undefined;
   type: number;
 }
 
-class Avatar extends React.Component<IAvatar> {
-	render() {
-		let iconurl = '';
-		switch(this.props.type) {
-			case 0:
-				iconurl = ''; // Default public image
-				break;
-			case 1:
-				iconurl = ''; // Default private image
-				break;
-			case 2:
-				iconurl = ''; // Default private invite only image
-				break;
-			case 3:
-				if (this.props.name) {
-					iconurl = avatarUrl+encodeURI(this.props.name).toLowerCase()+'.png';
-				}
-				break;
-			case 4: 
-				iconurl = ''; // TODO: load a ? avatar here.
-			default:
-				break;
-    }
- 
-		const avatarStyle = {
-			background: 'url(' + iconurl + ') no-repeat 50% 50% / cover',
-		};
-		return (
-			<div className="avatar-contain" style={avatarStyle}></div>
-		)
-	}
-}
+const getAvatar = (type: number, name?: string) => {
+  switch (type) {
+    case 0:
+      return ""; // Default public image
+    case 1:
+      return ""; // Default private image
+    case 2:
+      return ""; // Default private invite only image
+    case 3: // user image.
+      if (name) {
+        return avatarUrl + encodeURI(name).toLowerCase() + ".png";
+      }
+    // eslint-disable-next-line no-fallthrough
+    default:
+      return ""; // TODO: load a ? avatar here.
+  }
+};
+
+const Avatar: React.FC<IAvatar> = ({ type, name }) => {
+  const iconurl = getAvatar(type, name);
+  const avatarStyle = {
+    background: "url(" + iconurl + ") no-repeat 50% 50% / cover"
+  };
+
+  return <div className="avatar-contain" style={avatarStyle}></div>;
+};
 
 export default Avatar;
