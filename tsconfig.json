@@ -21,8 +21,8 @@
     "strict": true,
     "allowSyntheticDefaultImports": true,
     "typeRoots": [
-      "node_modules/@types",
-      "src/customTypings"
+      "./node_modules/@types",
+      "./src/customTypings"
     ],
     "plugins": [
       {
@@ -42,10 +42,11 @@
       "node",
       "react",
       "styled-components",
+      "./src/customTypings/bbcode-to-react"
     ]
   },
-  "include": [
-    "src", "config/jest/styled-components"
+  "includes": [
+    "./src", "config/jest/styled-components", "./src/customTypings/bbcode-to-react.d.ts"
   ],
   "exclude": [
     "node_modules",

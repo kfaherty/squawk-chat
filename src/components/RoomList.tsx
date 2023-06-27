@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import StandardInput from "./StandardInput";
 import { RoomObject, RoomShortObject } from "./RoomObject";
 
@@ -68,25 +68,30 @@ const oldest = (a, b) => {
   return 0;
 };
 
-// TODO: typedef props.
-class RoomList extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      sortType: this.props.defaultSort || "Alphabetical",
-      sortMenuOpen: false,
-      selectedChat: null,
-      searchString: ""
-    };
-    this.handleFieldChange = this.handleFieldChange.bind(this);
-  }
-  performFilterSort(array, searchString, sortType, label) {
-    if (!Array.isArray(array)) {
-      array = Object.values(array);
-    }
+type VALID_SORT = 'Alphabetical' | 'Population' | 'Type' | 'Status' | 'Newest First' | 'Oldest First';
 
+interface IRoomList {
+  sortType: VALID_SORT,
+  label: string;
+  rooms: Array<any> // TODO: typedef.
+  activeTab: string;
+  selectedChat: string;
+  setSelectedChat: (channelName: string, type: number) => void;
+}
+
+const RoomList: React.FC<IRoomList> = ({ sortType: sortTypeProps, label, rooms, activeTab, selectedChat, setSelectedChat}) => {
+  const [searchString, setSearchString] = React.useState<string>("");
+  const [sortMenuOpen, setShowSortMenu] = React.useState<boolean>(false);
+  const [sortType, setSortType] = React.useState<VALID_SORT>(sortTypeProps);
+
+  const performFilterSort = React.useCallback((rooms: any, searchString: string, sortType: VALID_SORT) => {
+    let sortedRooms = rooms;
+    
+    if (!Array.isArray(rooms)) {
+      sortedRooms = Object.values(rooms);
+    }
     if (searchString.length) {
-      array = array.filter((obj) => {
+      sortedRooms = rooms.filter((obj: any) => {//TODO: typedef
         return obj.name.search(new RegExp(searchString, "i")) !== -1;
       });
     }
@@ -94,121 +99,114 @@ class RoomList extends Component {
     // determine which function to use here.
     switch (sortType) {
       case "Alphabetical":
-        return array.sort(alpha);
+        return sortedRooms.sort(alpha);
       case "Population":
-        return array.sort(population);
+        return sortedRooms.sort(population);
       case "Type":
-        return array.sort(type);
+        return sortedRooms.sort(type);
       case "Status":
-        return array.sort(status);
+        return sortedRooms.sort(status);
       case "Newest First":
-        return array.sort(newest);
+        return sortedRooms.sort(newest);
       case "Oldest First":
-        return array.sort(oldest);
+        return sortedRooms.sort(oldest);
       default:
         console.log("invalid sortType", sortType);
-        return array;
+        return sortedRooms;
     }
-  }
-  toggleSortMenu() {
-    this.setState({ sortMenuOpen: !this.state.sortMenuOpen });
-  }
+  },
+  []);
 
-  changeSort(value) {
-    this.toggleSortMenu();
-    this.setState({
-      sortType: value
-    });
-  }
+  const toggleSortMenu = React.useCallback(() => {
+    setShowSortMenu((value) => !value);
+  }, []);
 
-  handleFieldChange(name, value) {
-    this.setState({
-      searchString: value
-    });
-  }
+  const changeSort = React.useCallback((value: string) => {
+    toggleSortMenu();
+    setSortType( value as VALID_SORT);
+  }, [toggleSortMenu]);
 
-  setSelectedChat(channelName, type) {
-    // console.log(channelid);
-    // this goes to root so root can tell chat-window.
-    this.props.setSelectedChat(channelName, type);
-  }
+  const handleFieldChange = React.useCallback((_name: any, value: string) => {
+    setSearchString(value);
+  },
+  []
+  );
 
-  render() {
-    const rooms = this.performFilterSort(
-      this.props.rooms || [],
-      this.state.searchString,
-      this.state.sortType,
-      this.props.label
-    );
+    const sortedRooms = React.useMemo(() => performFilterSort(
+      rooms || [],
+      searchString,
+      sortType,
+    ), [performFilterSort, rooms, searchString, sortType]);
+
     return (
       <div
         className={
           "room-list-contain " +
-          this.props.label +
+          label +
           " " +
-          (this.props.activeTab ? "visible" : "")
+          (activeTab ? "visible" : "")
         }
       >
         <div className="search">
           <StandardInput
             iconClass="fi-magnifying-glass"
             inputName="Search"
-            onChange={this.handleFieldChange}
+            onChange={handleFieldChange}
           />
         </div>
 
-        <div className="sort" onClick={() => this.toggleSortMenu()}>
-          <div className="label">Sort: {this.state.sortType}</div>
+        <div className="sort" onClick={() => toggleSortMenu()}>
+          <div className="label">Sort: {sortType}</div>
           <div
-            className={"arrow " + (this.state.sortMenuOpen ? "flipped" : "")}
+            className={"arrow " + (sortMenuOpen ? "flipped" : "")}
           ></div>
         </div>
         <div
-          className={"dropdown " + (this.state.sortMenuOpen ? "visible" : "")}
+          className={"dropdown " + (sortMenuOpen ? "visible" : "")}
         >
           <div
             className="list-item"
-            onClick={() => this.changeSort("Alphabetical")}
+            onClick={() => changeSort("Alphabetical")}
           >
             <div className="list-icon fi-text-color"></div>Alphabetical
           </div>
           <div
             className="list-item"
-            onClick={() => this.changeSort("Population")}
+            onClick={() => changeSort("Population")}
           >
             <div className="list-icon fi-torsos"></div>Population
           </div>
-          <div className="list-item" onClick={() => this.changeSort("Type")}>
+          <div className="list-item" onClick={() => changeSort("Type")}>
             <div className="list-icon fi-filter"></div>Type
           </div>
-          <div className="list-item" onClick={() => this.changeSort("Status")}>
+          <div className="list-item" onClick={() => changeSort("Status")}>
             <div className="list-icon fi-filter"></div>Status
           </div>
           <div
             className="list-item"
-            onClick={() => this.changeSort("Newest First")}
+            onClick={() => changeSort("Newest First")}
           >
             <div className="list-icon fi-arrow-up"></div>Newest First
           </div>
           <div
             className="list-item"
-            onClick={() => this.changeSort("Oldest First")}
+            onClick={() => changeSort("Oldest First")}
           >
             <div className="list-icon fi-arrow-down"></div>Oldest First
           </div>
         </div>
 
         <div className="room-list">
-          {rooms.map((obj) => {
+          {sortedRooms.map((obj) => {
             obj.selected =
-              obj.name === this.props.selectedChat ? "selected" : "";
-            if (this.props.label === "messages") {
+              obj.name === selectedChat ? "selected" : "";
+            if (label === "messages") {
               return (
                 <RoomObject
                   key={obj.channel}
                   user={obj}
                   setSelectedChat={() =>
-                    this.setSelectedChat(obj.channel, obj.type)
+                    setSelectedChat(obj.channel, obj.type)
                   }
                 />
               );
@@ -218,19 +216,19 @@ class RoomList extends Component {
                   key={obj.channel}
                   user={obj}
                   setSelectedChat={() =>
-                    this.setSelectedChat(obj.channel, obj.type)
+                    setSelectedChat(obj.channel, obj.type)
                   }
                 />
               );
             }
           })}
           <div className={"no-rooms " + (rooms.length ? "hidden" : "")}>
-            No {this.props.label} to show
+            No {label} to show
           </div>
         </div>
       </div>
     );
   }
-}
+
 
 export default RoomList;

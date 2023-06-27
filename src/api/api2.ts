@@ -1,7 +1,7 @@
-
 import Cookies from 'universal-cookie';
-const cookies = new Cookies();
 import { useProd, loginUrl } from '../config/api-urls';
+
+const cookies = new Cookies();
 
 if (!useProd) {
 	console.warn('using dev');

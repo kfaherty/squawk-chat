@@ -1,19 +1,18 @@
-// notification
-import * as React from 'react';
-import { ToastContainer, toast } from 'react-toastify';
+import * as React from "react";
+import { ToastContainer, toast } from "react-toastify";
 
 interface INotification {
-	icon: string;
-	text: string;
-	closeToast(): void;
+  icon: string;
+  text: string;
+  closeToast(): void;
 }
 
 class NotificationTemplate extends React.Component<INotification, {}> {
-  render(){
+  render() {
     return (
-        <div className="toast-item">
-          <div className="content-wrap">
-            <div className={"toast-icon " + this.props.icon}></div>
+      <div className="toast-item">
+        <div className="content-wrap">
+          <div className={"toast-icon " + this.props.icon}></div>
           <div className="toast-content">{this.props.text}</div>
         </div>
         <button onClick={this.props.closeToast}>Dismiss</button>
@@ -22,11 +21,16 @@ class NotificationTemplate extends React.Component<INotification, {}> {
   }
 }
 
-const createToast: (icon: string, text: string, closeToast: () => void) => void = (icon, text, closeToast) => {
-	toast(<NotificationTemplate text={text} icon={icon} closeToast={closeToast}/>)
-}
+export const createToast: (
+  icon: string,
+  text: string,
+  closeToast: () => void
+) => void = (icon, text, closeToast) => {
+  toast(
+    <NotificationTemplate text={text} icon={icon} closeToast={closeToast} />
+  );
+};
 
-const Notifications: React.StatelessComponent = () => 
-	<ToastContainer autoClose={15000} />
-
-export default { createToast, Notifications };
+export const Notifications: React.FC = () => (
+  <ToastContainer autoClose={15000} />
+);

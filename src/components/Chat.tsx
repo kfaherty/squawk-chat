@@ -15,35 +15,34 @@ import ChatMessage from "./ChatMessage";
 import UserList from "./UserList";
 import UserProfile from "./UserProfile";
 
-import { getProfileURL } from "../config/api-urls";
+import { profileUrl } from "../config/api-urls";
 
-class TypingIndicator extends Component {
-  render() {
-    return (
-      <div
-        className={
-          "typing-indicator " +
-          (() => {
-            switch (this.props.typing) {
-              case "typing":
-                return "visible";
-              case "paused":
-                return "paused";
-              case "clear":
-                return "";
-              default:
-                return "";
-            }
-          })()
-        }
-      >
-        <div className="dot-one"></div>
-        <div className="dot-two"></div>
-        <div className="dot-three"></div>
-      </div>
-    );
-  }
+interface ITypingIndicator {
+  typing: "typing" | "paused" | "clear";
 }
+
+const TypingIndicator: React.FC<ITypingIndicator> = ({ typing }) => (
+  <div
+    className={
+      "typing-indicator " +
+      (() => {
+        switch (typing) {
+          case "typing":
+            return "visible";
+          case "paused":
+            return "paused";
+          case "clear":
+          default:
+            return "";
+        }
+      })()
+    }
+  >
+    <div className="dot-one"></div>
+    <div className="dot-two"></div>
+    <div className="dot-three"></div>
+  </div>
+);
 
 class Chat extends Component {
   constructor(props) {
@@ -69,7 +68,7 @@ class Chat extends Component {
   }
 
   openProfile(user) {
-    window.open(getProfileURL() + this.props.chat.channel, "_blank"); // TODO:
+    window.open(profileUrl + this.props.chat.channel, "_blank"); // TODO: this.
   }
 
   clearSelectedChat() {
