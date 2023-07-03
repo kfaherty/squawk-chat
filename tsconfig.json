@@ -42,11 +42,12 @@
       "node",
       "react",
       "styled-components",
-      "./src/customTypings/bbcode-to-react"
+      "./src/customTypings/bbcode-to-react",
+      "./src/customTypings/universal-cookie"
     ]
   },
   "includes": [
-    "./src", "config/jest/styled-components", "./src/customTypings/bbcode-to-react.d.ts"
+    "./src", "config/jest/styled-components", "./src/customTypings/bbcode-to-react.d.ts", "./src/customTypings/universal-cookie.d.ts"
   ],
   "exclude": [
     "node_modules",
